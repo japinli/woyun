@@ -10,10 +10,13 @@
 						http://www.springframework.org/schema/mvc
 						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 						
-	<mvc:annotation-driven />
-	<context:component-scan base-package="io.github.japinl.springmvc" />
+	<!-- Enable annotations (such as @controller and @RequestMapping) 
+	<mvc:annotation-driven /> -->
+	<!-- Enable autodetection of the @Controller annotated classes -->
+<!--  	<context:component-scan base-package="io.github.japinl.springmvc" />
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	-->
 </beans>
