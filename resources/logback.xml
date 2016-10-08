@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configuration>
+	<substitutionProperty name="logbase" value="${catalina.base}/logs/springmvc" />
+	
+	<jmxConfigurator />
+	
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%.-5level|%d{HH:mm:ss}|%-30.30logger{0}|%msg%n</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Encoding>UTF-8</Encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<File>${logbase}%d{yyyy-MM-dd}.log.html</File>
+			<FileNamePattern>${logbase}.%d{yyyy-MM-dd}.log.html.zip</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggerPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+		<layout class="ch.qos.logback.classic.html.HTMLLayout">
+			<pattern>%date%level%thread%10logger%file%line%msg</pattern>
+		</layout>
+	</appender>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile" />
+	</root>
+</configuration>

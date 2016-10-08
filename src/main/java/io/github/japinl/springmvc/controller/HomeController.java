@@ -1,25 +1,15 @@
 package io.github.japinl.springmvc.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Controller // Declared to be a controller
 public class HomeController {
-	
-	@RequestMapping("/")
-	public String index(Model model) {
-		model.addAttribute("greeting", "Welcome to Home");
-		model.addAttribute("tagline", "The one and only amazing Spring Test");
-		
-		return "index";
+/*	
+	@RequestMapping(value="/", method=GET)   // Handle GET requests for /
+	public String home() {
+		return "home";            // View name is home
 	}
-	
-	@RequestMapping("/welcome")
-	public String welcome(Model model) {
-		model.addAttribute("greeting", "Welcome to Spring Test");
-		model.addAttribute("tagline", "The one and only amazing Spring Test");
-		
-		return "welcome";
-	}
+	*/
 }
