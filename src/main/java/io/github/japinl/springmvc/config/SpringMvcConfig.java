@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc                                  // Enable Spring MVC
 @ComponentScan("io.github.japinl.springmvc")   // Enable component-scanning
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
-
+	private final static String welcome = "html/index.html";
 	/*
 	 * Configure a view resolver
 	 */
@@ -33,7 +33,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		super.addViewControllers(registry);
-		registry.addViewController("/").setViewName("html/home.html");
+		registry.addViewController("/").setViewName(welcome);
 	}
 	
 	@Override
