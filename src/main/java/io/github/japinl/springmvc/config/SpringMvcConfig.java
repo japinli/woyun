@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc                                  // Enable Spring MVC
 @ComponentScan("io.github.japinl.springmvc")   // Enable component-scanning
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
-	private final static String welcome = "html/index.html";
+	private final static String welcome = "/static/html/index.html";
 	/*
 	 * Configure a view resolver
 	 */
@@ -39,10 +39,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		super.addResourceHandlers(registry);
-		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/static/js/");
-		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/static/css/");
-		registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/static/img/");
-		registry.addResourceHandler("/html/**").addResourceLocations("/WEB-INF/static/html/");
+		registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
 	}
 	
 	@Override
