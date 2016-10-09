@@ -1,6 +1,5 @@
 package io.github.japinl.springmvc.config;
 
-import javax.servlet.ServletRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class SpringMvcWebAppInitializer extends AbstractAnnotationConfigDispatch
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class };
+		return new Class<?>[] { RootConfig.class, DataConfig.class };
 	}
 	
 	/* Define beans for DispathcerServlet's application context.

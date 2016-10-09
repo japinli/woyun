@@ -1,0 +1,9 @@
+### springmvc 项目配置文件
+
+jdbc_url_query_string=useUnicode=true&characterEncoding=UTF-8
+
+[db.mysql]
+jdbc_driver=com.mysql.jdbc.Driver
+jdbc_url=jdbc:mysql://localhost:3306/springmvcdb?${jdbc_url_query_string}
+jdbc_username=admin
+jdbc_password=@dm!n

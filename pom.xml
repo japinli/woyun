@@ -1,75 +1,156 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.japinl</groupId>
-  <artifactId>springmvc</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  
-  <dependencies>
-    <!-- 指定 spring mvc 框架 -->
-  	<dependency>
-  		<groupId>org.springframework</groupId>
-  		<artifactId>spring-webmvc</artifactId>
-  		<version>${spring.version}</version>
-  	</dependency>
-  	
-  	<dependency>
-  		<groupId>javax.servlet</groupId>
-  		<artifactId>jstl</artifactId>
-  		<version>${servlet.version}</version>
-  	</dependency>
-  	
-  	<dependency>
-  		<groupId>javax.servlet</groupId>
-  		<artifactId>javax.servlet-api</artifactId>
-  		<version>${servlet.api.version}</version>
-  		<!-- Tomcat 容器提供 -->
-  		<scope>provided</scope>
-  	</dependency>
-  	
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.12</version>
-  		<scope>test</scope>
-  	</dependency>
-  	
-  	<!-- 日志配置 -->
-  	<dependency>
-  		<groupId>ch.qos.logback</groupId>
-  		<artifactId>logback-classic</artifactId>
-  		<version>${logback.version}</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>ch.qos.logback</groupId>
-  		<artifactId>logback-core</artifactId>
-  		<version>${logback.version}</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-api</artifactId>
-  		<version>${slf4j.version}</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>log4j-over-slf4j</artifactId>
-  		<version>${slf4j.version}</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>jcl-over-slf4j</artifactId>
-  		<version>${slf4j.version}</version>
-  	</dependency>
-  	
-  </dependencies>
-  
-  <properties>
-  	<maven.compiler.source>1.8</maven.compiler.source>
-  	<maven.compiler.target>1.8</maven.compiler.target>
-  	<slf4j.version>1.7.7</slf4j.version>
-  	<logback.version>1.1.3</logback.version>
-  	<spring.version>4.3.3.RELEASE</spring.version>
-  	<servlet.version>1.2</servlet.version>
-  	<servlet.api.version>3.1.0</servlet.api.version>
-  </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.github.japinl</groupId>
+	<artifactId>springmvc</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<!-- 指定 spring mvc 框架 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.api.version}</version>
+			<!-- Tomcat 容器提供 -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 日志配置 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>org.json</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+
+		<!-- MySQL 连接依赖 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
+		</dependency>
+
+		<!-- MyBatis 依赖 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
+
+		<!-- 数据源依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<slf4j.version>1.7.7</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<spring.version>4.3.3.RELEASE</spring.version>
+		<servlet.version>1.2</servlet.version>
+		<servlet.api.version>3.1.0</servlet.api.version>
+		<jackson.version>2.5.1</jackson.version>
+		<json.version>chargebee-1.0</json.version>
+		<mysql-connector.version>5.1.32</mysql-connector.version>
+		<mybatis.version>3.2.8</mybatis.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+		<druid.version>1.0.15</druid.version>
+		<aspectj.version>1.8.4</aspectj.version>
+	</properties>
 </project>
