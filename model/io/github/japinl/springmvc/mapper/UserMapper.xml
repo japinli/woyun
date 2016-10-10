@@ -24,6 +24,20 @@
   	from user
   	where username = #{username, jdbcType=VARCHAR} and password = #{password, jdbcType=VARCHAR}
   </select>
+  <!-- 检测用户名是否存在 -->
+  <select id="isUsernameRegisted" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+  	from user
+  	where username = #{username, jdbcType=VARCHAR}
+  </select>
+  <!-- 检测邮箱是否存在 -->
+  <select id="isEmailRegisted" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+  	from user
+  	where email = #{email, jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}

@@ -5,8 +5,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,8 @@ import io.github.japinl.springmvc.model.User;
 
 @Controller
 public class LoginController {
+	
+	private final static Logger LOG = LoggerFactory.getLogger(LoginController.class); 
 
 	@Resource
 	private UserMapper userMapper;
@@ -37,13 +40,39 @@ public class LoginController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/signup/checkuser", method = RequestMethod.GET, params = "name")
+	@RequestMapping(value = "/signup/checkuser", method = RequestMethod.GET, params = "username")
 	@ResponseBody
-	public Map<String, Object> checkuser(@RequestParam String name) {
+	public Map<String, Object> checkUser(@RequestParam String username) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		System.out.println(name);
-		result.put("status", 0);
+		User tmp = userMapper.isUsernameRegisted(username);
+		
+		if (tmp == null) {
+			result.put("status", 0);
+		} else {
+			result.put("status", 1);
+		}
+		
+		LOG.info(result.toString());
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/signup/checkemail", method = RequestMethod.GET, params = "email")
+	@ResponseBody
+	public Map<String, Object> checkEmail(@RequestParam String email) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User tmp = userMapper.isEmailRegisted(email);
+		
+		if (tmp == null) {
+			result.put("status", 0);
+		} else {
+			result.put("status", 1);
+		}
+		
+		LOG.info(result.toString());
+		
 		return result;
 	}
 	
@@ -52,7 +81,14 @@ public class LoginController {
 	public Map<String, Object> register(@RequestBody User user) {
 		Map<String, Object> result = new HashMap<String, Object>();
 
-		result.put("status", 0);
+		int ret = userMapper.insertSelective(user);
+		LOG.info("register: insertSelective: " + ret);
+		if (ret != 0) {
+			result.put("status", 0);
+		} else {
+			result.put("status", 1);
+		}
+		
 		return result;
 	}
 }

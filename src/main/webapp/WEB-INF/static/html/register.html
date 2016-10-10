@@ -19,25 +19,33 @@
 	<div id="info" class="containerBox regContainerBox">
 		<form class="form-signup" role="form" id="fm">
 			<h2 class="signup-title">注册帐号</h2>
-			
-			<label>请输入用户昵称:</label>
-			<input type="text" name="nickname" class="form-control" required autofocus id="username">
-			<span id="error-msg"></span>
-			
-			<label>请输入用户密码:</label>
-			<input type="password" name="pwd" class="form-control" required id="password">
-			
-			<label>请输入确认密码:</label>
-			<input type="password" name="cfm" class="form-control" required id="confirm">
-			
-			<label>请输入邮箱地址:</label>
-			<input type="text" name="email" class="form-control" required id="email">
-			
+			<div class="item">
+				<label>请输入用户昵称:</label>
+				<input type="text" name="nickname" class="form-control" required id="username">
+				<span id="error-msg"></span>
+			</div>
+			<div class="item">
+				<label>请输入用户密码:</label>
+				<input type="password" name="pwd" class="form-control" required id="password">
+				<span id="error-msg"></span>
+			</div>
+			<div class="item">
+				<label>请输入确认密码:</label>
+				<input type="password" name="cfm" class="form-control" required id="confirm">
+				<span id="error-msg"></span>
+			</div>
+			<div class="item">
+				<label>请输入邮箱地址:</label>
+				<input type="text" name="email" class="form-control" required id="email">
+				<span id="error-msg"></span>
+			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="button" id="signup">立即注册</button>
 		</form>
+		<br>
+		<p><a href="/cloud/login.html">返回登录页面</a></p>
 	</div>
 	
-	<script src="/js/jquery/jquery-1.11.3.js"></script>
+	<script src="/js/jquery/jquery-3.1.1.min.js"></script>
 	<script src="/js/bootstrap/bootstrap.min.js"></script>
 	<script src="/js/register.js"></script>
 </body>

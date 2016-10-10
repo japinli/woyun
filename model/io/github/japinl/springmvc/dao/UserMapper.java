@@ -13,6 +13,10 @@ public interface UserMapper {
 	User selectByPrimaryKey(Integer id);
 	
 	User login(User user);
+	
+	User isUsernameRegisted(String username);
+	
+	User isEmailRegisted(String email);
 
 	int updateByPrimaryKeySelective(User record);
 
