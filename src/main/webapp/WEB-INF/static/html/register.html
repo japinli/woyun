@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<!--目前只有360旗下全系列双核浏览器识别该meta标签-->
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<!--有的双核浏览器其中一核使用的就是IE内核，但是默认并不会调用最高版本,让浏览器自动调用最高版本的IE-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/css/register.css" rel="stylesheet">
+
+<title>注册 | 文件同步系统</title>
+</head>
+<body>
+	<div id="info" class="containerBox regContainerBox">
+		<form class="form-signup" role="form" id="fm">
+			<h2 class="signup-title">注册帐号</h2>
+			
+			<label>请输入用户昵称:</label>
+			<input type="text" name="nickname" class="form-control" required autofocus id="username">
+			<span id="error-msg"></span>
+			
+			<label>请输入用户密码:</label>
+			<input type="password" name="pwd" class="form-control" required id="password">
+			
+			<label>请输入确认密码:</label>
+			<input type="password" name="cfm" class="form-control" required id="confirm">
+			
+			<label>请输入邮箱地址:</label>
+			<input type="text" name="email" class="form-control" required id="email">
+			
+			<button class="btn btn-lg btn-primary btn-block" type="button" id="signup">立即注册</button>
+		</form>
+	</div>
+	
+	<script src="/js/jquery/jquery-1.11.3.js"></script>
+	<script src="/js/bootstrap/bootstrap.min.js"></script>
+	<script src="/js/register.js"></script>
+</body>
+</html>

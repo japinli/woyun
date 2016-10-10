@@ -16,7 +16,7 @@ function login() {
 		alert("请填写用户名或密码");
 	} else {
 		$.ajax({
-			url: "/login",
+			url: "/signin",
 			type: "POST",
 			dataType: "json",
 			contentType: "application/json",
@@ -26,13 +26,13 @@ function login() {
 				var _type = data.status;
 				if (_type==0) {
 					alert("登录成功");
-					window.location.href="/static/html/about.html";
+					window.location.href="/cloud/about.html";
 				} else {
 					$("#fm .errormsg").show();
 				}
 			},
 			error: function() {
-				alert("数据异常");
+				alert("登录异常");
 			}
 		});
 	}

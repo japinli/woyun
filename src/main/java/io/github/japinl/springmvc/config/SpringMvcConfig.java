@@ -1,11 +1,13 @@
 package io.github.japinl.springmvc.config;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @EnableWebMvc                                  // Enable Spring MVC
 @ComponentScan("io.github.japinl.springmvc")   // Enable component-scanning
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
-	private final static String welcome = "/static/html/index.html";
+	private final static String welcome = "/cloud/index.html";
 	
 	/*
 	 * 配置默认视图
@@ -37,7 +39,10 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		super.addResourceHandlers(registry);
-		registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/static/css/");
+		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/static/js/");
+		registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/static/img/");
+		registry.addResourceHandler("/cloud/**").addResourceLocations("/WEB-INF/static/html/");
 	}
 	
 	/*
@@ -63,6 +68,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		super.configureMessageConverters(converters);
 		converters.add(mappingJackson2HttpMessageConverter());
+		converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
 	}
 
 	/*

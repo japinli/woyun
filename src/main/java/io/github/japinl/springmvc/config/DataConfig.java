@@ -77,9 +77,9 @@ public class DataConfig{
 		return dataSource;
 	}
 	/**
-	*配事务管理器
+	* 配事务管理器
 	*
-	*@return 名称为"transactionManager"的数据源方式的事务管理bean
+	* @return 名称为"transactionManager"的数据源方式的事务管理bean
 	*/
 	@Bean
 	public DataSourceTransactionManager transactionManager() {
@@ -91,9 +91,8 @@ public class DataConfig{
 	/**
 	* 创建基于MyBatis的SqlSessionFactory（连接池），同时指定其使用的数据源
 	* 
-	*@return 名称为"sqlSessionFactory"的Mybatis SqlSessionFactory连接池bean
-	*
-	*@throws Exception
+	* @return 名称为"sqlSessionFactory"的Mybatis SqlSessionFactory连接池bean
+	* @throws Exception
 	*/
 	@Bean
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
@@ -109,8 +108,8 @@ public class DataConfig{
 	/**
 	* 自动扫描将Mapper接口生成代理注入到Spring容器
 	* 
-	*@return 名称为"mapperScanner"的Mapper接口扫描器bean
-	 * @throws Exception 
+	* @return 名称为"mapperScanner"的Mapper接口扫描器bean
+	* @throws Exception 
 	*/
 	@Bean
 	public MapperScannerConfigurer mapperScanner() throws Exception{
@@ -128,6 +127,4 @@ public class DataConfig{
     public void serviceAnnotatedClass() {
 		LOG.info("======================>>  以拦截器方式配置事务，将所有Service纳入事务管理");
 	}
-	
-	
 }
