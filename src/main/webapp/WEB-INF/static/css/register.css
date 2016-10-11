@@ -1,0 +1,21 @@
+.containerBox {
+	width: 324px;
+	margin: auto;
+}
+.signup-title{
+	text-align: center;
+	margin: 70px 0 50px 0;
+}
+.item{
+	margin: 4px 0;
+}
+.item input{
+	height: 40px !important;
+}
+.item input:hover{
+	border-color: #428bca;
+}
+.error{
+	color:red;
+	margin-left:2px;
+}

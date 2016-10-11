@@ -25,8 +25,7 @@ function login() {
 				console.log(data);
 				var _type = data.status;
 				if (_type==0) {
-					alert("登录成功");
-					window.location.href="/cloud/about.html";
+					window.location.href="/cloud/home.html";
 				} else {
 					$("#fm .errormsg").show();
 				}
