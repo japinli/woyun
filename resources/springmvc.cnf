@@ -7,3 +7,5 @@ jdbc_driver=com.mysql.jdbc.Driver
 jdbc_url=jdbc:mysql://localhost:3306/springmvcdb?${jdbc_url_query_string}
 jdbc_username=admin
 jdbc_password=@dm!n
+
+[hadoop]

@@ -143,6 +143,11 @@ function signup() {
 	var confirm = $("#confirm").val();
 	var email = $("#email").val();
 
+	isUsernameValid(username, uTipInfo);
+	isPasswordValid(password, pTipInfo);
+	isConfirmPasswordValid(password, confirm, cTipInfo);
+	isEmailValid(email, eTipInfo);
+	
 	if (uTipInfo.text() == "ok" && pTipInfo.text() == "ok" && cTipInfo.text() == "ok" && eTipInfo.text() == "ok") {
 		$.ajax({
 			url : "/signup",
@@ -161,17 +166,12 @@ function signup() {
 					alert("注册成功");
 					window.location.href = "/cloud/login.html";
 				} else {
-					alert("登录失败");
+					alert("注册失败");
 				}
 			},
 			error : function() {
 				alert("注册异常");
 			}
 		});
-	} else {
-		isUsernameValid(username, uTipInfo);
-		isPasswordValid(password, pTipInfo);
-		isConfirmPasswordValid(password, confirm, cTipInfo);
-		isEmailValid(email, eTipInfo);
 	}
 }

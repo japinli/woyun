@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.japinl.springmvc.dao.UserMapper;
 import io.github.japinl.springmvc.model.User;
+import io.github.japinl.springmvc.utils.HDFSUtil;
 
 @Controller
 public class LoginController {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(LoginController.class); 
 
+	
 	@Resource
 	private UserMapper userMapper;
 	
@@ -82,13 +84,20 @@ public class LoginController {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		int ret = userMapper.insertSelective(user);
-		LOG.info("register: insertSelective: " + ret);
-		if (ret != 0) {
-			result.put("status", 0);
-		} else {
+		if (ret == 0) {
 			result.put("status", 1);
+		} else {
+			/*
+			 *  TODO: 能否调用 /create-directory?directory=name 实现？
+			 */
+			boolean ok = HDFSUtil.createDirectory(user.getUsername());
+			if (ok == true) {
+				result.put("status", 0);
+			} else {
+				result.put("status", 1);
+			}
 		}
-		
+
 		return result;
 	}
 }
