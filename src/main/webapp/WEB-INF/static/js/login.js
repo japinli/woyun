@@ -20,11 +20,12 @@ function login() {
 			type: "POST",
 			dataType: "json",
 			contentType: "application/json",
-			data: JSON.stringify({"username":username, "password": password}),
+			data: JSON.stringify({"username": username, "password": password}),
 			success: function(data) {
 				console.log(data);
 				var _type = data.status;
 				if (_type==0) {
+					globalUsername = username;
 					window.location.href="/cloud/home.html";
 				} else {
 					$("#fm .errormsg").show();

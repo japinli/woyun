@@ -29,9 +29,6 @@
 		<table schema="${jdbc_user}" tableName="user" domainObjectName="User" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table>
-		
 
-		
-		
 	</context>
 </generatorConfiguration>

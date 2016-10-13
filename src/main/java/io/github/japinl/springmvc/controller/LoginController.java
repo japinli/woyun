@@ -22,7 +22,6 @@ import io.github.japinl.springmvc.utils.HDFSUtil;
 public class LoginController {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(LoginController.class); 
-
 	
 	@Resource
 	private UserMapper userMapper;
@@ -88,7 +87,7 @@ public class LoginController {
 			result.put("status", 1);
 		} else {
 			/*
-			 *  TODO: 能否调用 /create-directory?directory=name 实现？
+			 *  NOTE: 能否调用 /create-directory?directory=name 实现？
 			 */
 			boolean ok = HDFSUtil.createDirectory(user.getUsername());
 			if (ok == true) {

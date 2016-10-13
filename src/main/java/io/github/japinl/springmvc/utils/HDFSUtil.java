@@ -42,4 +42,20 @@ public class HDFSUtil {
 		}
 		return false;
 	}
+	
+	/*
+	 * 新建文件
+	 * @param filename 文件名
+	 * @return 成功返回 true ，否则返回 false
+	 */
+	public static boolean createFile(String filename) {
+		try {
+			FileSystem fileSystem = FileSystem.get(URI.create(HDFS_URL), HDFS_CONF);
+			fileSystem.create(new Path(filename)).close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
