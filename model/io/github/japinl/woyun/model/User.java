@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.model;
+package io.github.japinl.woyun.model;
 
 public class User {
 

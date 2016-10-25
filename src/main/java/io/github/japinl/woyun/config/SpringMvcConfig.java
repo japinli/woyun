@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.config;
+package io.github.japinl.woyun.config;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Configuration
 @EnableWebMvc                                  // Enable Spring MVC
-@ComponentScan("io.github.japinl.springmvc")   // Enable component-scanning
+@ComponentScan("io.github.japinl.woyun")   // Enable component-scanning
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
-	private final static String welcome = "/cloud/index.html";
+	private final static String welcome = "/index.html";
 	
 	/*
 	 * 配置默认视图
@@ -42,7 +42,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/static/css/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/static/js/");
 		registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/static/img/");
-		registry.addResourceHandler("/cloud/**").addResourceLocations("/WEB-INF/static/html/");
+		registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/static/html/");
 	}
 	
 	/*

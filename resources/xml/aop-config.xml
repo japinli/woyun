@@ -37,7 +37,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 	<!-- 配置参与事务的类 -->
 	<aop:config>
 		<aop:advisor advice-ref="transactionAdvice"
-			pointcut="io.github.japinl.springmvc.config.DataConfig.serviceAnnotatedClass()"
+			pointcut="io.github.japinl.woyun.config.DataConfig.serviceAnnotatedClass()"
 			order="20" />
 	</aop:config>
 </beans>

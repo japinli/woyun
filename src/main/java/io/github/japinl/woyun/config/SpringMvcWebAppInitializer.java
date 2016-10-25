@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.config;
+package io.github.japinl.woyun.config;
 
 
 import org.slf4j.Logger;

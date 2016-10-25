@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.utils;
+package io.github.japinl.woyun.utils;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.config;
+package io.github.japinl.woyun.config;
 
 
 import javax.sql.DataSource;
@@ -27,8 +27,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 * @version 1.1.0
 */
 @Configuration
-@ComponentScan("io.github.japinl.springmvc.**.model.**")
-//@MapperScan(basePackages={"io.github.japinl.springmvc.mapper"},sqlSessionFactoryRef="sqlSessionFactory")
+@ComponentScan("io.github.japinl.woyun.**.model.**")
+//@MapperScan(basePackages={"io.github.japinl.woyun.mapper"},sqlSessionFactoryRef="sqlSessionFactory")
 //启用切面
 @Aspect
 //导入xml配置资源
@@ -59,7 +59,7 @@ public class DataConfig{
 		//LOG.info("======================>>  配置数据源（采用DRUID数据源）( {} ) ",DruidDataSource.class.getName());
 		DruidDataSource dataSource = new DruidDataSource(true);
 		/*数据库连接*/
-		dataSource.setUrl("jdbc:mysql://localhost:3306/springmvcdb?useUnicode=true&characterEncoding=UTF-8");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/woyun?useUnicode=true&characterEncoding=UTF-8");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUsername("admin");
 		dataSource.setPassword("@dm!n");
@@ -98,8 +98,8 @@ public class DataConfig{
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		//自动扫描domain目录，省掉手动配置Configuration.xml
-		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:io/github/japinl/springmvc/mapper/*.xml"));
-		sessionFactory.setTypeAliasesPackage("io.github.japinl.springmvc.model");//不支持ANT风格路径，只能用",;\t\n"分隔
+		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:io/github/japinl/woyun/mapper/*.xml"));
+		sessionFactory.setTypeAliasesPackage("io.github.japinl.woyun.model");//不支持ANT风格路径，只能用",;\t\n"分隔
 		return sessionFactory.getObject();
 	}
 	
@@ -113,7 +113,7 @@ public class DataConfig{
 	public MapperScannerConfigurer mapperScanner() throws Exception{
 		LOG.info("======================>>  自动扫描将Mapper接口生成代理注入到Spring容器 ( {} ) ",MapperScannerConfigurer.class.getName());
 		MapperScannerConfigurer msc = new MapperScannerConfigurer();
-		msc.setBasePackage("io.github.japinl.springmvc.dao");
+		msc.setBasePackage("io.github.japinl.woyun.dao");
 		msc.setSqlSessionFactoryBeanName("sqlSessionFactory");
 		return msc;
 	}
@@ -121,7 +121,7 @@ public class DataConfig{
 	/**
 	* 以拦截器方式配置事务，将所有Service纳入事务管理
 	*/
-	@Pointcut("execution(* io.github.japinl.springmvc.service..*.*(..))")
+	@Pointcut("execution(* io.github.japinl.woyun.service..*.*(..))")
     public void serviceAnnotatedClass() {
 		LOG.info("======================>>  以拦截器方式配置事务，将所有Service纳入事务管理");
 	}

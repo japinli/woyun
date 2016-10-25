@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.controller;
+package io.github.japinl.woyun.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import io.github.japinl.springmvc.utils.HDFSUtil;
+import io.github.japinl.woyun.utils.HDFSUtil;
 
 @Controller
 public class FileController {

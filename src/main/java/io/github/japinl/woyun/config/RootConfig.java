@@ -1,4 +1,4 @@
-package io.github.japinl.springmvc.config;
+package io.github.japinl.woyun.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan(basePackages="io.github.japinl,springmvc", excludeFilters={@Filter(type=FilterType.ANNOTATION, value=EnableWebMvc.class)})
+@ComponentScan(basePackages="io.github.japinl,woyun", excludeFilters={@Filter(type=FilterType.ANNOTATION, value=EnableWebMvc.class)})
 public class RootConfig {
 
 }

@@ -1,6 +1,6 @@
-package io.github.japinl.springmvc.dao;
+package io.github.japinl.woyun.dao;
 
-import io.github.japinl.springmvc.model.User;
+import io.github.japinl.woyun.model.User;
 
 public interface UserMapper {
 
