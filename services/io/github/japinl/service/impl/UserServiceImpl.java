@@ -21,4 +21,14 @@ public class UserServiceImpl implements UserService {
 		}
 		return true;
 	}
+	
+	public boolean isEamilRegister(String email) {
+		
+		return true;
+	}
+	
+	public boolean isPhoneRegister(String phone) {
+		
+		return false;
+	}
 }

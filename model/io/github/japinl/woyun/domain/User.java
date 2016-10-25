@@ -3,7 +3,7 @@ package io.github.japinl.woyun.domain;
 public class User {
     private Integer id;
 
-    private String username;
+    private String name;
 
     private String password;
 
@@ -19,12 +19,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getname() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setname(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
