@@ -1,52 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="expires" content="-1">
-<!--目前只有360旗下全系列双核浏览器识别该meta标签-->
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<!--有的双核浏览器其中一核使用的就是IE内核，但是默认并不会调用最高版本,让浏览器自动调用最高版本的IE-->
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-<link href="/css/register.css" rel="stylesheet">
-
-<title>注册 | 文件同步系统</title>
-</head>
-<body>
-	<div id="info" class="containerBox regContainerBox">
-		<form class="form-signup" role="form" id="fm">
-			<h2 class="signup-title">注册帐号</h2>
-			<div class="item">
-				<!-- <label>请输入用户昵称:</label> -->
-				<input type="text" name="nickname" class="form-control" placeholder="请输入用户昵称" required id="username">
-				<span id="error-msg" class="error"></span>
-			</div>
-			<div class="item">
-				<!-- <label>请输入用户密码:</label> -->
-				<input type="password" name="pwd" class="form-control" placeholder="请输入用户密码" required id="password">
-				<span id="error-msg" class="error"></span>
-			</div>
-			<div class="item">
-				<!-- <label>请输入确认密码:</label> -->
-				<input type="password" name="cfm" class="form-control" placeholder="请输入确认密码" required id="confirm">
-				<span id="error-msg" class="error"></span>
-			</div>
-			<div class="item">
-				<!-- <label>请输入邮箱地址:</label> -->
-				<input type="text" name="email" class="form-control" placeholder="请输入邮箱地址" required id="email">
-				<span id="error-msg" class="error"></span>
-			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="button" id="signup">立即注册</button>
-			<br>
-			<a href="login.html">返回登录页面</a>
-		</form>
-	</div>
-	
-	<script src="/js/jquery/jquery-3.1.1.min.js"></script>
-	<script src="/js/bootstrap/bootstrap.min.js"></script>
-	<script src="/js/register.js"></script>
-</body>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+		<title>注册 | 蜗云</title>
+		<link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/register.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="woyun">
+			<h1>注册帐号</h1>
+		</div>
+		<div id="info">
+			<form class="signup" role="form" id="fm">
+				<div class="item">
+					<input type="text" name="username" class="form-control" placeholder="请输入用户名" required id="username">
+					<span id="errmsg" class="error"></span>
+				</div>
+				<div class="item">
+					<input type="password" name="password" class="form-control" placeholder="请输入密码" required id="password">
+					<span id="errmsg" class="error"></span>
+				</div>
+				<div class="item">
+					<input type="password" name="confirm" class="form-control" placeholder="请确认密码" required id="confirm">
+					<span id="errmsg" class="error"></span>
+				</div>
+				<div class="item">
+					<input type="text" name="email" class="form-control" placeholder="请输入邮箱地址" required id="email">
+					<span id="errmsg" class="error"></span>
+				</div>
+				<div class="item">
+					<input type="text" name="phone" class="form-control" placeholder="请输入手机号" id="phone">
+					<span id="errmsg" class="error"></span>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block" type="button" id="register">注册</button>
+				<br />
+				<a href="/">返回登录</a>
+			</form>
+		</div>
+	</body>
 </html>

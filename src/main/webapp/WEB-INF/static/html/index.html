@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<title>Hello Spring MVC</title>
-</head>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+		<title>登录 | 蜗云</title>
+		<link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/login.css" rel="stylesheet">
+	</head>
 	<body>
-		<p>This is a HTML file</p>
-		<p>see <a href="about.html">about</a></p>
-		<p><a href="login.html">Sign in</a></p>
-		中文测试
+		<div id="woyun">
+			<h1>蜗  云</h1>
+		</div>
+		<div id="info">
+			<form class="signin" role="form" id="fm">
+				<h2 class="heading">请先登录</h2>
+				<p class="errmsg">* 帐号或密码错误</p>
+				<input type="text" name="username" class="form-control" placeholder="用户名" required autofocus id="username">
+				<input type="password" name="password" class="form-control" placeholder="密码" required id="password">
+				<button class="btn btn-lg btn-primary btn-block" type="button" id="login">登录</button>
+				<br />
+				<a href="register.html">还没有帐号？</a>
+			</form>
+		</div>
 	</body>
 </html>

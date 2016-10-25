@@ -11,14 +11,14 @@
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false"/>
 		</javaTypeResolver>
-		<javaModelGenerator targetPackage="io.github.japinl.springmvc.model" targetProject="springmvc/model" >
+		<javaModelGenerator targetPackage="io.github.japinl.woyun.domain" targetProject="woyun/model" >
 			<property name="enableSubPackages" value="true"/>
 			<property name="trimStrings" value="true"/>
 		</javaModelGenerator>
-		<sqlMapGenerator targetPackage="io.github.japinl.springmvc.mapper" targetProject="springmvc/model" >
+		<sqlMapGenerator targetPackage="io.github.japinl.woyun.mapper" targetProject="woyun/model" >
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
-		<javaClientGenerator targetPackage="io.github.japinl.springmvc.dao" targetProject="springmvc/model" type="XMLMAPPER"
+		<javaClientGenerator targetPackage="io.github.japinl.woyun.dao" targetProject="woyun/model" type="XMLMAPPER"
 			>
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
