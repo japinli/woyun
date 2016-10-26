@@ -19,11 +19,11 @@ public class User {
         this.id = id;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
 

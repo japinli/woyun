@@ -98,4 +98,24 @@
   	where name = #{name,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+  	from user
+  	where email = #{email,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+  	from user
+  	where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByNameAndPassword" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from user
+  	where name = #{name,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>

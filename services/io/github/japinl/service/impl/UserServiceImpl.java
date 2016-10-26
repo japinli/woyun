@@ -16,19 +16,21 @@ public class UserServiceImpl implements UserService {
 	
 	public boolean isUsernameRegister(String name) {
 		User user = userMapper.selectByName(name);
-		if (user == null) {
-			return false;
-		}
-		return true;
+		return user == null ? false : true;
 	}
 	
 	public boolean isEamilRegister(String email) {
-		
-		return true;
+		User user = userMapper.selectByEmail(email);
+		return user == null ? false : true;
 	}
 	
 	public boolean isPhoneRegister(String phone) {
-		
-		return false;
+		User user = userMapper.selectByPhone(phone);
+		return user == null ? false : true;
+	}
+	
+	public boolean login(String name, String password) {
+		User user = userMapper.selectByNameAndPassword(name, password);
+		return user == null ? false : true;
 	}
 }

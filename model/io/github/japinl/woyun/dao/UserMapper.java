@@ -1,5 +1,7 @@
 package io.github.japinl.woyun.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import io.github.japinl.woyun.domain.User;
 
 public interface UserMapper {
@@ -16,4 +18,10 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
     
     User selectByName(String name);
+    
+    User selectByEmail(String email);
+    
+    User selectByPhone(String phone);
+    
+    User selectByNameAndPassword(@Param("name") String name, @Param("password") String password);
 }
