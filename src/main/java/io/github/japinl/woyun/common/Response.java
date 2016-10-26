@@ -44,6 +44,14 @@ public class Response {
 		return new Response(status, resultCode, resultDesc, resultData);
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public String getResultCode() {
 		return resultCode;
 	}
@@ -66,5 +74,11 @@ public class Response {
 
 	public void setResultData(Object resultData) {
 		this.resultData = resultData;
+	}
+	
+	@Override
+	public String toString() {
+		return "Response [status:" + status + ", resultCode:" + resultCode +
+				", resultDesc:" + resultDesc + ", resultData:" + resultData + "]";
 	}
 }

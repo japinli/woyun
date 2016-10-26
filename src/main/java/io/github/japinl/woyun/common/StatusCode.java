@@ -2,14 +2,17 @@ package io.github.japinl.woyun.common;
 
 public enum StatusCode {
 	SUCCESS("0000", "操作成功"),
-	FAILTURE("1000", "操作失败")
+	FAILTURE("1000", "操作失败"),
+	USER_REGISTERED("1001", "用户已注册"),
+	USER_NOT_REGISTER("1001", "用户未注册")
 	;
 	
 	private String code;
 	private String desc;
 	
 	StatusCode(String code, String desc) {
-		// TODO Auto-generated constructor stub
+		this.code = code;
+		this.desc = desc;
 	}
 
 	public String getCode() {

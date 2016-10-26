@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.japinl.service.UserService;
 import io.github.japinl.woyun.common.Response;
+import io.github.japinl.woyun.common.SessionResults;
 import io.github.japinl.woyun.common.StatusCode;
 
 @Controller
@@ -24,11 +25,15 @@ public class UserController {
 		boolean flag = userService.isUsernameRegister(name);
 
 		if (flag == false) {
-			return response;
+			response.setResultCode(StatusCode.USER_NOT_REGISTER.getCode());
+			response.setResultDesc(StatusCode.USER_NOT_REGISTER.getDesc());
+		} else {
+			response.setResultCode(StatusCode.USER_REGISTERED.getCode());
+			response.setResultDesc(StatusCode.USER_REGISTERED.getDesc());
 		}
 		
-		response.setResultCode(StatusCode.SUCCESS.getCode());
-		response.setResultDesc(StatusCode.SUCCESS.getDesc());
+		response.setStatus(SessionResults.RESULT_SUCCESS);
+		
 		return response;
 	}
 }
