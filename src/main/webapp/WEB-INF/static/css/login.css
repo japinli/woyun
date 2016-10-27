@@ -24,7 +24,6 @@ h2 {
 	margin: 0px auto;
 	margin-top: 5%;
 	width: 350px;
-	height: 310px;
 	background-color: #ebebeb;
 }
 
@@ -48,7 +47,6 @@ h2 {
 
 #fm {
 	max-width: 350px;
-	max-height: 310px;
 	min-height: 310px;
 }
 

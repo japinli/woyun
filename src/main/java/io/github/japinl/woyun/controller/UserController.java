@@ -1,6 +1,5 @@
 package io.github.japinl.woyun.controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.japinl.service.UserService;
-import io.github.japinl.woyun.common.Response;
-import io.github.japinl.woyun.common.SessionResults;
-import io.github.japinl.woyun.common.StatusCode;
 import io.github.japinl.woyun.common.WoStatus;
 import io.github.japinl.woyun.domain.User;
 
@@ -28,7 +24,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/checkuser")
 	@ResponseBody
-	public WoStatus checkUser(@Param("name") String name) {
+	public WoStatus checkUser(@RequestParam("name") String name) {
 		boolean flag = userService.isUsernameRegister(name);
 		return new WoStatus(flag ? 1 : 0);
 	}
@@ -39,7 +35,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/checkemail")
 	@ResponseBody
-	public WoStatus checkEmail(@Param("email") String email) {
+	public WoStatus checkEmail(@RequestParam("email") String email) {
 		boolean flag = userService.isEamilRegister(email);
 		return new WoStatus(flag ? 1 : 0);
 	}
@@ -50,7 +46,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/checkphone")
 	@ResponseBody
-	public WoStatus checkPhone(@Param("phone") String phone) {
+	public WoStatus checkPhone(@RequestParam("phone") String phone) {
 		boolean flag = userService.isPhoneRegister(phone);
 		return new WoStatus(flag ? 1 : 0);
 	}
@@ -58,6 +54,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public WoStatus login(@RequestBody User user) {
+		System.out.println(user.getName());
 		boolean flag = userService.login(user.getName(), user.getPassword());
 		return new WoStatus(flag ? 0 : 1);
 	}

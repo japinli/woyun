@@ -9,12 +9,38 @@ $(function() {
 	})
 })
 
+function checkUsername(username, tipInfo) {
+	$.ajax({
+		url: "/checkuser?name=" + username,
+		type: "GET",
+		success: function(data) {
+			if (data.status == 0) {
+				$("#fm .errmsg").html("* 用户名不存在！").show();
+			} else {
+				$("#fm .errmsg").html("ok").hide();
+			}
+		}
+	})
+}
+$("#username").focusout(function() {
+	var name = $("#username").val();
+	if (name != null && name != "") {
+		var tipInfo = $(this).siblings("span").eq(0);
+		checkUsername(name, tipInfo);
+	}
+})
+
 function signin() {
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	if (username.length <= 0 || password.lenght <= 0) {
-		alert("请填写用户名或密码");
+	var msg = $("#fm .errmsg").val();
+	if (msg != "ok") {
+		return;
+	}
+	
+	if (username == "" || password == "") {
+		$("#fm .errmsg").html("* 用户名或密码不能为空!").show();
 	} else {
 		$.ajax({
 			url: "/login",
@@ -26,7 +52,7 @@ function signin() {
 				if (data.status == 0) {
 					window.location.href = "home.html";
 				} else {
-					$("#fm .errmsg").show();
+					$("#fm .errmsg").html("* 用户名或密码错误!").show();
 				}
 			},
 			error: function() {
