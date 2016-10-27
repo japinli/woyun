@@ -9,7 +9,7 @@ $(function() {
 	})
 })
 
-function checkUsername(username, tipInfo) {
+function checkUsername(username) {
 	$.ajax({
 		url: "/checkuser?name=" + username,
 		type: "GET",
@@ -22,11 +22,18 @@ function checkUsername(username, tipInfo) {
 		}
 	})
 }
+
 $("#username").focusout(function() {
 	var name = $("#username").val();
 	if (name != null && name != "") {
-		var tipInfo = $(this).siblings("span").eq(0);
-		checkUsername(name, tipInfo);
+		checkUsername(name);
+	}
+})
+
+$("#password").focusout(function() {
+	var name = $("#username").val();
+	if (name != null && name != "") {
+		checkUsername(name);
 	}
 })
 
@@ -34,7 +41,7 @@ function signin() {
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	var msg = $("#fm .errmsg").val();
+	var msg = $("#fm .errmsg").html();
 	if (msg != "ok") {
 		return;
 	}
@@ -43,7 +50,7 @@ function signin() {
 		$("#fm .errmsg").html("* 用户名或密码不能为空!").show();
 	} else {
 		$.ajax({
-			url: "/login",
+			url: "/signin",
 			type: "POST",
 			dataType: "json",
 			contentType: "application/json",

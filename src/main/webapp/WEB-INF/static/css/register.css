@@ -25,7 +25,7 @@ h1 {
 #info>form>div {
 	margin-top: 10px;
 	margin-bottom: 5px;
-	height: 40px;
+	height: 60px;
 }
 
 .item {
@@ -50,7 +50,7 @@ h1 {
 
 #fm {
 	max-width: 350px;
-	max-height: 400px;
+
 	min-height: 310px;
 }
 

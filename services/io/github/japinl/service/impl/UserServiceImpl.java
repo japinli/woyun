@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.selectByNameAndPassword(name, password);
 		return user == null ? false : true;
 	}
+	
+	public boolean register(User user) {
+		int ret = userMapper.insert(user);
+		return ret == 0 ? false : true; 
+	}
 }

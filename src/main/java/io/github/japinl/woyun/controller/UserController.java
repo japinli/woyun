@@ -51,11 +51,28 @@ public class UserController {
 		return new WoStatus(flag ? 1 : 0);
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*
+	 * @brief 用户登录
+	 * @param user [in] 包含用户名及密码的User对象
+	 * @return {"status": 0} 登录成功， {"status": 1} 登录失败
+	 */
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
 	public WoStatus login(@RequestBody User user) {
 		System.out.println(user.getName());
 		boolean flag = userService.login(user.getName(), user.getPassword());
+		return new WoStatus(flag ? 0 : 1);
+	}
+	
+	/*
+	 * @breif 用户注册
+	 * @param user [in] 包含用户注册信息的User对象
+	 * @return {"status": 0} 注册成功， {"status": 1} 注册失败
+	 */
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@ResponseBody
+	public WoStatus register(@RequestBody User user) {
+		boolean flag = userService.register(user);
 		return new WoStatus(flag ? 0 : 1);
 	}
 }

@@ -59,7 +59,7 @@ public class DataConfig{
 		//LOG.info("======================>>  配置数据源（采用DRUID数据源）( {} ) ",DruidDataSource.class.getName());
 		DruidDataSource dataSource = new DruidDataSource(true);
 		/*数据库连接*/
-		dataSource.setUrl("jdbc:mysql://localhost:3306/woyun?useUnicode=true&characterEncoding=UTF-8");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/woyundb?useUnicode=true&characterEncoding=UTF-8");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUsername("admin");
 		dataSource.setPassword("@dm!n");
