@@ -54,7 +54,7 @@ function signin() {
 			type: "POST",
 			dataType: "json",
 			contentType: "application/json",
-			data: JSON.stringify({"name": username, "password": password}),
+			data: JSON.stringify({"name": username, "password": SparkMD5.hash(password)}),
 			success: function(data) {
 				if (data.status == 0) {
 					window.location.href = "home.html";
