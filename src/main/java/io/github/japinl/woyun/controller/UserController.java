@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.github.japinl.service.DirsService;
 import io.github.japinl.service.UserService;
 import io.github.japinl.woyun.common.WoStatus;
 import io.github.japinl.woyun.domain.User;
@@ -17,6 +18,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DirsService dirsService;
 	
 	/*
 	 * @brief 检测用户是否已注册
@@ -65,14 +68,25 @@ public class UserController {
 	}
 	
 	/*
-	 * @breif 用户注册
+	 * @breif 用户注册并创建相应的用户目录
 	 * @param user [in] 包含用户注册信息的User对象
-	 * @return {"status": 0} 注册成功， {"status": 1} 注册失败
+	 * @return {"status": 0} 注册成功， {"status": 1} 注册失败 
 	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
 	public WoStatus register(@RequestBody User user) {
-		boolean flag = userService.register(user);
-		return new WoStatus(flag ? 0 : 1);
+		WoStatus status = new WoStatus(0);
+		boolean success = dirsService.createDirectory(user.getName());
+		if (success) {
+			success = userService.register(user);
+			if (success) {
+				return status;
+			} else {
+				dirsService.deleteDirectory(user.getName());
+			}
+		}
+		
+		status.setStatus(1);
+		return status;
 	}
 }

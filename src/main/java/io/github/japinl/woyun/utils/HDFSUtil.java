@@ -13,7 +13,7 @@ public class HDFSUtil {
 	private final static Configuration HDFS_CONF = new Configuration();
 	
 	/*
-	 * 创建目录
+	 * @brief 创建目录
 	 * @param path 目录名
 	 * @return 成功返回 true ，否则返回 false
 	 */
@@ -29,7 +29,7 @@ public class HDFSUtil {
 	}
 	
 	/*
-	 * 删除目录
+	 * @brief 删除目录
 	 * @param path 目录名
 	 * @return 成功返回 true ，否则返回 false
 	 */
@@ -37,22 +37,6 @@ public class HDFSUtil {
 		try {
 			FileSystem fileSystem = FileSystem.get(URI.create(HDFS_URL), HDFS_CONF);
 			return fileSystem.delete(new Path(path), true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	/*
-	 * 新建文件
-	 * @param filename 文件名
-	 * @return 成功返回 true ，否则返回 false
-	 */
-	public static boolean createFile(String filename) {
-		try {
-			FileSystem fileSystem = FileSystem.get(URI.create(HDFS_URL), HDFS_CONF);
-			fileSystem.create(new Path(filename)).close();
-			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
