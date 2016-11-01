@@ -1,14 +1,18 @@
 package io.github.japinl.woyun.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.japinl.service.DirsService;
+import io.github.japinl.woyun.common.WoErr;
 import io.github.japinl.woyun.common.WoStatus;
+import io.github.japinl.woyun.utils.FileEntry;
 
 @Controller
 public class DirsController {
@@ -18,10 +22,17 @@ public class DirsController {
 	/*
 	 * @breif 列出给定目录下的所有文件及目录信息
 	 */
-	@RequestMapping(value = "/dirs/{dir}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dirs/list", method = RequestMethod.POST)
 	@ResponseBody
-	public WoStatus listDirs(@PathVariable("dir") String dir) {
-		return new WoStatus(0);
+	public WoStatus listDirs(@RequestBody FileEntry entry) {
+		WoStatus status = new WoStatus();
+		List<FileEntry> entries = dirsService.listDirectory(entry.getPath());
+		
+		status.setStatus(0);
+		status.setErrno(WoErr.SUCCESS.getErrno());
+		status.setErrinfo(WoErr.SUCCESS.getErrinfo());
+		status.setData(entries);
+		return status;
 	}
 	
 	/*
@@ -29,20 +40,40 @@ public class DirsController {
 	 * @param dir [in] 待创建的目录名
 	 * @return {"status": 0} 成功， {"status": 1} 失败
 	 * */
-	@RequestMapping(value = "/dirs/{dir}", method = RequestMethod.POST)
+	@RequestMapping(value = "/dirs/create", method = RequestMethod.POST)
 	@ResponseBody
-	public WoStatus createDir(@PathVariable("dir") String dir) {
-		boolean flag = dirsService.createDirectory(dir);
-		return new WoStatus(flag ? 0 : 1);
+	public WoStatus createDir(@RequestBody FileEntry entry) {
+		WoStatus status = new WoStatus(1);
+
+		boolean success = dirsService.createDirectory(entry.getPath());
+		if (success) {
+			status.setStatus(0);
+			status.setErrno(WoErr.SUCCESS.getErrno());
+			status.setErrinfo(WoErr.SUCCESS.getErrinfo());
+		} else {
+			status.setErrno(WoErr.DIR_FAILED.getErrno());
+			status.setErrinfo(WoErr.DIR_FAILED.getErrinfo());
+		}
+		return status;
 	}
 	
 	/*
-	 * @brief 删除目录
+	 * @brief 删除目录或文件
 	 * */
-	@RequestMapping(value = "/dirs/{dir}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/dirs/delete", method = RequestMethod.DELETE)
 	@ResponseBody
-	public WoStatus deleteDir(@PathVariable("dir") String dir) {
-		boolean success = dirsService.deleteDirectory(dir);
-		return new WoStatus(success ? 0 : 1);
+	public WoStatus deleteDir(@RequestBody FileEntry entry) {
+		WoStatus status = new WoStatus(1);
+		
+		boolean success = dirsService.deleteDirectory(entry.getPath());
+		if (success) {
+			status.setStatus(0);
+			status.setErrno(WoErr.SUCCESS.getErrno());
+			status.setErrinfo(WoErr.SUCCESS.getErrinfo());
+		} else {
+			status.setErrno(WoErr.DIR_DEL_FAILED.getErrno());
+			status.setErrinfo(WoErr.DIR_DEL_FAILED.getErrinfo());
+		}
+		return status;
 	}
 }

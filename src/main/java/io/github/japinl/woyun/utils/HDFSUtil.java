@@ -2,8 +2,11 @@ package io.github.japinl.woyun.utils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
@@ -41,5 +44,25 @@ public class HDFSUtil {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static List<FileEntry> listDirectory(String path) {
+		List<FileEntry> entries = new ArrayList<FileEntry>();
+		try {
+			FileSystem fileSystem = FileSystem.get(URI.create(HDFS_URL), HDFS_CONF);
+			FileStatus[] fileStatus = fileSystem.listStatus(new Path(path));
+			for (FileStatus status : fileStatus) {
+				FileEntry entry = new FileEntry();
+				entry.setPath(status.getPath().getName());
+				entry.setDir(status.isDirectory());
+				entry.setFile(status.isFile());
+				entry.setMtime(status.getModificationTime());
+				entries.add(entry);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return entries;
 	}
 }
