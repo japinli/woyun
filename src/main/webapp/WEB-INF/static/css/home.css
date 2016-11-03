@@ -1,0 +1,56 @@
+@charset "utf-8"
+
+body {
+	background-color: #dedede;
+}
+
+#woyun {
+	background-color: #0162c2;
+	color: white;
+}
+
+#title {
+	font-size: 30px;
+	margin-left: 20px;
+}
+
+#tool-bar {
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
+.head {
+	display: inline;
+}
+
+.tb-item {
+	display: inline-block;
+}
+
+ul {
+	list-style: table;
+	list-style-type: none;
+	margin-left: 20px;
+	padding: 0;
+	list-style-type: none;
+	width: 100%;
+	font-size: 12px;
+	color: gray;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+}
+
+.menu {
+	font-size: 12px;
+	color: gray;
+}
+
+ul li {
+	display: inline-block;
+}
+
+
+.col-item {
+	display: inline;
+}

@@ -57,6 +57,7 @@ public class HDFSUtil {
 				entry.setDir(status.isDirectory());
 				entry.setFile(status.isFile());
 				entry.setMtime(status.getModificationTime());
+				entry.setLength(status.getLen());
 				entries.add(entry);
 			}
 		} catch (IOException e) {

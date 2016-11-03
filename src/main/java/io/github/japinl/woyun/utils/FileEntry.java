@@ -6,6 +6,7 @@ public class FileEntry {
 	private boolean isDir;
 	private boolean isFile;
 	private long mtime;
+	private long length;
 	
 	public FileEntry() {
 		
@@ -33,5 +34,11 @@ public class FileEntry {
 	}
 	public void setMtime(long mtime) {
 		this.mtime = mtime;
+	}
+	public long getLength() {
+		return length;
+	}
+	public void setLength(long length) {
+		this.length = length;
 	}
 }

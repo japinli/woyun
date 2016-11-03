@@ -4,10 +4,82 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-		<title>蜗云</title>
+		<title>蜗云 | 我的云盘</title>
 		<link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/home.css" rel="stylesheet">
 	</head>
 	<body>
-		<h1>蜗  云</h1>
+		<div id="woyun">
+			<div class="head">
+				<span id="title">蜗  云</span>
+			</div>
+			<div class="user head">
+				<span id="user-info">japin</span>
+			</div>
+		</div>
+		<div id="tool-bar" class="cmd-panel">
+			<div class="btn-group btns-file-list">
+				<div class="tb-item">
+					<span id="tb-upload" class="y-btn y-btn-blue upload show">
+						<!-- <i class="icon icon-upload"></i> -->
+						<span class="label label-default">上传</span>
+					</span>
+				</div>
+				<div class="tb-item">
+					<span id="tb-new-dir" class="y-btn y-btn-gray new show">
+						<!-- <i class="icon icon-new"></i> -->
+						<span class="label label-default">新建文件夹</span>
+					</span>
+				</div>
+				
+				<div class="tb-item">
+					<span id="tb-download">
+						<!-- <i class="icon icon-download"></i> -->
+						<span class="label label-default">下载</span>
+					</span>
+					<span id="tb-delete">
+						<!-- <i class="icon icon-delete"></i> -->
+						<span class="label label-default">删除</span>
+					</span>
+					<span id="tb-move">
+						<!-- <i class="icon icon-move"></i> -->
+						<span class="label label-default">移动</span>
+					</span>
+					<span id="tb-rename">
+						<!-- <i class="icon icon-rename"></i> -->
+						<span class="label label-default">重命名</span>
+					</span>
+				</div>
+				
+			</div>
+		</div>
+		<div class="menu"><a href="">所有文件</a></div>
+		<div class="list-header">
+			<ul class="list-cols">
+				<li class="col first-col">
+					<div class="col-item check">
+						<span class="check-icon"></span>
+						<span class="check-all-text">全选</span>
+						<span class="icon checksmall icon-checksmall"></span>
+					</div>
+					<span class="text">文件名</span>
+				</li>
+				<li class="col">
+					<span class="text">大小</span>
+				</li>
+				<li class="col last-col descend">
+					<span class="text">修改日期</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="list-container">
+			
+		</div>
+		 
+		<script type="text/javascript" src="../js/jquery/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/moment.min.js"></script>
+		<script type="text/javascript" src="../js/home.js"></script>		
 	</body>
 </html>
