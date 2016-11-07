@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import io.github.japinl.service.DirsService;
 import io.github.japinl.woyun.common.UrlPath;
@@ -18,6 +19,7 @@ import io.github.japinl.woyun.utils.FileEntry;
 
 @Controller
 @RequestMapping(value = UrlPath.REST_DIR_PATH)
+@SessionAttributes("username")
 public class DirsController {
 	
 	@Autowired
@@ -31,6 +33,7 @@ public class DirsController {
 	public WoStatus createDirs(HttpServletRequest request) {
 		WoStatus status = new WoStatus(1);
 		String url = request.getRequestURI();
+		System.out.println(request.getSession().getAttribute("username"));
 		String path = url.substring(url.indexOf(UrlPath.REST_DIR_PATH) + UrlPath.REST_DIR_PATH.length());
 		
 		if (dirsService.exists(path)) {
@@ -82,9 +85,9 @@ public class DirsController {
 	 */
 	@RequestMapping(value = "/**", method = RequestMethod.GET)
 	@ResponseBody
-	public WoStatus listDirs(HttpServletRequest req) {
+	public WoStatus listDirs(HttpServletRequest request) {
 		WoStatus status = new WoStatus(1);
-		String url = req.getRequestURI();
+		String url = request.getRequestURI();
 		String path = url.substring(url.indexOf(UrlPath.REST_DIR_PATH) + UrlPath.REST_DIR_PATH.length());
 		
 		if (!dirsService.exists(path)) {

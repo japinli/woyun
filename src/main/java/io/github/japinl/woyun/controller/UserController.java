@@ -1,5 +1,9 @@
 package io.github.japinl.woyun.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import io.github.japinl.service.DirsService;
 import io.github.japinl.service.UserService;
@@ -14,6 +19,7 @@ import io.github.japinl.woyun.common.WoStatus;
 import io.github.japinl.woyun.domain.User;
 
 @Controller
+@SessionAttributes("username")
 public class UserController {
 
 	@Autowired
@@ -61,9 +67,12 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
-	public WoStatus login(@RequestBody User user) {
-		System.out.println(user.getName());
+	public WoStatus login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
 		boolean flag = userService.login(user.getName(), user.getPassword());
+		if (flag) {
+			response.addCookie(new Cookie("username", user.getName()));
+			request.getSession().setAttribute("username", user.getName());
+		}
 		return new WoStatus(flag ? 0 : 1);
 	}
 	

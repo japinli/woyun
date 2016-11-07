@@ -1,5 +1,8 @@
 $(document).ready(function() {
-	listDirectory("japin");
+	name = getUsernameByCookie();
+	path = "/" + name;
+	listDirectory(path);
+	
 })
 
 function convertBytes(bytes) {
@@ -14,13 +17,22 @@ function convertBytes(bytes) {
 	return (bytes / Math.pow(k, i)).toPrecision(3) + units[i];
 }
 
-function listDirectory(dir) {
+function getUsernameByCookie() {
+	name = getCookie("username");
+	$("#user-info").html(name);
+	return name;
+}
+
+function getUsername() {
+	return $("user-info").text();
+}
+
+function listDirectory(path) {
 	$.ajax({
-		url: "/dirs/list",
-		type: "POST",
+		url: "/dirs" + path,
+		type: "GET",
 		dataType: "json",
 		contentType: "application/json",
-		data: JSON.stringify({"path": dir}),
 		success: function(data) {
 			showItems(data.data);
 		},
@@ -42,10 +54,10 @@ function showItems(data) {
 		}
 		
 		size = '<span class="text">';
-		if (item.dir) {
+		if (item.isdir) {
 			size += '--';
 		} else {
-			size += convertBytes(item.length);
+			size += convertBytes(item.size);
 		}
 		size += '</span>';
 		

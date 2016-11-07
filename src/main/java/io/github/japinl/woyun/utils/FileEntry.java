@@ -35,7 +35,6 @@ public class FileEntry {
 	public void setSize(long size) {
 		this.size = size;
 	}
-	
 	public boolean isIsdir() {
 		return isdir;
 	}
