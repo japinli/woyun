@@ -2,50 +2,44 @@ package io.github.japinl.woyun.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.japinl.service.DirsService;
+import io.github.japinl.woyun.common.UrlPath;
 import io.github.japinl.woyun.common.WoErr;
 import io.github.japinl.woyun.common.WoStatus;
 import io.github.japinl.woyun.utils.FileEntry;
 
 @Controller
+@RequestMapping(value = UrlPath.REST_DIR_PATH)
 public class DirsController {
 	
 	@Autowired
 	private DirsService dirsService;
-	/*
-	 * @breif 列出给定目录下的所有文件及目录信息
-	 */
-	@RequestMapping(value = "/dirs/list", method = RequestMethod.POST)
-	@ResponseBody
-	public WoStatus listDirs(@RequestBody FileEntry entry) {
-		WoStatus status = new WoStatus();
-		List<FileEntry> entries = dirsService.listDirectory(entry.getPath());
-		
-		status.setStatus(0);
-		status.setErrno(WoErr.SUCCESS.getErrno());
-		status.setErrinfo(WoErr.SUCCESS.getErrinfo());
-		status.setData(entries);
-		return status;
-	}
 	
 	/*
 	 * @brief 创建目录
-	 * @param dir [in] 待创建的目录名
-	 * @return {"status": 0} 成功， {"status": 1} 失败
 	 * */
-	@RequestMapping(value = "/dirs/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/**", method = RequestMethod.POST)
 	@ResponseBody
-	public WoStatus createDir(@RequestBody FileEntry entry) {
+	public WoStatus createDirs(HttpServletRequest request) {
 		WoStatus status = new WoStatus(1);
-
-		boolean success = dirsService.createDirectory(entry.getPath());
+		String url = request.getRequestURI();
+		String path = url.substring(url.indexOf(UrlPath.REST_DIR_PATH) + UrlPath.REST_DIR_PATH.length());
+		
+		if (dirsService.exists(path)) {
+			status.setErrno(WoErr.FILE_EXIST.getErrno());
+			status.setErrinfo(WoErr.FILE_EXIST.getErrinfo());
+			return status;
+		}
+		
+		boolean success = dirsService.createDirectory(path);
 		if (success) {
 			status.setStatus(0);
 			status.setErrno(WoErr.SUCCESS.getErrno());
@@ -57,15 +51,20 @@ public class DirsController {
 		return status;
 	}
 	
-	/*
-	 * @brief 删除目录或文件
-	 * */
-	@RequestMapping(value = "/dirs/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/**", method = RequestMethod.DELETE)
 	@ResponseBody
-	public WoStatus deleteDir(@RequestBody FileEntry entry) {
+	public WoStatus deleteDirs(HttpServletRequest request) {
 		WoStatus status = new WoStatus(1);
+		String url = request.getRequestURI();
+		String path = url.substring(url.indexOf(UrlPath.REST_DIR_PATH) + UrlPath.REST_DIR_PATH.length());
 		
-		boolean success = dirsService.deleteDirectory(entry.getPath());
+		if (!dirsService.exists(path)) {
+			status.setErrno(WoErr.FILE_NOT_EXIST.getErrno());
+			status.setErrinfo(WoErr.FILE_NOT_EXIST.getErrinfo());
+			return status;
+		}
+		
+		boolean success = dirsService.deleteDirectory(path);
 		if (success) {
 			status.setStatus(0);
 			status.setErrno(WoErr.SUCCESS.getErrno());
@@ -74,6 +73,31 @@ public class DirsController {
 			status.setErrno(WoErr.DIR_DEL_FAILED.getErrno());
 			status.setErrinfo(WoErr.DIR_DEL_FAILED.getErrinfo());
 		}
+		
+		return status;
+	}
+	
+	/*
+	 * @brief 列出指定目录下的所有文件信息
+	 */
+	@RequestMapping(value = "/**", method = RequestMethod.GET)
+	@ResponseBody
+	public WoStatus listDirs(HttpServletRequest req) {
+		WoStatus status = new WoStatus(1);
+		String url = req.getRequestURI();
+		String path = url.substring(url.indexOf(UrlPath.REST_DIR_PATH) + UrlPath.REST_DIR_PATH.length());
+		
+		if (!dirsService.exists(path)) {
+			status.setErrno(WoErr.FILE_NOT_EXIST.getErrno());
+			status.setErrinfo(WoErr.FILE_NOT_EXIST.getErrinfo());
+			return status;
+		}
+		
+		List<FileEntry> entries = dirsService.listDirectory(path);
+		status.setStatus(0);
+		status.setErrno(WoErr.SUCCESS.getErrno());
+		status.setErrinfo(WoErr.SUCCESS.getErrinfo());
+		status.setData(entries);
 		return status;
 	}
 }

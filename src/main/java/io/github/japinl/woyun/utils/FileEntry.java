@@ -3,10 +3,10 @@ package io.github.japinl.woyun.utils;
 public class FileEntry {
 
 	private String path;
-	private boolean isDir;
-	private boolean isFile;
+	private String filename;
 	private long mtime;
-	private long length;
+	private long size;
+	private boolean isdir;
 	
 	public FileEntry() {
 		
@@ -17,17 +17,11 @@ public class FileEntry {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public boolean isDir() {
-		return isDir;
+	public String getFilename() {
+		return filename;
 	}
-	public void setDir(boolean isDir) {
-		this.isDir = isDir;
-	}
-	public boolean isFile() {
-		return isFile;
-	}
-	public void setFile(boolean isFile) {
-		this.isFile = isFile;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	public long getMtime() {
 		return mtime;
@@ -35,10 +29,17 @@ public class FileEntry {
 	public void setMtime(long mtime) {
 		this.mtime = mtime;
 	}
-	public long getLength() {
-		return length;
+	public long getSize() {
+		return size;
 	}
-	public void setLength(long length) {
-		this.length = length;
+	public void setSize(long size) {
+		this.size = size;
+	}
+	
+	public boolean isIsdir() {
+		return isdir;
+	}
+	public void setIsdir(boolean isdir) {
+		this.isdir = isdir;
 	}
 }

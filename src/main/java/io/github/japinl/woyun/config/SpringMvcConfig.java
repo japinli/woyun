@@ -81,4 +81,6 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 		jsonConverter.getObjectMapper().setSerializationInclusion(Include.NON_NULL).setSerializationInclusion(Include.NON_EMPTY);
 		return jsonConverter;
 	}
+	
+	
 }

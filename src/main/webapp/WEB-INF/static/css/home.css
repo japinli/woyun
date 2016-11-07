@@ -50,7 +50,14 @@ ul li {
 	display: inline-block;
 }
 
+.file-name-item {
+	width: 50%;
+}
 
-.col-item {
-	display: inline;
+.file-size-item {
+	width: 10%;
+}
+
+.file-mtime-item {
+	width: 20%;
 }

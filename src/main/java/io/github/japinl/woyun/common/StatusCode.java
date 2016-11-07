@@ -10,7 +10,8 @@ public enum StatusCode {
 	EMAIL_REGISTERED("1003", "邮箱地址已注册"),
 	EMAIL_NOT_REGISTER("1004", "邮箱地址未注册"),
 	PHONE_REGISTERED("1005", "手机号码已注册"),
-	PHONE_NOT_REGISTER("1006", "手机号码未注册")
+	PHONE_NOT_REGISTER("1006", "手机号码未注册"),
+	FILE_NOT_EXISTS("2001", "文件或目录不存在")
 	;
 	
 	private String code;

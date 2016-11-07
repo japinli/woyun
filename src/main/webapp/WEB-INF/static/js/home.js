@@ -1,17 +1,5 @@
 $(document).ready(function() {
-	$.ajax({
-		url: "/dirs/list",
-		type: "POST",
-		dataType: "json",
-		contentType: "application/json",
-		data: JSON.stringify({"path": "japin"}),
-		success: function(data) {
-			showItems(data.data);
-		},
-		error: function() {
-			alert("获取目录列表异常");
-		}
-	});
+	listDirectory("japin");
 })
 
 function convertBytes(bytes) {
@@ -64,7 +52,7 @@ function showItems(data) {
 		var mtime = moment(item.mtime).format("YYYY-MM-DD HH:mm:ss");
 		context = 
 '			<ul id="file-list-container">\
-				<li class="col item-name">\
+				<li class="col file-name-item first-col">\
 					<div class="col-item check">\
 						<span class="check-icon"></span>\
 						<span class="check-all-text">全选</span>\
@@ -72,10 +60,10 @@ function showItems(data) {
 					</div>\
 					<span class="text">' + name + '</span>\
 				</li>\
-				<li class="col item-size">\
+				<li class="col file-size-item">\
 					<span class="text">'+ size + '</span>\
 				</li>\
-				<li class="col item-date">\
+				<li class="col file-mtime-item last-col">\
 					<span class="text">' + mtime + '</span>\
 				</li>\
 			</ul>\

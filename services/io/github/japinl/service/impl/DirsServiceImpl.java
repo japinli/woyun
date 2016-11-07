@@ -23,6 +23,10 @@ public class DirsServiceImpl implements DirsService {
 		return HDFSUtil.deleteDirectory(name);
 	}
 	
+	public boolean exists(String path) {
+		return HDFSUtil.exists(path);
+	}
+	
 	public List<FileEntry> listDirectory(String path) {
 		return HDFSUtil.listDirectory(path);
 	}

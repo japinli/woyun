@@ -76,7 +76,7 @@ public class UserController {
 	@ResponseBody
 	public WoStatus register(@RequestBody User user) {
 		WoStatus status = new WoStatus(0);
-		boolean success = dirsService.createDirectory(user.getName());
+		boolean success = dirsService.createDirectory("/" + user.getName());
 		if (success) {
 			success = userService.register(user);
 			if (success) {
