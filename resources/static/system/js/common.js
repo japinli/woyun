@@ -30,7 +30,8 @@ $(document).ready(function(){
 function globalUserInfo(){
 	//添加logo触发事件
 	$(".logo").on("click",function(){
-		 window.location.href=gfALLDATA("userHref")+"/index.html";
+		 /*window.location.href=gfALLDATA("userHref")+"/index.html";*/
+		window.location.href="/wesign/user/index.html";
 	});
 }
 

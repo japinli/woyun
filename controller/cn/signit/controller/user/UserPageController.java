@@ -4,9 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import cn.signit.cons.PageLogicPath;
 import cn.signit.cons.UrlPath;
@@ -25,6 +27,7 @@ import jodd.madvoc.RootPackages;
 * @see (参阅)
 */
 @Controller
+@SessionAttributes(SessionKeys.LOGIN_USER)
 public class UserPageController implements InUserPageController{
 	
 	
@@ -46,7 +49,7 @@ public class UserPageController implements InUserPageController{
 	*/
 	@RequestMapping(value=UrlPath.PAGE_USER_HOME,method={RequestMethod.GET,RequestMethod.POST})
 	@Override
-	public String getHomePage(User user, Model model) {
+	public String getHomePage(@ModelAttribute(SessionKeys.LOGIN_USER) User user, Model model) {
 		model.addAttribute("userInfo", user);
 		return PageLogicPath.USER_HOME.path();
 	}

@@ -1,99 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>我的中心 | 云取证</title>
+<title>保全中心 | 云取证</title>
 <div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
-<link rel="stylesheet" th:href="@{/static/system/css/user-center.css}"/>
+<link rel="stylesheet" href="../../css/simple-pagination.css" th:href="@{/static/system/css/simple-pagination.css}">
 </head>
 <body>
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
 <div class="container">
-    <div class="container-header">
-        <div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
-    </div>
-    <div class="view" style="padding-top: 60px;background-images:url('../../images/back.png');">
-        <div class="ui-nav-content centerContent" style="width: 900px;">
-            <div class="userInfo">
-                <i class="icon-user-solid userImg"></i>
-               <p class="userName fs24" th:text="${session.loginUser.availableUserName()}"></p>
-              
-                <!-- <p>证据文件总数：99个</p>
-                <p>今日新增文件：06个</p> -->
-                <p th:if="${userInfo != null and (userInfo.identify=='未认证' or userInfo.identify=='未通过' or userInfo.identify=='审核中')}">证据文件总数：<span class="restAmount ">0</span></p>
-                <div th:if="${userInfo != null and (userInfo.identify=='已认证')}">
-                    <p>今日新增文件：<span class="restAmount withCert">0</span></p>
-                    <p><span style="visibility: hidden;"></span>证据文件总数：<span class="restAmount noCert">0</span></p>
-                </div>
-          <!--   <hr> -->
-            <div class="centerBlock">
-                <div class="fs32 textCenter">
-                    <span>实名认证</span>
-                </div>
-                <div class="upgradeProcess">
-                    <ol class="upgradeStepList mt20">
-                        <li id="stepOne" class="stepList">
-                           <!--  <div class="bg-container"><i class="step-container-css">1</i></div>
-                            <div class="dash"></div> -->
-                            <p class="stepListText"></p>
-                            <div class=" stateShow authIdentify" th:if="${userInfo != null and (userInfo.identify=='' or userInfo.identify=='')}" th:text="${userInfo.identify}"></div>  
-                            <div class=" stateShow authIdentify unauthorized" th:if="${userInfo != null and (userInfo.identify=='' or userInfo.identify=='')}" th:text="${userInfo.identify}"></div>                           
-                        </li>
-                        <li id="steoTwo" class="stepList">
-                            <!-- <div class="bg-container"><i class="step-container-css">2</i></div>
-                            <div class="dash"></div> -->
-                            <p class="stepListText">实名认证</p>
-                            <div class="compStatus stateShow authIdentify" th:if="${userInfo != null and (userInfo.identify=='已认证' or userInfo.identify=='审核中')}" th:text="${userInfo.identify}"></div>  
-                            <div class="inCompStatus stateShow authIdentify unauthorized" th:if="${userInfo != null and (userInfo.identify=='未认证' or userInfo.identify=='未通过')}" th:text="${userInfo.identify}"></div>
-                            <!-- <a class="inCompStatus stateShow chooseCombo">选择套餐</a> -->
-                        </li>
-                        <!-- <li id="stepThree" class="stepListThree">
-                            <div class="bg-container"><i class="step-container-css">3</i></div>
-                            <p class="stepListText">进行签名</p>
-                        </li> -->
-                    </ol>
-                </div>
-            </div>
-           <!--  <hr> -->
-<!--             <div class="centerBlock downloadBlock">
-                <div class="fs32 textCenter">
-                    <span>下载易企签手机APP</span>
-                </div>
-                <div class="mt50">
-                    <div class="centerLinkContainer">
-                        <a class="centerLink" href="https://itunes.apple.com/us/app/wei-qian/id967142560?l=zh&ls=1&mt=8" target="_blank">
-                            <div class="downloadIcon">
-                                <i class="icon-apple"></i>
-                            </div>                      
-                            <div class="centerLinkText fs16">
-                                <span>IOS版</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="centerLinkContainer">
-                        <a class="centerLink" href="http://zhushou.360.cn/detail/index/soft_id/2958640?recrefer=SE_D_#nogo" target="_blank">
-                            <div class="downloadIcon">
-                                <i class="icon-android"></i>
-                            </div>                      
-                            <div class="centerLinkText fs16">
-                                <span>Android版</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="centerLinkContainer">                        
-                        <span class="QRcode"></span>                        
-                    </div>
-                </div>              
-            </div> -->
-        </div>
-    </div>
-    <div class="tipMsg hidden" title="提示">
-        <div class="tipMsgContent"></div>
-        <div id="js_btn_group" class="confirmBtn textCenter">
-        </div>
-    </div>
-</div>  
-<!-- footer -->  
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+	<div class="rmain">
+	      <div class="lbar">
+	      		<div class="lbar-block">
+	      			<a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
+	      			    <i class="icon-add addSignFlow"></i>
+	      			    <span>新建保全</span>
+	      			</a>
+			        <ul id="doc-id-bar" class="lbar-link" name="1">
+			            <!-- <li id="allDocBarId" class="active">
+			            	<a href="javascript:;">
+			            		<i class="icon-ownsign-hollow"></i>
+			            		<span class="lbar-link-title">全部保全文件</span>
+			            	</a>
+						</li> -->
+			            <!-- <li id="waitMeBarId">
+			            	<a href="javascript:;">
+				            	<i class="circle-state default-bg"></i>
+				            	<span class="lbar-link-title">待我签署</span>
+				            </a>
+				        </li> -->
+			            <!-- <li id="waitOtherBarId">
+			            	<a href="javascript:;">
+			            		<i class="circle-state transit-bg"></i>
+			            		<span class="lbar-link-title">等待他人签署</span>
+			            	</a>
+			           </li> -->
+			           <li id="signedBarId" class="active">
+			            	<a href="javascript:;">
+			            		<i class="circle-state success-bg"></i>
+			            		<!-- <span class="lbar-link-title">已完成</span> -->
+			            		<span class="lbar-link-title">保全列表</span>
+			            	</a>
+			           </li>
+			           <li id="waitMeBarId">
+			            	<a href="javascript:;">
+				            	<i class="circle-state default-bg"></i>
+				            	<span class="lbar-link-title">出证列表</span>
+				            </a>
+				        </li>
+			        </ul>
+		        </div>
+		        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-app">动态复用</div>
+		</div>
+
+	      <div class="rmain-main">
+	            <div class="rmain-operation-bar">
+	               <div class="dis-inline bar-title"><span class="js-doctitle">全部文件</span></div>
+	               <div class="search-form-group dis-inline rmain-top-barr posAr mr35">
+	               		<i id="submit-search-icon" class="icon-search-hollow"></i>
+				        <input id="search-input-id" class="search-input" type="text" name="" value="" placeholder="输入“主题关键字”搜索你的文件" />
+	               </div>
+	            </div> <!-- rmain-operation-bar -->
+	            <div class="rmain-show-area">
+	                <div class="area-operate"></div>
+	                <div class="rmain-view-container">
+	                	<div class="view plr30">
+               				<div class="thead">
+                				<div class="thead-td firstEle td-f1">保全状态</div>
+                				<div class="thead-td td-f2">保全号</div>
+                				<div class="thead-td td-f3">保全时间</div>
+                				<div class="thead-td td-f4">操作</div>
+               				</div>
+                			<div id="docListContainer"></div>
+                		</div>
+	                </div><!-- rmain-view-container -->
+	                <div class="bottom-oparate textCenter">
+	                	<div class="dis-inline">
+	                		<div class="js_pagination bar-title"></div>
+	                	</div>
+	                </div>
+	            </div> <!-- rmain-show-area -->
+	        </div>
+	        <!-- more info -->
+			<div id="js_taskinfo_box" class="taskinfo-box"></div>   
+			<!-- end more info -->
+	</div> <!--rmain-->
+</div>    
+
+<!--footer-->
 <div th:replace="system/pages/common/sys-quote-common.html  :: copy-sysbase-footer">此处footer动态复用</div>
-<script type="text/javascript" th:src="@{/static/system/js/user-center.js}"></script>
+<script th:src="@{/static/common/js/jquery.simplePagination.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/doctask.js}" type="text/javascript"></script>
 </body>
 </html>

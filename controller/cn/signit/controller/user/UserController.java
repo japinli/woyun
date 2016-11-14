@@ -80,7 +80,7 @@ public class UserController {
 	*@since 1.2.0
 	*/
 	@RequestMapping(value=UrlPath.PAGE_USER_LOGIN,method=RequestMethod.POST)
-	public String submitLoginForm(@ModelAttribute LoginForms forms, Model model, HttpServletRequest request) {
+	public String userLogin(@ModelAttribute LoginForms forms, Model model, HttpServletRequest request) {
 		//交给Spring Security完成,当配置loginProcessingUrl("/j_spring_security_check")时，此项可用
 		//return PageLogicPath.LOGIN.redirectFromSystemPath();
 		String username = forms.getUsername();
@@ -100,6 +100,16 @@ public class UserController {
 			model.addAttribute(SessionKeys.RESULT_ERROR, SessionResults.USER_NAME_OR_PWD_ERROR);
 		}
 		
+		return PageLogicPath.LOGIN.path();
+	}
+	
+	/**
+	 * 用户退出登录
+	 */
+	@RequestMapping(value = UrlPath.PAGE_USER_LOGOUT, method = RequestMethod.GET)
+	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
+		LOG.info("用户:" + ((User)request.getSession().getAttribute(SessionKeys.LOGIN_USER)).availableUserName() + "退出登录!");
+		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
 		return PageLogicPath.LOGIN.path();
 	}
 	

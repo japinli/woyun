@@ -39,7 +39,7 @@
 		<url>jdbc:mysql://localhost:3306/test</url> <user>root</user> <password>trend_dev</password> 
 		</connectionSource> </appender> -->
 	<root>
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="logfile" />
 	</root>

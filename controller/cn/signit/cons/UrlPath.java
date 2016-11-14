@@ -66,7 +66,7 @@ public class UrlPath {
 			public final static String PAGE_USER_PERSON_AUTH = USER_ROOT+"/person-auth.html";//用户个人实名认证页面
 			public final static String PAGE_USER_PERSON_AUTH_RESULT_BY_ALIPAY = USER_ROOT+"/person-auth/auto-mode/alipaycertifi-result.html";//用户个人采用支付宝自动实名认证回调结果页面
 			public final static String PAGE_USER_ENTERPRISE_AUTH = USER_ROOT+"/enterprise-auth.html";//用户企业实名认证页面
-			public final static String PAGE_USER_LOGOUT = USER_ROOT+"/logout.html";//用户个人信息页面
+			public final static String PAGE_USER_LOGOUT = SYSTEM_ROOT+"/logout.html";//用户个人信息页面
 			public final static String PAGE_USER_DOC_HOME = DOC_ROOT+"/index.html";//用户个人信息页面
 
 			
