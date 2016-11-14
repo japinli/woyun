@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>签名 | 易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../../css/doc-sign.css" th:href="@{/static/system/css/doc-sign.css}"/>
+</head>
+<body>
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
+<div th:replace="system/pages/common/sys-bar-common.html :: copy-common-data"></div>
+<!--docViewer-->
+<div id="containerViewer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;">
+	  <div style="display:none">
+	  		<input type="hidden" id="hidden-wfId" th:value="${wfId}"/>  
+	  		<input type="hidden" id="hidden-name" th:value="${signerName}"/>
+	  		<input type="hidden" id="hidden-type" th:value="${action}"/>
+	  </div>
+	  <div class="sign-mask"></div>
+	  <div class="signFinishWarn">
+	  		<p><i class="icon-check" style="font-size: 18px"></i>您已完成此份合同的签署</p>
+	  </div>
+	  <div id="topContainer" style="display:none">
+	      <div class="signature-bar">
+	      	  <p>请"点击签名"处以添加你的签名</p>
+	      </div>
+	  </div>
+	  <div id="outerContainer">   
+		<div class="preview-container-scroll" style="top: 84px;">
+			<div id= "buttonContainer" th:style="|width:${pageWidth}px;margin:0 auto;|">
+			    <span id="signButton" class="signButtonTip">查看签章位置</span>
+				<div id="docViewer" class="preview-container-body">
+					<!-- 列表 -->
+					<div th:each= "page:${totalPages}" th:id="${page}" class="preview-page" th:style="|width:${pageWidth}px; height:${pageHeight}px;|">
+		                <img th:id="|pageitem${page}|" th:style="|width:${pageWidth}px; height:${pageHeight}px;|"></img>
+		                <div th:id="|esignForm${page}|" class="esignClass" th:value="${page}"></div>  
+		            </div> 
+		        </div>
+	         </div>
+		 </div>
+		 <div id="bottomSave">
+		 	  <span>您已经完成此份文档的所有签名，请点击"完成"按钮发送文件</span>
+	          <span id="saveButton" type="button">完成</span>         
+	     </div>
+	  </div>
+</div>	
+<!--footer-->
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-syscommon-footer">此处footer动态复用</div>
+<script th:src="@{/static/common/js/sockjs/sockjs-0.3.4.min.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/stomp/stomp.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/signature-pad/signature-pad.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/jquery.qrcode.min.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/renderpage.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/signatureway.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/signtask.js}" type="text/javascript"></script>
+<!-- 制作签章 -->
+<div th:replace="system/pages/common/sys-module-common.html  :: copy-sign-wf-panel">此处工作流签名面板动态复用</div>
+</body>
+</html>

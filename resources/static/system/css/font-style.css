@@ -1,0 +1,99 @@
+/* hcn-xllnfregular - 继世硬笔行书 */
+@font-face {
+    font-family: 'hcnxllnfregular';
+    src: url('webfontkit/yingbixingshu/--webfont.eot');
+    src: url('webfontkit/yingbixingshu/--webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/yingbixingshu/--webfont.woff') format('woff'),
+         url('webfontkit/yingbixingshu/--webfont.ttf') format('truetype'),
+         url('webfontkit/yingbixingshu/--webfont.svg#hcn-xllnfregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/* QXyingbikai - 全新硬笔简书楷 */
+@font-face {
+	font-family:'QXyingbikaiRegular';
+	src: url('webfontkit/yingbikaijian/QXyingbikai.eot');
+	src: url('webfontkit/yingbikaijian/QXyingbikai.eot?#iefix') format('embedded-opentype'),
+		url('webfontkit/yingbikaijian/QXyingbikai.woff') format('woff'),
+		url('webfontkit/yingbikaijian/QXyingbikai.ttf') format('truetype'),
+		url('webfontkit/yingbikaijian/QXyingbikai.svg#QXyingbikai-Regular') format('svg');
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-FFE5;
+}
+
+/* zhongshouxieti -  手写体*/
+@font-face {
+    font-family: 'zhongshouxie';
+    src: url('webfontkit/zhongshouxie/_-webfont.eot');
+    src: url('webfontkit/zhongshouxie/_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/zhongshouxie/_-webfont.woff') format('woff'),
+         url('webfontkit/zhongshouxie/_-webfont.ttf') format('truetype'),
+         url('webfontkit/zhongshouxie/_-webfont.svg#vyyebkqosregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* sentyteaproregular - 新蒂下午茶专业版 */
+@font-face {
+    font-family: 'sentyteaproregular';
+    src: url('webfontkit/xinde/_-webfont.eot');
+    src: url('webfontkit/xinde/_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfontkit/xinde/_-webfont.woff') format('woff'),
+         url('webfontkit/xinde/_-webfont.ttf') format('truetype'),
+         url('webfontkit/xinde/_-webfont.svg#sentyteaproregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.fontStyle01, .fontStyle02, .fontStyle03, .fontStyle04,.handFontStyle01,.handFontStyle02,.handFontStyle03,.handFontStyle04{
+	font-size:32px;
+}
+.handFontStyle01{
+	font-family:'hcnxllnfregular';
+}
+.handFontStyle02{
+	font-family:'zhongshouxie';
+}
+.handFontStyle03{
+	font-family:'QXyingbikaiRegular';
+}
+.handFontStyle04{
+	font-family:'sentyteaproregular';
+}
+.fontStyle01{
+	font-family:'宋体','SimSun','华文宋体','STSong','Noto Sans CJK SC Light','hcnxllnfregular';
+}
+.fontStyle02{
+	font-family:'仿宋','FangSong','华文黑体','STHeiti','Noto Sans CJK SC Medium','zhongshouxie';
+}
+.fontStyle03{
+	font-family:'楷体','KaiTi','华文楷体','STKaiti','Noto Sans CJK SC Regular','QXyingbikaiRegular';
+}
+.fontStyle04{
+	font-family:'微软雅黑','Microsoft YaHei','儷宋 Pro','LiSong Pro','Noto Sans CJK SC Black','sentyteaproregular';
+}
+
+#webfontLoading01{
+	position:absolute;
+	top: 90px;
+	left: 74.25px;
+} 
+#webfontLoading02{
+	position:absolute;
+	top: 90px;
+	left: 329.75px;
+}
+#webfontLoading03{
+	position:absolute;
+	top: 189px;
+	left: 74.25px;
+}
+#webfontLoading04{
+	position:absolute;
+	top: 189px;
+	left: 329.75px;
+}

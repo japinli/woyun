@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>设置签名域 | 易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../../css/doc-sign.css" th:href="@{/static/system/css/doc-sign.css}"/>
+</head>
+<body>
+<!-- container -->
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
+<div th:replace="system/pages/common/sys-bar-common.html :: copy-common-data"></div>
+<!--docViewer-->
+<div id="containerViewer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;">   
+   <div id="topContainer">
+      <div class="signature-bar">
+         <span class="toolBarDoc-left plr10">
+              <!-- <span class="sign-tooltip-left"><i class="icon-keyboard-arrow-left"></i><a>返回</a></span> -->
+              <span class="sign-tooltip"><a>设置签名</a></span>
+          </span>
+          <div id="jstool_done_doc" class="toolBarDoc-right setting-finish">         	 
+		    <span><p class="sendRequest">发送</p></sapn>
+          </div>
+      </div>
+  </div>
+  <div id="outerContainer">
+      <div id="leftSidebarContainer">
+          <div class="signGuide">
+              <i class="icon-bullhorn signGuideIcon"></i>
+              <p>拖拽签名项到文档设定签署区域</p>
+          </div> 
+          <div id="pdfForm-lists" class="pdfFormList" onselectstart='return false'>
+              <div class="pdfListHeader">
+                  <span>可选签名项</span>
+              </div>
+              <div id="pdfElements-list"> 
+                  <div id="dragSignature" class="draggableField pdfElements" title="拖放 签名域">
+                  	 <img class="pdfIcon" alt="签名域"  th:src="@{/static/system/images/pdficons/logoico1.png}">签名
+                  </div>  
+              </div> 
+          </div> 
+                  
+      </div>
+      <div id="mainContainer">
+      	  <div style="height:32px;line-height:32px;background-color:#fff;position:absolute;left:0;right:0;top:60px;z-index:1;">
+      	  	 <div class="toolBarDoc-center">
+	             <div class="toolBarDoc-innerCenter">
+		              <span class="pre-back">
+	                     <span id="pre-page" class="toolBar-btn-color">上一页</span>
+	                     <input id="showPageNum" type="text" value="1" /> / <span id="numCount">1</span>
+	                     <input id="showPageNum-hidden" type="hidden" value="1" />
+	                     <span id="back-page" class="toolBar-btn-color">下一页</span>
+	                  </span>
+	              </div>
+	          </div>
+      	  </div>
+          <div id="viewerContainer">
+          	<div class="preview-container-scroll" style="top:32px;">
+              <div id="docViewer" class="preview-container-body">
+					<!-- 列表 -->
+					<div th:each= "page:${totalPages}" th:id="${page}" class="preview-page" th:style="|width:${pageWidth}px; height:${pageHeight}px;|">
+		                <img th:id="|pageitem${page}|" th:style="|width:${pageWidth}px; height:${pageHeight}px;|"></img>
+		                <div th:id="|esignForm${page}|" class="esignClass" th:value="${page}"></div>
+		            </div>        
+		      </div>
+		    </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!--footer-->
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-docpreview-footer"></div>
+<script  th:src="@{/static/system/js/setfields.js}" type="text/javascript"></script>
+</body>
+</html>

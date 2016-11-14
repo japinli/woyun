@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<!--说明：低浏览器的处理
+	-->
+	<!-- ------------------------------------------- -->
+	<!-- browser  fragment -->
+	<!-- ------------------------------------------- -->
+	<div th:fragment="copy-browser" th:remove="tag">
+		<!--[if lte IE 9]>
+	    <div id="browser_info" class="browser-bar">
+	        <button id="close_browser_info" class="close-btn bold" type="button">x</button>
+	        <span class="bold">您正在使用低版本浏览器，</span> 在本页面的显示效果有差异，将影响页面正常使用。
+	        建议您升级浏览器到最新版或使用如下浏览器:
+	        <a href="http://www.google.cn/intl/zh-CN/chrome/" target="_blank">Chrome</a> /
+	        <a href="http://www.mozilla.org/en-US/firefox/‎" target="_blank">Firefox</a> /
+	        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
+	            Internet Explorer(最新)</a>
+	    </div>
+	    <script type="text/javascript">
+	    window.onload = function(){
+	    	var info = document.getElementById('browser_info');
+	    	var closeInfo = document.getElementById('close_browser_info');
+	    	
+	    	closeInfo.onclick = function(){
+	    		info.style.display = 'none';
+			}
+	    	
+	    }
+	    </script>
+		<![endif]-->
+	</div>	
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>易企签</title>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+</head>
+<body style="background-color: #f0f3f5;">
+	<div th:replace="system/pages/common/login-common.html :: copy-logo-header"></div>
+	<div class="transit-box">
+		<!-- 要求实名认证提示 -->
+		<div class="transit-tip-box" th:if="${state == 1}">
+			<form action="#" th:action="@{'/wesign/'+${session.loginRole}+'/documents/transit-state-tip.html?state=1'}" th:object="${documentTransitForms}" method="POST">
+				<p><span th:text="|${sponsor}(${sponsorContact})|">李伟（987707344@qq.com）</span></p>
+				<p>邀请您使用证书签名，请前往易企签实名认证中心认证，</p>
+				<p>认证通过易企签将为您免费颁发专有证书。</p>
+				<div class="mt10">
+					<input type="hidden" name="wfId" th:value="${documentTransitForms.wfId}" readonly="readonly"/>
+				</div>
+				<!-- 前端注意：此处submit改为button，方便js对输入的校验/加密等其他操作的控制，然后通过js的$.submit()来提交表单 -->
+				<input type="submit" value="免费申请证书" class="solidBtnMid mt26">
+			</form>
+		</div>
+	</div>
+	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+</body>
+</html>

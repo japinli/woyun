@@ -1,0 +1,369 @@
+/*****
+ * author: liyulan
+ * last edit time: 2016-9
+ * scan signature
+ * *****/
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+#header-container {
+position: relative;
+	height: 46px;
+	line-height: 46px;
+	color: #fff;
+	background-color: #29abc2;
+	text-align:center;
+	z-index:2;
+}
+
+.m-signature-pad {
+  position: absolute;
+  font-size: 10px;
+  width: 700px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  margin-left: -350px;
+  margin-top: -200px;
+  border: 1px solid #e8e8e8;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+  border-radius: 4px;
+}
+
+.m-signature-pad:before, .m-signature-pad:after {
+	position: absolute;
+  z-index: -1;
+  content: "";
+	width: 40%;
+	height: 10px;
+	left: 20px;
+	bottom: 10px;
+	background: transparent;
+	-webkit-transform: skew(-3deg) rotate(-3deg);
+	-moz-transform: skew(-3deg) rotate(-3deg);
+	-ms-transform: skew(-3deg) rotate(-3deg);
+	-o-transform: skew(-3deg) rotate(-3deg);
+	transform: skew(-3deg) rotate(-3deg);
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.m-signature-pad:after {
+	left: auto;
+	right: 20px;
+	-webkit-transform: skew(3deg) rotate(3deg);
+	-moz-transform: skew(3deg) rotate(3deg);
+	-ms-transform: skew(3deg) rotate(3deg);
+	-o-transform: skew(3deg) rotate(3deg);
+	transform: skew(3deg) rotate(3deg);
+}
+
+.m-signature-pad--body {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  border: 1px solid #f4f4f4;
+}
+
+.m-signature-pad--body
+  canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
+  }
+
+.m-signature-pad--footer {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  height: 40px;
+}
+
+.m-signature-pad--footer
+  .description {
+    color: #C3C3C3;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 1.8em;
+  }
+
+.m-signature-pad--footer
+  .button {
+    position: absolute;
+    bottom: 0;
+  }
+
+.m-signature-pad--footer
+  .button.clear {
+    left: 0;
+  }
+
+.m-signature-pad--footer
+  .button.save {
+    right: 0;
+  }
+
+@media screen and (max-width: 1024px) {
+  .m-signature-pad {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+   	height: auto;
+   	max-height:300px;
+    min-width: 250px;
+    min-height: 140px;
+    margin: 2%;
+    margin-top:35px;
+    margin-bottom:5px;
+  }
+  #github {
+    display: none;
+  }
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .m-signature-pad {
+    margin: 10%;
+  }
+}
+
+@media screen and (max-height: 320px) {
+  .m-signature-pad--body {
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+  }
+  .m-signature-pad--footer {
+    left: 20px;
+    right: 20px;
+    bottom: 4px;
+    height: 28px;
+  }
+  .m-signature-pad--footer
+    .description {
+      font-size: 1em;
+      margin-top: 1em;
+    }
+}
+
+.baseBtn:hover, .generateQrcode:hover {
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	filter: alpha(opacity = 80);
+}
+
+.signatureReset {
+	color: #fff;
+}
+
+.signatureSave {
+	color: #fff;
+}
+
+.szComDiv {
+	position:absolute;
+	width: 100%;
+	margin-top: 30px;
+	top:50px;
+}
+
+.szComDiv p {
+	text-align: center;
+	color: #91969d;
+	padding-bottom: 5px;
+}
+
+@
+keyframes appear { 
+	0%{
+		opacity: 0;
+	}
+	
+	100%{
+		opacity:1;
+		}
+	}
+@-webkit-keyframes appear { 
+	0%{
+		opacity: 0;
+	}
+	
+	100%{
+		opacity:1;
+	}
+}
+.Appear {
+	animation: appear 0.3s linear both;
+	-webkit-animation: appear 0.3s linear both;
+}
+
+.animation_delay200ms {
+	animation-delay: 200ms;
+}
+.header-center{
+	width:98%;
+	height: 46px;
+	margin:0 auto;
+	position:relative;
+}
+.header-font{
+	width:45px;
+	display:inline;
+	margin:0 auto;
+	font-size:18px;
+}
+.signatureReset{
+	position:absolute;
+	left:1%;
+	top:4px;
+	width:60px;
+	height:36px;
+	line-height:36px;
+	border:1px solid #29abc2;
+	border-radius: 4px;
+	background-color:#ff6700;
+}
+.signatureSave{
+	position:absolute;
+	right:1%;
+	top:4px;
+	width:60px;
+	height:36px;
+	line-height:36px;
+	border:1px solid #29abc2;
+	border-radius: 4px;
+	background-color:#33cc99;
+}
+/*****
+ * author: liyulan
+ * last edit time: 2016-9
+ * upload scan signature
+ * *****/
+ body{
+	height:auto;
+}
+#header-container {
+	position: relative;
+	height: 46px;
+	line-height: 46px;
+	color: #fff;
+	background-color: #29abc2;
+	text-align:center;
+	z-index:2;
+}
+.header-center{
+	width:98%;
+	height: 46px;
+	margin:0 auto;
+	position:relative;
+}
+.header-font{
+	width:45px;
+	display:inline;
+	margin:0 auto;
+	font-size:18px;
+}
+/* .container {
+      max-width: 640px;
+      margin: 120px auto;
+    } */
+.container {
+      width: 100%;
+      height:100%;
+      min-width:300px;
+      max-height:300px;
+      margin-top: 98px;
+    }
+
+   .container img {
+     width: 100%;
+     min-width:300px;
+    }
+    /* img {
+      max-width: 70%;
+    } */
+
+    .cropper-view-box,
+    .cropper-face {
+      
+    }
+
+/*     .cropper-view-box, .cropper-face {
+      border-radius: 50%;
+    } */
+.btn{
+   font-size:16px;
+   border:0px;
+}
+.file {
+    position: relative;
+    /* display: inline-block; */
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    /* font-size: 100px; */
+    width:100%;
+    height:100%;
+    border: 1px solid #99D3F5;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.imgBox{
+	/* display:none; */
+}
+.btn{
+	background-color:#33cc99;
+	color:white;
+	border:1px solid #33cc99;
+	padding:3px 10px;
+}
+.uploadTip{
+	width:100%px;
+	text-align:center;
+	font-size:14px;
+	font-family: '微软雅黑';
+}
+.szComupload {
+	position:absolute;
+	width: 100%;
+	margin-top: 30px;
+	top:50px;
+}
+
+.szComupload p {
+	text-align: center;
+	color: #91969d;
+	padding-bottom: 5px;
+}
+.hidden{
+	display:none;
+}
+ 

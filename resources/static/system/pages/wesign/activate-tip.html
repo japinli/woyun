@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>激活账号提示 | 云取证</title>
+</head>
+<body>
+	<div th:replace="system/pages/common/login-common.html :: copy-login-header">此处header动态复用</div>
+	<div class="containerBg">
+		<div class="containerBox">
+			<div class="textCenter">
+				<div th:if="${type == 1}" id="phone-active" style="margin-top: 120px;">
+					<h4 style="margin:0 0 30px 160px;text-align:left;">请输入手机验证码激活账号：</h4>
+					<form id="active-phone-form" action="#" th:action="@{/wesign/activate-tip.html}" th:object="${activateValidateForms}" method="POST">
+						<input type="hidden" name="account" id="account" th:value="${activateValidateForms.account}" readonly="true">
+						<input type="text" name="code" id="code" class="find-code" maxlength="6">
+						<input type="button" value="获取激活验证码" id="get-code-btn" class="getCode ml5">
+						<input type="button" value="提交" id="submit-phone-btn" class="getCode ml5">
+						<span class="js-curtext-state"></span>
+						<span id="reset-code-text" class="tipWarning" th:text="${error}?${error}:''"></span>
+					</form>
+				</div>
+				<div th:if="${type == 2}" id="email-active">
+					<div class="mt40">
+						<img alt="激活账号提醒" src="../../images/s-activetip.jpg" th:src="@{/static/system/images/s-activetip.jpg}">
+						<h2 class="active-title">您已成功注册云取证</h2>
+						<p>请在<span class="tipWarning"> 24小时 </span>内前往您的邮箱激活账号，过期将失效。<!-- 页面将在12秒后自动跳转到登录页... --></p>
+					</div>
+					<div class="mt40">
+						<!-- <input type="button" value="激活邮箱" class="solidBtnMid"> -->
+						<a th:href="@{/wesign/login.html}" class="solidBtnMid">返回登录</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+	<script src="../../js/activate-tip.js" th:src="@{/static/system/js/activate-tip.js}" type="text/javascript"></script>
+</body>
+</html>

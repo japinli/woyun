@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>发生错误 | 易企签</title>
+</head>
+<body>
+	<div th:replace="system/pages/common/login-common.html :: copy-login-header"></div>
+	<div class="errorContainer">
+		<h2 class="fourzthead">抱歉，本页面被禁止访问</h2>
+		<p class="textCenter"><img src="../images/error403.jpg" th:src=@{/static/error/images/error403.jpg}></p>
+		<div >
+			<ul class="whyToThis">
+				<li class="whyTo">为什么？</li>
+				<li>-可能我们的网站正在升级维护；</li>
+				<li>-可能您输入的网址不正确；</li>
+				<li>-访问链接已失效</li>
+			</ul>
+			<ul class="howToDo">
+				<li class="howTo">怎么办？</li>
+				<li><a class="tipDefault" href="javascript: history.go(-1);">-返回上一页</a></li>
+				<li><a class="tipDefault" th:href="@{/wesign/login.html}">-返回登录页</a></li>
+				<li><a class="tipDefault" th:href="@{/wesign/login.html}">-登录访问</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

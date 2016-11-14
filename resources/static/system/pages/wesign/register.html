@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>立即注册|云取证</title>
+</head>
+<body>
+	<div th:replace="system/pages/common/login-common.html :: copy-login-header"></div>
+	<div class="containerBg">
+		<div class="containerBox regContainerBox">
+			<h2 class="reg-title">注册账号</h2>
+			<form id="registerForm" action="#" th:action="@{/wesign/register.html}" th:object="${registerForms}" method="POST">
+				<div class="mb10">
+					<label for="email" class="info-label">请输入邮箱或者手机:</label>
+					<input type="text" name="email" th:field="*{username}" id="emailOrPhone" class="info-input">
+					<span class="errorWarning"></span>
+				</div>
+				<div class="hidden">
+					<label for="realName">请输入您的姓名:</label>
+					<input type="text" name="realName" th:field="*{realName}" id="realName">
+					<span class="errorWarning"></span>
+				</div>
+				<div class="mb10">
+					<label class="info-label">请输入您的姓名:</label>
+					<input type="text" id="invented_realName" class="info-input">
+					<span class="errorWarning"></span>
+				</div>
+				<div class="mb10">
+					<label for="password" class="info-label">请输入密码:</label>
+					<input type="password" name="password" th:field="*{password}" id="userPassword" class="info-input">
+					<span class="errorWarning"></span>
+				</div>
+				<div class="mb10">
+					<label for="rePassword" class="info-label">请确认密码:</label>
+					<input type="password" name="rePassword" id="passwordAgain" class="info-input">
+					<span class="errorWarning"></span>
+					
+				</div>
+				<div class="mb10">
+					<label for="captcha" class="info-label">验证码:</label>
+					<input type="text" name="captcha" th:field="*{captcha}" id="regCaptcha" maxLength="10" class="info-input-code">
+					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
+					<span class="js-change-verimg tipNormal login-event">换一个</span>
+					<span class="errorWarning"></span>
+				</div>
+				<div class="mt26" th:switch="${error}">
+					<input type="button" value="立即注册" class="loginRegistBtn" id="regSubmitBtn">
+					<span id="js_register_error" class="errorWarning"></span>
+					<span th:case="'disabled'" class="tipWarning">账户尚未激活，<a class="errorWarning activeNow" th:href="${resultUrl}">立即激活？</a></span>
+					<span th:case="*" th:text=${error} class="tipWarning"/>
+		        </div> 
+		        <p class="tipNormal registItem">点击注册即同意我们的<a th:href=@{/state.html} target="_blank">服务条款</a></p>
+			</form>
+			<div class="exitContain">
+				<img class="exitImg" alt="您还不是易企签的用户？ 马上加入我们吧" src="../../images/s-joinSignit.jpg" th:src="@{/static/system/images/s-joinSignit.jpg}">
+				<p class="queryJoin">您还不是我们的用户？<br/><span class="font18">马上加入我们吧</span></p>
+				<p class="theseJoin"><span id="userNumber">电子证据保全</span><br/>让权益保护不再难！</p>
+				<a th:href="@{/wesign/login.html}" class="borderBtn">已有账号，登录</a>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="system/pages/common/login-common.html :: copy-login-footer"></div>
+<script src="../../js/regist.js" th:src="@{/static/system/js/regist.js}" type="text/javascript"></script>
+</body>
+</html>

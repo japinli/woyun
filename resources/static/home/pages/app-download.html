@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" href="../../../common/images/logo-ico.ico" th:href="@{/static/common/images/logo-ico.ico}" type="image/x-icon">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="易企签APP下载">
+	<meta name="keywords" content="易企签，APP，移动电子签名应用">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="renderer" content="webkit">
+  	<link rel="stylesheet" href="../css/app.css" th:href=@{/static/home/css/app.css}>
+	<title>APP下载|思安特科技</title>
+</head>
+<body>
+	<div class="page-wrap">
+		<div id="header-tip">思安特科技，移动安全智能电子签章</div>
+		<div class="download">
+			<div id="iosDownload" class="download-btn">
+				<a href="https://itunes.apple.com/us/app/wei-qian/id967142560?l=zh&amp;ls=1&amp;mt=8">
+					<span>iOS版下载</span>
+				</a>
+			</div>
+			<div id="androidDownload" class="download-btn">
+				<a href="http://zhushou.360.cn/detail/index/soft_id/2958640?recrefer=SE_D_#nogo" class="android-btn" id="J_weixin">
+					<span>Android版下载</span>
+				</a>
+			</div>
+		</div>
+		<div id="fonter-tip" class="footer-bg">
+			<p class="entry-con">注：如果点击按钮不能下载，请在右上角图标，选择“在浏览器中打开”，再选择下载应用</p>
+		</div>
+		<div id="fonter-tip-ios" style="display:none;" class="footer-bg">
+			<p class="entry-con">注：如果点击按钮不能下载，请点击右上角图标，选择“在Safari中打开”或别的浏览器，再选择下载应用</p>
+		</div>
+	</div>
+	<div id="weixin-tip">
+		<p><img src="../images/app/live_weixin.png" th:src=@{/static/home/images/app/live_weixin.png} alt="微信打开"><span id="close" title="关闭" class="close">×</span></p>
+	</div>
+
+<script type="text/javascript">
+var is_android = (function(){
+	if (/android/i.test(navigator.userAgent)) {
+		return true;
+	}else{
+		return false;
+	}
+})();
+var is_ios = (function(){
+	if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+		return true;
+	}else{
+		return false;
+	}
+})();
+var is_weixin = (function() {
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true;
+    } else {
+        return false;
+    }
+})();
+window.onload = function(){
+	var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+	var iosBtn = document.getElementById('iosDownload');
+	var androidBtn = document.getElementById('androidDownload');
+	var btn = document.getElementById('J_weixin');
+	var tip = document.getElementById('weixin-tip');
+	var tipInfo = document.getElementById('fonter-tip');
+	var tipIos = document.getElementById('fonter-tip-ios');
+	var close = document.getElementById('close');
+
+	if(is_ios){
+		iosBtn.style.display = 'block';
+		if(is_weixin){
+			tipIos.style.display = 'block';
+		}else{
+			tipIos.style.display = 'none';
+		}
+		
+	}else if(is_android){
+		androidBtn.style.display = 'block';
+		if(is_weixin){
+			btn.onclick = function(e){
+				tip.style.height = winHeight + 'px';
+				tip.style.display = 'block';
+				return false;
+			}
+			close.onclick = function(){
+				tip.style.display = 'none';
+			}
+			tipInfo.style.display = 'block';
+		}else{
+			tipInfo.style.display = 'none';
+		}
+	}else{
+		/* btn.onclick = function(e){
+			tip.style.height = winHeight + 'px';
+			tip.style.display = 'block';
+			return false;
+		}
+		close.onclick = function(){
+			tip.style.display = 'none';
+		} */
+		androidBtn.style.display = 'block';
+		iosBtn.style.display = 'block';
+	}
+}
+</script>
+</body>
+</html>

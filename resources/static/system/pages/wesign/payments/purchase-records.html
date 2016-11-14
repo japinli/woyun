@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>购买记录|易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../css/setting.css" th:href="@{/static/system/css/setting.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/static/system/css/simple-pagination.css}">
+</head>
+<body>
+<div class="container">
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+	<div class="rmain">
+		<div class="lbar">
+			<div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-link">动态复用</div>
+		</div>
+		<div class="rmain-main">
+		  	<div class="rmain-operation-bar">
+            	<div class="dis-inline bar-title">购买记录</div>
+            </div> <!-- rmain-operation-bar -->
+			<div class="rmain-view-container">
+				<div class="posR">
+					<p class="ComboCertTab fs20">
+						<span class="comboTab" id="js_hasCertCombo">
+							<a th:href="@{'/wesign/'+${session.loginRole}+'/payments/bill-records.html'}">账单记录</a>
+						</span>
+						<span class="cutline">|</span>
+						<span class="comboTab comboTab-active" id="js_hasNoCertCombo">购买记录</span>
+					</p>
+				</div>
+				<div class="dropdown select-all">
+					<span class="selectedAll" id="js_selectAll">查看全部</span>
+				</div>
+				<div class="dropdown select-month">
+				    <span class="selected" id="js_month">1月</span>
+				    <span class="carat"></span>
+				    <div class="options hidden">
+				        <ul class="date" id="js_date_month">
+				        </ul>
+				    </div>
+				</div>
+				<div class="dropdown select-year">
+				    <span class="selected" id="js_year">2015年</span>
+				    <span class="carat"></span>
+				    <div class="options hidden">
+				        <ul class="date" id="js_date_year">
+				        </ul>
+				    </div>
+				</div>
+				<div class="records">
+					<p class="p-title">交易总览</p>
+					<table class="record-table">
+						<thead>
+							<tr class="records-htr">
+								<td class="records-htd td-per5">类型</td>
+								<td class="records-htd td-per5">总额(元)</td>
+							</tr>
+						</thead>
+						<tbody id="records-tot">
+							<tr class="records-btr">
+								<td colspan="2" class="records-btd">暂无记录</td>
+							</tr>
+						</tbody>
+					</table>	
+				</div>
+				<div class="records">
+					<p class="p-title">交易明细</p>
+					<table class="record-table">
+						<thead>
+							<tr class="records-htr">
+								<td class="records-htd td-per2">订单号</td>
+								<td class="records-htd td-per1">名称</td>
+								<td class="records-htd td-per1">单价</td>
+								<td class="records-htd td-per1">数量(套)</td>
+								<td class="records-htd td-per1">实付款(元)</td>
+								<td class="records-htd td-per1">交易时间</td>
+								<td class="records-htd td-per1">状态</td>
+								<td class="records-htd td-per1">操作</td>
+								<td class="records-htd td-per1">备注</td>
+							</tr>
+						</thead>
+						<tbody id="records-tbd">
+						</tbody>
+					</table>	
+				</div>
+				<div id="js_comboDetail" class="infoDetail hidden">
+				</div>
+			</div><!--rmain-view-container  -->
+			<div class="bottom-oparate textCenter">
+	            <div class="js_pagination bar-title"></div>
+	        </div>
+		</div><!--rmain-main  -->
+	</div> <!--rmain  -->
+</div>	
+
+<!-- <com:ui-footer-content /> -->
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-sysbase-footer"></div>
+<!--footer-->
+<script th:src="@{/static/common/js/jquery.simplePagination.js}" type="text/javascript"></script>
+<script  th:src="@{/static/system/js/account/purchaseRecords.js}" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>登录 | 蜗云</title>
+</head>
+<body>
+	<!--header-->
+<!-- 	<div id="body"> -->
+		<div th:replace="system/pages/common/login-common.html :: copy-login-header">此处header动态复用</div>
+		<div class="containerBg">
+		<div class="containerBox">
+			<h2 class="reg-title">会员登录</h2>
+			<form id="login-form" action="#" th:action="@{/wesign/login.html}" th:object="${loginForms}" method="POST">
+				<div class="mb10">
+					<label for="email" class="info-label">账号:</label>
+					<input type="text" name="email" th:field="*{username}" value="" id="loginCount" class="info-input">
+					<span class="errorWarning"></span>
+				</div>
+				<div class="mb10">
+					<label for="password" class="info-label">密码:</label>
+					<input type="password" name="password" th:field="*{password}" value="" id="loginPwd" class="info-input">
+					<span id="js_pwd_error" class="errorWarning"></span>
+				</div>
+				<div th:if="${enableCaptcha}" class="mb10" th:classappend="${not enableCaptcha}? 'displayNo'" >
+					<label for="captcha" class="info-label">验证码:</label>
+					<input type="text" name="captcha" th:field="*{captcha}" id="loginCaptcha" class="info-input-code">
+					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
+					<span class="js-change-verimg tipNormal login-event">换一个</span>
+				</div>
+				 <div class="mb10">
+					<label for="reme-me">自动登录</label>
+					<input type="checkbox" name="remember-me" id="reme-me" class="checkbox-reme" checked="checked">
+					<a class="forgetPwd" th:href="@{/wesign/find-password.html}">忘记密码？</a>
+				</div> 
+				<div class="mt26" th:switch="${param.error != null && param.error[0]=='disabled'}">
+					<input type="button" value="登录" class="loginRegistBtn" id="js-login">
+					<span id="js_login_error" class="errorWarning"></span>
+					<span th:case="${true}" class="tipWarning">账户尚未激活，<a class="errorWarning activeNow" th:href="${resultUrl}">立即激活？</a></span>
+					<span th:case="*" th:text=${error} class="tipWarning" id="loginTip" />
+		            <span class="tipWarning" th:if="${param.logout != null}" th:text=${logout} />
+		            <span class="tipWarning" th:if="${param.resetpwd != null}" th:text="重置成功"/>
+				</div>
+			</form>
+			<div class="exitContain">
+				<img class="exitImg" alt="您还不是易企签的用户？ 马上加入我们吧" src="../../images/s-joinSignit.jpg" th:src="@{/static/system/images/s-joinSignit.jpg}">
+				<p class="queryJoin">您还不是我们的用户？<br/><span class="font18">马上加入我们吧</span></p>
+				<p class="theseJoin"><span id="userNumber">电子数据保全</span><br/>让权益保护不再难！</p>
+				<a th:href="@{/wesign/register.html}" class="borderBtn">立即注册</a>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+    <script src="../../js/login.js" th:src="@{/static/system/js/login.js}" type="text/javascript"></script> 
+</body>
+</html>

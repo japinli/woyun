@@ -1,0 +1,1211 @@
+/*
+***function: 文档浏览签章 
+***author: duym
+*/
+
+*{padding:0; margin:0;}
+
+/* 框架UI */
+#outerContainer{
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+#outerContainer.rightbarOpen > #rightSidebarContainer{
+    display:none;
+    right:-200px;
+}
+#outerContainer.rightbarOpen > #mainContainer{
+    right:0;
+}
+
+#outerContainer.leftbarOpen > #leftSidebarContainer{
+    display:none;
+    left:-200px;
+}
+#outerContainer.leftbarOpen > #mainContainer{
+    left:0;
+}
+#leftSidebarContainer{
+    width:200px;
+    border-right:#dddada 1px solid;
+    position:absolute;
+    top:60px;
+    bottom:0;
+    left:0px;
+    z-index:2;
+}
+#rightSidebarContainer{
+    width:200px;
+    border-left:#dddada 1px solid;
+    position:absolute;
+    top:50px;
+    bottom:0;
+    right:0;
+    z-index:2;
+}
+#mainContainer{
+    background-color:#e9e9e9;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:200px;
+    /* right:200px; */
+    right:0;
+    z-index:1;
+}
+.viewerInfo{
+	display:none;
+	height: 26px;
+    padding: 6px 12px 1px 12px;
+  	background-color: #e9e9e9;
+  	position: absolute;
+  	top: 42px;
+  	right: 0;
+  	left: 0;
+  	z-index: 1;
+  	border-bottom: #c4c3c3 1px solid;
+  	box-shadow: 1px 3px 5px -3px #c4c3c3;
+}
+.animationBg{
+	animation:myfirst 5s;
+	-moz-animation:myfirst 5s; /* Firefox */
+	-webkit-animation:myfirst 5s; /* Safari and Chrome */
+	-o-animation:myfirst 5s; /* Opera */
+}
+@keyframes myfirst
+{
+0%   {background-color:#e9e9e9;}
+25%  {background-color:#fef4d3;}
+50%  {background-color:#d5fba2;}
+100% {background-color:#c9f2fe;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+0%   {background-color:#e9e9e9;}
+25%  {background-color:#fef4d3;}
+50%  {background-color:#d5fba2;}
+100% {background-color:#c9f2fe;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+0%   {background-color:#e9e9e9;}
+25%  {background-color:#fef4d3;}
+50%  {background-color:#d5fba2;}
+100% {background-color:#c9f2fe;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+0%   {background-color:#e9e9e9;}
+25%  {background-color:#fef4d3;}
+50%  {background-color:#d5fba2;}
+100% {background-color:#c9f2fe;}
+}
+#topContainer{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index:23;
+    background-color:#fff;
+}
+#bottomContainer {
+    position:absolute;
+    bottom:0;
+    right:0;
+    left:0;
+    z-index:2;
+    height:42px;
+    line-height:42px;
+}
+#toolBarDoc{
+    height:50px;
+    line-height:50px;
+    border-bottom:#dddada 1px solid;
+}
+.signature-bar{
+	background-color: #095db1;
+	line-height:60px;
+	height:60px;
+	border-bottom:#dddada 1px solid;
+	padding:0 20px;
+}
+.signSetting-content-list li{
+    text-align: center;
+}
+.signSetting-content-list{
+	max-width:362px;
+	padding:0 10px 0 10px;
+	line-height: 39px;
+}
+#signSetting-mod{
+	right:10px;
+	top:40px;
+	min-width:100px;
+	position:absolute;
+	z-index:11;
+	width:auto;
+	background-color:#fff;
+    border: #bcbcbc 1px solid;
+    box-shadow: 1px 5px 15px 1px #969494;
+}
+.signature-bar p,
+.setting-a,
+.signature-bar i{
+	color:white;
+	font-weight: 600;
+	word-spacing:8px; 
+	letter-spacing: 0.5px;
+}
+.sign-tooltip-left a,
+.sign-tooltip a{
+	font-size: 1.6rem;
+	color:white;
+	word-spacing:8px;
+}
+.sign-tooltip-left{
+    background-color: #3a7dc1;
+    height: 60px;
+    display: inline-block;
+    width: 120px;
+}
+.sign-tooltip-left,
+.setting-finish{
+	cursor:pointer;
+}
+.setting-finish{
+	background-color: #ff6700;
+    width: 100px;
+}
+.sendRequest{
+	text-align: center;
+	font-size: 1.6rem;
+}
+.toolBarHeader{
+	height:32px;
+    line-height:32px;
+    border-bottom:#dddada 1px solid;
+    padding:0 10px;
+}
+#makeSignBtn{
+	display:inline-block;
+	float:right;
+	cursor:pointer;
+}
+#makeSignBtn:hover{
+	color:#4badf9;
+}
+.toolBarDoc-left{
+    position:absolute;
+    left:0;
+}
+.toolBarDoc-right{
+    position:absolute;
+    right:0;
+    padding-right:10px;
+}
+.toolBarDoc-center{
+    position:relative;
+    right:50%;
+    float:right;
+}
+.toolBarDoc-innerCenter{
+    position:relative;
+    right:-50%;
+    float:right;
+}
+.toolBarBtn{
+    padding:8px;
+}
+.toolBarBtn:hover{
+    cursor:pointer;
+}
+
+#viewerContainer{
+    overflow:auto;
+    position:absolute;
+    top:60px;
+    right:0px;
+    bottom:0;
+    left:0px;
+}
+.doc-page-list{
+	margin:0 auto;
+	height:600px;  /* 初始化一个宽度和高度，避免抖动 */
+	width:700px;
+}
+.doc-page{
+    background-color:#fff;
+    border:#bdbcbc 1px solid;
+    box-shadow: 1px 1px 8px 1px #969494;
+    background-position:top center;
+    background-repeat:no-repeat;
+    position:relative;
+    margin-bottom:15px;
+}
+#senfileDialog{
+	margin-top:15px;
+}
+.barLogo-icon{
+    background:url("../images/docviewer/docviewlogo.png") center left no-repeat;
+    display:inline-block;
+    min-height:24px;
+    max-width: 300px;
+	white-space: nowrap;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	text-overflow: ellipsis;
+}
+.docOpen-name{
+    padding:5px 0 5px 30px;
+}
+.esign-icon{
+    background-image:url("../images/docviewer/sprite-22.png");
+    background-repeat:no-repeat;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor:pointer;
+}
+.closeWindow-icon{
+    background-position:0 0;
+}
+.prevEsign-icon{
+    background-position:0 -26px;
+}
+.nextEsign-icon{
+    background-position:0 -52px;
+}
+.left-icon{
+    background-position:0 -78px;
+}
+.right-icon{
+    background-position:0 -104px;
+}
+.done-icon{
+    background-position:0 -130px;
+}
+.edit-icon{
+    background-position:0 -156px;
+}
+.closeDialog-icon{
+    background-position:0 -182px;
+}
+
+.closeWindow-icon:hover{
+    background-position:-26px 0;
+}
+.prevEsign-icon:hover{
+    background-position:-26px -26px;
+}
+.nextEsign-icon:hover{
+    background-position:-26px -52px;
+}
+.left-icon:hover{
+    background-position:-26px -78px;
+}
+.right-icon:hover{
+    background-position:-26px -104px;
+}
+/* ********esign及操作UI */
+#esign-lists{
+    width:200px;
+    max-height:280px;
+    text-align:center;
+    overflow-y:auto;
+    border-bottom: #eee 1px solid;
+}
+#esign-lists .signBox{
+    margin:5px;
+}
+#esign-lists .signBox{
+    cursor:move;
+}
+#esign-lists .signBox:hover{
+    border:1px #4badf9 solid;
+}
+.js_empty_econtainer div{
+	margin:15px;
+	text-align:left;
+	padding-left:16px;
+}
+/* ******** */
+.wait-sign-bar{
+    position:absolute;
+    z-index:1;
+    top:-54px;
+    left:-2px;
+    right:-2px;
+    min-height:32px;
+    padding:5px;
+    min-width:175px;
+    background-color:#272727; 
+    color:#e74c3c;
+}
+.wait-sign-bar li{
+    display:inline-block;
+    margin:0 15px;
+    cursor:pointer;
+}
+#okSelected{margin-left:47px;}
+#okSelected, #closeContainer, .formbtn-ui{
+    background-color: #4badf9;
+    cursor:pointer;
+    padding:8px 30px;
+    color:#fff;
+}
+#showPageNum{
+	width:42px;
+	text-align:center;
+    border-color:#8e8e93;
+    background-color:#f5f5f5;
+    margin-left:5px;
+}
+#numCount{
+	margin-right:5px;
+}
+.toolBar-btn-color{
+	color:#8e8e93;
+	cursor:pointer;
+}
+.toolBar-btn-color:hover{
+	color:#000;
+}
+/* ************old css */
+
+.show-page-count input{
+    text-align:center;
+    width:50px;
+    height:16px;
+    padding:1px;
+    border:#cccaca 1px solid;
+}
+.doc-view{
+    width:auto;
+    text-align: center;
+    overflow-y:scroll;
+    height:660px;
+}
+#docShowBlock{
+    display:none;
+}
+.sign-btn{
+    padding:6px 15px;
+    cursor:pointer;
+    color:#fff;
+    border:0;
+}
+.sign-btn:hover{
+    opacity:0.70;
+    -moz-opacity: 0.70;
+    filter: alpha(opacity=70);
+}
+.draggable-box{
+    display:inline-block;
+    z-index:11111;
+    position:absolute;
+    top:0;
+    left:0;
+    color:#d43c3c; 
+    border:#d43c3c 1px solid; 
+    width:auto;
+    height:auto;
+}
+.draggable-box-child{
+    position:relative;
+    top:0;
+    width:0;
+    width:120px;
+    height:120px;
+}
+.draggable-box-close{
+    position:absolute;
+    right:-5px;
+    top:-5px;
+}
+.esign-img{
+    width:120px;
+    height:auto;
+}
+.draggable-box-operation{
+    width:100%;
+    height:30px;
+    text-align:left;
+}
+
+
+/* 初始化签名域 */
+.wait-sign-box{
+    background-color:#fff;
+    height:auto;
+    width:auto;
+    z-index:99999;
+    position:absolute;
+    opacity:0.85;
+    -moz-opacity: 0.85;
+    filter: alpha(opacity=85);
+    border:2px #bdbcbc dashed;
+    cursor:move;
+}
+.wait-sign-header{
+    background-color:#272727;
+    color:#fff;
+    height:32px;
+    line-height:32px;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0.80;
+    -moz-opacity: 0.80;
+    filter: alpha(opacity=80);
+    display:none;
+    cursor:pointer;
+    text-align:right;
+    
+}
+.close-wait-sign{
+    padding:2px 8px;
+}
+span.close-wait-sign:hover{
+    background-color:#d43c3c;
+    -moz-border-radius: 50%;      
+    -webkit-border-radius: 50%;   
+    border-radius:50%;
+}
+
+.verify-sign-box{
+    z-index:99999;
+    position:absolute;
+    cursor:pointer;
+}
+.activeBox{
+    background-color:#fff;
+    opacity:0.4;
+    -moz-opacity: 0.4;
+    filter: alpha(opacity=40);
+    border:2px #4badf9 solid;
+}
+#verifyDialog{
+    font-size:14px;
+    font-size:1.4rem;
+    padding:0 10px;
+}
+#verifyHeader{
+    padding:15px 15px 10px;
+    line-height:20px;
+}
+#verifyHeader div{
+    display:inline-block;
+}
+#verifyAccordion{padding:10px 15px 15px;}
+.verifyImg{
+    width:64px;
+    height:64px;
+    margin-right:30px;
+    background-repeat:no-repeat;
+}
+.invalidInfo{background-image:url('../images/sign-invalid.png');}
+.unknownInfo{background-image:url('../images/sign-unknown.png');}
+.valid{background-image:url('../images/sign-valid.png');}
+.errorColor{color:#e74c3c;}
+.successColor{color:#00a651;}
+.unknownColor{color:#eb911a;}
+.verifyBody-header{
+	background-color:#f5f5f5;
+	padding:6px 10px;
+}
+.verifyBody{
+	font-size:12px;
+	padding:10px;
+}
+.verifyBody div{
+    line-height:22px;
+    word-break:break-all;
+    display:inline-block;
+    width:100%;
+}
+.wordInfo, .wordDesc{
+	display:inline-block;
+	float:left;
+}
+.wordInfo{
+	width:22%;
+}
+.wordDesc{
+	width:78%;
+}
+
+/* esignContainer */
+.bgContainer{
+    position:fixed;
+    bottom:0;
+    left:120px;
+    width:100%;
+    height:auto;
+    background-color:#abcdef;
+    z-index:89;
+    margin:0 auto;
+}
+#esignContainer, #senfileDialog{
+    overflow:auto;
+    width:650px;
+    height:auto;
+    background-color:#fff;
+    margin-right:0;
+    padding-bottom:30px;
+}
+
+.formContainer p{
+    margin:10px 0;
+}
+.footerContainer{
+    margin-top:30px;
+}
+.selectedOne{
+    border: 1px #4badf9 solid;
+}
+
+/*************signatureway css*/
+.body-content-container{
+	padding:30px 30px 20px 30px;
+}
+.footer-bar-container{
+	padding:30px;
+}
+#signatureTab-list{
+	  border-bottom: #e4e8ee 1px solid;
+	  margin: 30px 30px 0 30px;
+}
+#signatureTab-list li.active{
+	  border-bottom: #33cc99 1px solid;
+}
+#signatureTab-list li a, .fontColor-default{
+	color:#91969d;
+}
+#signatureTab-list li.active a{
+	color:#33cc99;
+	border:0;
+}
+#signatureTab-list li a{
+	font-size:16px;
+}
+#signatureTab-list li{
+	color:#777;
+	padding:10px 0;
+	margin:0 20px -1px 0;
+}
+.write-operation{
+	padding:15px;
+	border-left:1px #dbdee2 solid;
+	border-right:1px #dbdee2 solid;
+	border-bottom:1px #dbdee2 solid;
+}
+.signatureBlack, .signatureRed, .signatureBlue{
+	display:inline-block;
+	height:25px;
+	width:25px;
+	margin:0 4px;
+	cursor:pointer;
+	border-width:1px;
+	border-style:solid;
+	 border-radius:50%;
+	-moz-border-radius:50%;  
+    -webkit-border-radius:50%;
+}
+.signatureBlack{
+	border-color:#1e1e1e;
+	color:#1e1e1e;
+}
+.signatureRed{
+	border-color:#e31010;
+	color:#e31010;
+}
+.signatureBlue{
+	border-color:#095db1;
+	color:#095db1;
+}
+#showPageNum{
+	 border-radius:5px;
+	-moz-border-radius:5px;  
+    -webkit-border-radius:5px;
+}
+.baseBtn{
+   border: #c5cbd4 1px solid;
+   padding:0 15px;
+   height: 34px;
+   line-height: 34px;
+}
+.baseBtn:hover{
+	border:#66a3ff 1px solid;
+	color: #66a3ff;
+}
+.btn-primary, .btn-default{
+	padding:8px 60px;
+}
+/* 上传 */
+#signatureUpload-content{
+	min-height:260px;
+}
+.position-container{
+	position: absolute;
+	text-align: center;
+	left: 0; 
+	right: 0; 
+	top: 200px;
+}
+.uplaod-input-container{
+	position:relative;
+	width:70px;
+	padding:10px 60px;
+	border:1px #33cc99 dashed;
+	color:#33cc99;
+}
+.uplaod-input-container:hover{
+	background-color:#33cc99;
+	color:#fff;
+}
+.upload-input-css{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	opacity:0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    cursor:pointer;
+	position:absolute;
+	z-index:1;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+}
+.signnatureFont{
+	width:100%;
+	margin-top:10px;
+	color:#1e1e1e;
+}
+.inputSignature{
+	width:96%;
+	padding:5px 8px;
+}
+.contain-border,
+.signnatureFont tbody tr td{
+	border:#dbdee2 1px solid;
+}
+.signnatureFont tbody tr td{
+	text-align:center;
+	padding: 15px 0;
+	background-color:#fff;
+	cursor:pointer;
+	width:50%;
+	height:68px;
+	word-wrap:break-word;
+}
+.signnatureFont tbody tr td.tdActive,
+.signnatureFont tbody tr td:hover{
+	background-color:#f3f9ff;
+}
+.signature-content{
+	position:relative;
+	width: 100%; 
+    overflow: auto;
+}
+.hidenCanvas-css{
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   z-index: -1;
+   border:#ddd 1px solid;
+}
+.delectSeal{
+	position:absolute;
+	top:0;
+	left:-22px;
+	display:inline-block;
+	font-size: 20px;
+    color: #c8c8c8;
+    width:20px;
+    cursor:pointer;
+}
+.delectSeal:hover{
+	color:#656363;
+}
+
+/*操作功能样式*/
+.operContainer{
+	position:relative;
+	left:0;
+	right:0;
+	padding:20px 10px;
+	text-align:right;
+	border-bottom: 1px #eeeede solid;
+	cursor:pointer;
+}
+.operTextContainer{
+	position:absolute;
+	left:0;
+	text-align: left;
+  	padding-left: 10px;
+	
+}
+.operTextDesc{
+	font-size:10px;
+	color:#b3b3b3;
+}
+.operTextIcon{
+	font-size:24px;
+}
+.operContainer:hover .operTextIcon,
+.operContainer:hover .js-hover,
+.operContainer:hover .js-hover a{
+	color:#4badf9;
+}
+
+/* 签名提示 */
+.signTip{
+    background:#095db1;
+    z-index: 30;
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.signTip a{
+	color:white;
+	font-weight: 600;
+	word-spacing:8px; 
+	letter-spacing: 0.5px;
+	display: inline-block;
+    margin-left: 30px;
+    line-height: 60px
+}
+.sign-mask{
+	z-index: 29;
+    background: #000;
+    opacity: 0.4;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display:none;
+}
+#continue-sign{
+	color:#fff;
+	padding:8px 50px;
+	margin-left:30px;
+	border: 1px solid transparent;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: 600;
+    word-spacing: 8px;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 26;
+    background-color:#ff6700;
+}
+
+/*
+***function: pdf Form UI
+***author: YX
+*/
+textarea{
+	resize: none;
+}
+.pdfListHeader{
+    line-height: 60px;
+    padding-left: 14px;
+    color: #757373;
+    font-weight: 600;
+    word-spacing: 8px;
+    letter-spacing: 0.5px;
+}
+#pdfElements-list{
+    padding: 4px 15px 10px;
+}
+.pdfElements{
+    position: relative;
+    overflow:hidden;
+    padding: 12px 55px;
+    margin-bottom:10px;
+    cursor: move;
+    white-space: nowrap;
+    background-color: #f7f7f7;
+    border: 1px solid #d8d7d7
+}
+.dragType{
+	height: 20px;
+	line-height: 20px;
+}
+.signGuide{
+	margin-top: 32px;
+	padding:10px 0;
+	border-top: 1px dashed #d8d7d7;
+	border-bottom: 1px dashed #d8d7d7;
+	background-color: rgba(240,240,240,.3);
+}
+.signGuideIcon{
+	padding: 0 14px;
+	font-size: 22px;
+	font-size: 2.2rem;
+	color: #ff6700;
+	float: left;
+}
+#saveData{
+	border: 1px solid #92A8D1;
+	border-radius: 5px;
+	cursor: pointer;
+	position: absolute;
+	width: 120px;
+	height: 20px;
+	line-height: 20px;
+	background-color: rgba(135,174,247,0.5);
+	text-align: center;
+	margin: 20px 35px;
+}
+#saveData:hover{
+	opacity: 0.86;
+}
+.pdfIcon{
+    margin-right: 10px;
+    height: 20px;
+    width: 20px;
+}
+.pdfElements:hover{
+	background-color: #e6e7e8;
+}
+.dragItemAdornment{
+	position:absolute;
+	background-color:#EFBF87;
+	cursor: move;
+	z-index: 11111;
+	filter:alpha(opacity=95); /*IE滤镜*/
+    -moz-opacity:0.95; /*Firefox私有*/
+    opacity:0.95;/*其他*/
+}
+.propSetControl .propertySet,
+.propSetHover .propertySet{
+	visibility:visible;
+}
+.propertySet{
+	position: absolute;
+    right: -46px;
+    top: 0;
+    bottom:0;
+    cursor: default;
+    /* border: 1px solid #F7CAC9; */
+    /* display:none; */
+    visibility:hidden;
+}
+.propertyBox{
+	line-height: normal;
+	padding:30px 20px;
+	position:absolute;
+	background-color:rgb(192,192,192);
+	visibility:visible;
+}
+.hideSet{
+	position:absolute;
+	right:5px;
+	top:5px;
+	cursor: default;
+}
+.signatureTxt{
+	text-align:center;
+    font-weight: bold;
+    white-space: nowrap;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	text-overflow: ellipsis;
+}
+.msgSelect{
+	padding:2px 4px;
+	width: 120px;
+	margin:10px 0;
+}
+
+/*** signtask.js ***/
+.formAdornment{
+    z-index:26; 
+    position:absolute;     
+    overflow:hidden;    
+}
+.clickSign,
+.signButtonTip{
+	background-color:#EFBF87;
+	color:#1E1E1E;
+	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.8; /*Firefox私有，透明度50%*/
+    opacity:0.8;/*其他，透明度50%*/
+    position: relative;
+    -moz-box-sizing: inherit;
+    text-shadow: none;
+    letter-spacing: .6px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 26;
+}
+.signButtonTip{
+	height:40px;
+	line-height:40px;
+	width:103px;
+	position:fixed;
+	top:89px;
+}
+.signDiv{
+	boder: 2px;
+	boder-color: red;
+}
+#bottomSave, #saveButton{
+	 height: 60px; 
+}
+#saveButton{
+     width: 140px; 
+     background-color:#33cc99;
+     cursor:pointer;
+     position: absolute;
+     right: 0;
+     text-align: center;
+}
+#saveButton:hover{
+	background-color:#2fbb8d;
+}
+#bottomSave{
+	background: #095db1;
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    z-index:26;
+    line-height:60px;
+    padding: 0 20px;
+    color:#fff;
+    display:none;
+}
+.signFinishWarn{
+	height: 50px;
+	line-height:50px;
+    z-index: 32;
+    padding:0 20px;
+    position: absolute;
+    top: 40%;
+    margin: 0 auto;
+    left: 45%;
+    background-color:#2fbb8d;
+    color:#fff;
+    display:none;
+}
+.mustDo{
+	position: absolute;
+	color: #A40027;	
+}
+.propIcon{	
+	display: inline-block;
+	padding:2px;
+	float: left;
+	width: 16px;
+	height: 16px;
+	border: 1px solid transparent;
+}
+.propIcon:hover{
+	border: 1px solid #F7CAC9;
+}
+#propertyDialog .formCss div{
+	margin-top: 30px;
+}
+#confirmName, #cancelName{
+	width: 80px;
+	height: 35px;
+	background-color: #87AEF7;
+    cursor:pointer;
+    padding:6px 30px;
+    color:#fff;
+}
+#cancelName{
+	margin-left: 50px;
+	margin-right: 10px;
+}
+
+/****signature  scan-sign-model*****/
+.footer-container {
+	padding: 20px 0 5px 0;
+	text-align: right;
+}
+
+.baseBtn {
+	display: inline-block;
+	padding: 0px 20px;
+	background-color: #ebebeb;
+	border: #e1e1e1 1px solid;
+	cursor: pointer;
+	text-align: center;
+	font-size: 13px;
+}
+.signatureReset {
+	color: #fff;
+}
+
+.signatureSave {
+	color: #fff;
+}
+.js_qrcode_show{
+	text-align:center;
+	padding-top:60px;
+	padding-bottom:10px;
+}
+.generateQrcode {
+	position: absolute;
+	font-size:13px;
+	top: 100px;
+	right: 45px;
+	display: inline-block;
+	color: #fff;
+	cursor: pointer;
+	margin-right:0px;
+}
+.szCanvasDiv {
+	padding-top:30px;
+	width: 100%;
+}
+.szImgDiv{
+	height:300px;
+	border:1px solid #91969d;
+}
+.szImg{
+	width:250px;
+	margin-left:130px;
+	margin-top:50px;
+}
+.szP{
+	text-align:center;
+}
+.szSuggest{
+	margin-top:4px;
+	padding-top:60px;
+	text-align:center;
+}
+.szSuggest1{
+	margin-top:4px;
+	padding-top:60px;
+	text-align:center;
+}
+.szSuggest2{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+.szSuggest3{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+.szSuggest4{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+/****signature  scan-upload-model*****/
+.footer-container {
+	padding: 20px 0 5px 0;
+	text-align: right;
+}
+
+.baseBtn {
+	display: inline-block;
+	padding: 0px 20px;
+	background-color: #ebebeb;
+	border: #e1e1e1 1px solid;
+	cursor: pointer;
+	text-align: center;
+	font-size: 13px;
+}
+.signatureReset {
+	color: #fff;
+}
+
+.signatureSave {
+	color: #fff;
+}
+.js_qrcode_show_upload{
+	text-align:center;
+	padding-top:60px;
+	padding-bottom:10px;
+}
+.generateQrcodeupload {
+	position: absolute;
+	font-size:13px;
+	top: 100px;
+	right: 45px;
+	display: inline-block;
+	color: #fff;
+	cursor: pointer;
+	margin-right:0px;
+}
+.szCanvasupload {
+	padding-top:30px;
+	width: 100%;
+}
+.szImgDiv{
+	height:300px;
+	border:1px solid #91969d;
+}
+.szImg{
+	width:250px;
+	margin-left:130px;
+	margin-top:50px;
+}
+.szP{
+	text-align:center;
+}
+.szupload{
+	margin-top:4px;
+	padding-top:60px;
+	text-align:center;
+}
+.szupload1{
+	margin-top:4px;
+	padding-top:60px;
+	text-align:center;
+}
+.szupload2{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+.szupload3{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+.szupload4{
+	margin-top:4px;
+	padding-top:102px;
+	padding-bottom:102px;
+	text-align:center;
+}
+.szImgupload{
+	width:200px;
+	margin-left:160px;
+}

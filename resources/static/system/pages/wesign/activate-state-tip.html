@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>激活状态提示 | 云取证</title>
+</head>
+<body>
+	<div th:replace="system/pages/common/login-common.html :: copy-login-header">此处header动态复用</div>
+	<div class="containerBg">
+		<div class="containerBox">
+			<div class="textCenter mt40">
+				<!-- <div class="activeContent">
+					<p class="active-subtitle">请求链接已发送到邮箱<sp  an class="tipDefault"> simpleronline@sina.com </span>，请前往邮箱确认链接</p>
+				</div> -->
+				<div th:if="${resultCode == 0}" class="mb10">
+					<img alt="激活账号提醒" src="../../images/s-activetip.jpg" th:src="@{/static/system/images/s-activetip.jpg}">
+            		<h2 class="active-title" th:text=${error} />
+            		<div class="mt40">
+            			<a th:href="@{/wesign/login.html}" class="solidBtnMid">立即登录</a>
+					</div>
+    			</div>
+    			<div th:if="${resultCode < 0}" class="mb10">
+    				<img th:alt=${error} src="../../images/active-error.png" th:src="@{/static/system/images/active-error.png}">
+            		<h2 class="active-title tipWarning" th:text=${error} />
+            		<div class="mt40">
+						<!-- <input type="button" value="前往邮箱" class="solidBtnMid"> -->
+						<a th:href="@{/wesign/register.html}" class="solidBtnMid">重新注册</a>
+						<a th:href="@{/wesign/login.html}" class="solidBtnMid btnNormal">返回登录</a>
+					</div>
+    			</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+	<script src="../../js/login.js" th:src="@{/static/system/js/login.js}" type="text/javascript"></script>
+</body>
+</html>

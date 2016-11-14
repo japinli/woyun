@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>签名管理 | 易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../css/doc-sign.css" th:href="@{/static/system/css/doc-sign.css}"/>
+</head>
+<body>
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
+<div class="container">
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+	<div class="rmain">
+		<div class="lbar">
+	        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-link"></div>
+		</div>
+		
+		<div class="rmain-main">
+               <div class="rmain-operation-bar">
+               		<div class="dis-inline bar-title">
+               			<span>我的印章和签名</span>
+               			<span class="fs12 plr10">*单个用户设置签名和印章的总数不超过5个</span>
+               		</div>
+                   <ul class="dis-inline rmain-top-bar posAr mr35">
+                   	   <li id="js_makesign_btn" class="btn-bar-solidbg" title="添加签名"><span>添加签名</span></li>
+                   	   <li id="js_sealUpload_btn" class="btn-bar-solidbg" title="上传印章"><span>上传印章</span></li>
+                   </ul>
+               </div>
+               <div class="rmain-show-area">
+                   <div class="area-operate"></div>
+                   <div class="rmain-view-container">
+	                   <div class="view view-padding">
+	                   </div> <!-- view -->
+	                </div>
+               </div> <!-- rmain-show-area -->
+        </div> <!-- rmain-main -->
+	</div> <!-- rmain -->
+</div>   
+<!-- footer -->
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-syscommon-footer">此处footer动态复用</div>
+<script th:src="@{/static/common/js/sockjs/sockjs-0.3.4.min.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/stomp/stomp.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/signature-pad/signature-pad.js}" type="text/javascript"></script>
+<script th:src="@{/static/common/js/jquery.qrcode.min.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/signatureway.js}" type="text/javascript"></script>
+<script th:src="@{/static/system/js/seal.js}" type="text/javascript"></script>
+<!-- 制作签章 -->
+<div th:replace="system/pages/common/sys-module-common.html :: copy-sign-seals-panel">此处制作签名面板动态复用</div>
+
+<!--dialog-->
+<div id="sealUploadDialog" title="上传印章">
+    <div class="body-content-container posR">
+  		<p class="fontColor-default">支持图片类型: GIF, JPG, JPEG, PNG, JPE, BMP, TIFF</p>
+  		<p class="fontColor-default">文件大小不超过500KB，建议背景透明</p>
+  		<div class="position-container">
+   			<span class="uplaod-input-container">选择图片文件或拖拽图片到本框<input id="js_sealUpload" class="upload-input-css" type="file" name="file" /></span>
+   		</div>
+   		<div id="signatureUpload-content" class="contain-border mt20">
+   			<div id="imageFiles"></div>
+   		</div>
+  	</div>
+</div>
+</body>
+</html>

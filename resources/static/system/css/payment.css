@@ -1,0 +1,170 @@
+/*充值页面*/
+.payBody,.payResultBody{
+		max-width: 1080px;
+		min-width: 800px;
+		margin-left:auto;
+		margin-right:auto;
+		font:12px/1.5 "\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Hiragino Sans GB",Helvetica;
+	}
+.payBody input{
+		border-radius: 3px;
+		border:1px solid #ccc;
+		padding:3px 5px;
+	}
+.payBody h2{
+		font-size:27px;
+		border-bottom:3px solid red;
+		margin:20px  0px;
+	}
+.payBody h3{
+	font-size:18px;
+	font-weight:bold;
+	background:#eee;
+}
+.payBody  p{
+	font-size:16px;
+	line-height:1.7;
+	margin:15px 0;
+}
+input.payButton{
+	width:160px;
+	height:32px;
+	border:1px #f45d67 solid;
+	margin:22px 0 90px;
+	font-size:16px;
+}
+.payNumber{
+		width:68px;
+	}
+.payAccount{
+		color: #f20;
+		font-family: "微软雅黑";
+	}
+/*套餐页面*/
+.comboAll{
+	width:82%;
+	min-width:880px;
+	height:100%;
+	margin: 0 auto;
+}
+.comboAll h2{
+	font-size:18px;
+	font-weight:bold;
+	margin:30px 0px 20px;
+}
+.personalCombo h3{
+	font-size:16px;
+	font-weight:bold;
+	text-align:center;
+	margin-bottom: 15px;
+}
+.personalCombo ul{
+	width:860px;;
+	margin:0 auto;
+	display:block;
+}
+.personalCombo li{
+	height:300px;
+	float:left;
+	display:inline;
+	overflow:hidden;
+	margin-left:3%;
+	margin-right:3%;
+	background:#eee;
+}
+.personalCombo .clearfix{
+	*zoom:1;
+}
+.personalCombo .clearfix:after{
+	content:"";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+.sinplePay{
+	width:230px;
+	height:260px;
+	padding:20px 0;
+}
+.sinplePay span{
+	color:red;
+	font-size:18px;
+	display:block;
+	text-align:center;
+}
+.sinplePay p{
+	text-align:center;
+	height:25px;
+	line-height:1.7;
+}
+.sinplePay a.fetmore{
+	color:#00a2ca;
+	display:block;
+	text-align:center;
+}
+.sinplePay a:hover.fetmore{
+	text-decoration:underline;
+}
+.sinplePay p.mt20{
+	margin-top:16px;
+}
+.sinpleBut{
+	width:128px;
+	text-align:center;
+	display:block;
+	margin:20px auto;
+}
+.enterpriCombo{
+		width:805px;
+		margin:0 auto;
+		background:#eee;
+		padding-top:20px;
+		padding-bottom:10px;
+		text-align:center;
+}
+.enterpriCombo h3{
+	font-size:16px;
+	font-weight:bold;
+	text-align:center;
+	margin-bottom: 15px;
+}
+/*支付结果页面*/
+.payResultBody h2{
+	font-size:27px;
+		border-bottom:3px solid red;
+		margin:20px  0px;
+}
+.payResultBody h3{
+	font-size:18px;
+	font-weight:bold;
+	background:#eee;
+	margin-top:74px;
+}
+.payResultBody  p{
+	font-size:16px;
+	line-height:1.7;
+	margin:15px 0;
+}
+.seComBo{
+	font-size:18px;
+}
+.payRBut{
+	margin-left:0;
+	width:168px;
+	font-size:15px;
+}
+.payRLeft{
+	padding-left:30px;
+}
+
+
+
+
+
+
+
+
+
+
+

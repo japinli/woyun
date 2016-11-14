@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>支付结果|易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../css/setting.css" th:href="@{/static/system/css/setting.css}"/>
+</head>
+<body>
+	
+<div class="container">
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+	<div class="view" style="top:60px">
+		<div class="ui-nav-container">
+			<div class="ui-nav-content">
+				<h2 class="setForm-title">支付结果</h2>
+			</div>
+		</div>	
+		<div class="ui-nav-content setForm-container">
+			<div class="payBody">				
+				<div th:if="${hasPay==true}" id="js_pay_success" class="left-content pay-results">
+					<img class="payment-title-pic" th:src="@{/static/system/images/pay-success.png}" src="static/system/images/pay-success.png"/>
+					<p><a class="need-expand">支付成功！</a></p>
+					<p>您已成功支付订单:&nbsp;<span th:text="${orderId}"></span></p>
+					<div class="pay-success-btn">
+						<a class="pay-success-result btn-primary" th:href="@{'/wesign/'+${session.loginRole}+'/index.html'}">立即签名</a>
+						<a class="pay-success-result btn-primary" th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}">返回文档中心</a>
+					</div>
+				</div>
+				<div th:if="${hasPay==false}" id="js_pay_error" class="pay-results">
+					<img class="payment-title-pic" th:src="@{/static/system/images/pay-fail.png}" src="static/system/images/pay-fail.png"/>
+					<p><a class="need-expand">支付失败！</a></p>
+				    <p>您好，由于网络延迟，支付失败的情况下也可能扣款成功，</br>
+				    如果扣款成功后套餐未到帐，系统将在7个工作日内进行退费，</br>
+				    如未收到退款，详询400-168-8973</p>
+				    <div class="pay-fail-btn">
+				    	<a class="pay-fail-result mr70" th:href="@{'/wesign/'+${session.loginRole}+'/payments/purchase-records.html'}" id="repay">重新支付</a>
+				    	<a class="btn-primary" th:href="@{'/wesign/'+${session.loginRole}+'/payments/purchase-records.html'}">购买记录</a>
+				    </div>
+				</div>
+			</div>
+		</div>
+		<div id="callback-form" style="display: none"> </div>
+	</div> <!-- ui-content-view -->
+	
+	<!-- <com:ui-footer-content /> -->
+	<div th:replace="system/pages/common/sys-quote-common.html :: copy-sysbase-footer"></div>
+</div>
+<script type="text/javascript">
+	var comboId = location.search.slice(-2);
+	$("#repay").unbind('click').click(function() {
+		$("#repay").prop("href",gfALLDATA("payHref")+"/pay-combo.html?id="+comboId); 
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>证书|易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+</head>
+<body>
+<div class="container">
+    <div class="container-header">
+        <div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>        
+    </div>
+    <div class="rmain">
+        <div class="lbar">
+            <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-link">动态复用</div>            
+        </div>
+        <div class="rmain-main">
+        <input class="userIdentify" type="hidden" th:value="${userInfo.identify}" />
+            <div class="rmain-operation-bar">
+                <div class="dis-inline bar-title">我的证书</div>
+            </div>
+            <div class="rmain-view-container">
+                <div class="view"></div>
+            </div>
+        </div>
+    </div>     
+</div>
+<!-- footer -->  
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-sysbase-footer">此处footer动态复用</div>
+<script th:src="@{/static/system/js/certi-details.js}" type="text/javascript"></script>
+</body>
+</html>

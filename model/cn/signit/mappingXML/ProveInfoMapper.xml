@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.signit.dao.mysql.ProveInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.signit.domain.mysql.ProveInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="regist_code" property="registCode" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="fill_in_person" property="fillInPerson" jdbcType="INTEGER" />
+    <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="legal_person_id_card_code" property="legalPersonIdCardCode" jdbcType="VARCHAR" />
+    <result column="legal_person_id_card_valid" property="legalPersonIdCardValid" jdbcType="INTEGER" />
+    <result column="legal_person_id_card_valid_date" property="legalPersonIdCardValidDate" jdbcType="TIMESTAMP" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="agent_id_card_code" property="agentIdCardCode" jdbcType="VARCHAR" />
+    <result column="agent_id_card_valid" property="agentIdCardValid" jdbcType="INTEGER" />
+    <result column="agent_id_card_valid_date" property="agentIdCardValidDate" jdbcType="TIMESTAMP" />
+    <result column="business_licence_pic" property="businessLicencePic" jdbcType="VARCHAR" />
+    <result column="org_code_pic" property="orgCodePic" jdbcType="VARCHAR" />
+    <result column="legal_person_id_card_type" property="legalPersonIdCardType" jdbcType="INTEGER" />
+    <result column="legal_person_id_card_pic1" property="legalPersonIdCardPic1" jdbcType="VARCHAR" />
+    <result column="legal_person_id_card_pic2" property="legalPersonIdCardPic2" jdbcType="VARCHAR" />
+    <result column="agent_id_card_type" property="agentIdCardType" jdbcType="INTEGER" />
+    <result column="agent_id_card_pic1" property="agentIdCardPic1" jdbcType="VARCHAR" />
+    <result column="agent_id_card_pic2" property="agentIdCardPic2" jdbcType="VARCHAR" />
+    <result column="agent_trust_instrument_pic" property="agentTrustInstrumentPic" jdbcType="VARCHAR" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+    <result column="pass_date" property="passDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, type, name, phone, email, regist_code, org_code, fill_in_person, legal_person_name, 
+    legal_person_id_card_code, legal_person_id_card_valid, legal_person_id_card_valid_date, 
+    agent_name, agent_id_card_code, agent_id_card_valid, agent_id_card_valid_date, business_licence_pic, 
+    org_code_pic, legal_person_id_card_type, legal_person_id_card_pic1, legal_person_id_card_pic2, 
+    agent_id_card_type, agent_id_card_pic1, agent_id_card_pic2, agent_trust_instrument_pic, 
+    submit_date, pass_date, state, remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_prove
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from enterprise_prove
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.signit.domain.mysql.ProveInfo" >
+    insert into enterprise_prove (id, user_id, type, 
+      name, phone, email, 
+      regist_code, org_code, fill_in_person, 
+      legal_person_name, legal_person_id_card_code, 
+      legal_person_id_card_valid, legal_person_id_card_valid_date, 
+      agent_name, agent_id_card_code, agent_id_card_valid, 
+      agent_id_card_valid_date, business_licence_pic, 
+      org_code_pic, legal_person_id_card_type, legal_person_id_card_pic1, 
+      legal_person_id_card_pic2, agent_id_card_type, 
+      agent_id_card_pic1, agent_id_card_pic2, agent_trust_instrument_pic, 
+      submit_date, pass_date, state, 
+      remarks)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{registCode,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{fillInPerson,jdbcType=INTEGER}, 
+      #{legalPersonName,jdbcType=VARCHAR}, #{legalPersonIdCardCode,jdbcType=VARCHAR}, 
+      #{legalPersonIdCardValid,jdbcType=INTEGER}, #{legalPersonIdCardValidDate,jdbcType=TIMESTAMP}, 
+      #{agentName,jdbcType=VARCHAR}, #{agentIdCardCode,jdbcType=VARCHAR}, #{agentIdCardValid,jdbcType=INTEGER}, 
+      #{agentIdCardValidDate,jdbcType=TIMESTAMP}, #{businessLicencePic,jdbcType=VARCHAR}, 
+      #{orgCodePic,jdbcType=VARCHAR}, #{legalPersonIdCardType,jdbcType=INTEGER}, #{legalPersonIdCardPic1,jdbcType=VARCHAR}, 
+      #{legalPersonIdCardPic2,jdbcType=VARCHAR}, #{agentIdCardType,jdbcType=INTEGER}, 
+      #{agentIdCardPic1,jdbcType=VARCHAR}, #{agentIdCardPic2,jdbcType=VARCHAR}, #{agentTrustInstrumentPic,jdbcType=VARCHAR}, 
+      #{submitDate,jdbcType=TIMESTAMP}, #{passDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.signit.domain.mysql.ProveInfo" >
+    insert into enterprise_prove
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="registCode != null" >
+        regist_code,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="fillInPerson != null" >
+        fill_in_person,
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name,
+      </if>
+      <if test="legalPersonIdCardCode != null" >
+        legal_person_id_card_code,
+      </if>
+      <if test="legalPersonIdCardValid != null" >
+        legal_person_id_card_valid,
+      </if>
+      <if test="legalPersonIdCardValidDate != null" >
+        legal_person_id_card_valid_date,
+      </if>
+      <if test="agentName != null" >
+        agent_name,
+      </if>
+      <if test="agentIdCardCode != null" >
+        agent_id_card_code,
+      </if>
+      <if test="agentIdCardValid != null" >
+        agent_id_card_valid,
+      </if>
+      <if test="agentIdCardValidDate != null" >
+        agent_id_card_valid_date,
+      </if>
+      <if test="businessLicencePic != null" >
+        business_licence_pic,
+      </if>
+      <if test="orgCodePic != null" >
+        org_code_pic,
+      </if>
+      <if test="legalPersonIdCardType != null" >
+        legal_person_id_card_type,
+      </if>
+      <if test="legalPersonIdCardPic1 != null" >
+        legal_person_id_card_pic1,
+      </if>
+      <if test="legalPersonIdCardPic2 != null" >
+        legal_person_id_card_pic2,
+      </if>
+      <if test="agentIdCardType != null" >
+        agent_id_card_type,
+      </if>
+      <if test="agentIdCardPic1 != null" >
+        agent_id_card_pic1,
+      </if>
+      <if test="agentIdCardPic2 != null" >
+        agent_id_card_pic2,
+      </if>
+      <if test="agentTrustInstrumentPic != null" >
+        agent_trust_instrument_pic,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="passDate != null" >
+        pass_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="registCode != null" >
+        #{registCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fillInPerson != null" >
+        #{fillInPerson,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonName != null" >
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardCode != null" >
+        #{legalPersonIdCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardValid != null" >
+        #{legalPersonIdCardValid,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonIdCardValidDate != null" >
+        #{legalPersonIdCardValidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentName != null" >
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardCode != null" >
+        #{agentIdCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardValid != null" >
+        #{agentIdCardValid,jdbcType=INTEGER},
+      </if>
+      <if test="agentIdCardValidDate != null" >
+        #{agentIdCardValidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessLicencePic != null" >
+        #{businessLicencePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCodePic != null" >
+        #{orgCodePic,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardType != null" >
+        #{legalPersonIdCardType,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonIdCardPic1 != null" >
+        #{legalPersonIdCardPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardPic2 != null" >
+        #{legalPersonIdCardPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardType != null" >
+        #{agentIdCardType,jdbcType=INTEGER},
+      </if>
+      <if test="agentIdCardPic1 != null" >
+        #{agentIdCardPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardPic2 != null" >
+        #{agentIdCardPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="agentTrustInstrumentPic != null" >
+        #{agentTrustInstrumentPic,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passDate != null" >
+        #{passDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.signit.domain.mysql.ProveInfo" >
+    update enterprise_prove
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="registCode != null" >
+        regist_code = #{registCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fillInPerson != null" >
+        fill_in_person = #{fillInPerson,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardCode != null" >
+        legal_person_id_card_code = #{legalPersonIdCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardValid != null" >
+        legal_person_id_card_valid = #{legalPersonIdCardValid,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonIdCardValidDate != null" >
+        legal_person_id_card_valid_date = #{legalPersonIdCardValidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardCode != null" >
+        agent_id_card_code = #{agentIdCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardValid != null" >
+        agent_id_card_valid = #{agentIdCardValid,jdbcType=INTEGER},
+      </if>
+      <if test="agentIdCardValidDate != null" >
+        agent_id_card_valid_date = #{agentIdCardValidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessLicencePic != null" >
+        business_licence_pic = #{businessLicencePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCodePic != null" >
+        org_code_pic = #{orgCodePic,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardType != null" >
+        legal_person_id_card_type = #{legalPersonIdCardType,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonIdCardPic1 != null" >
+        legal_person_id_card_pic1 = #{legalPersonIdCardPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonIdCardPic2 != null" >
+        legal_person_id_card_pic2 = #{legalPersonIdCardPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardType != null" >
+        agent_id_card_type = #{agentIdCardType,jdbcType=INTEGER},
+      </if>
+      <if test="agentIdCardPic1 != null" >
+        agent_id_card_pic1 = #{agentIdCardPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="agentIdCardPic2 != null" >
+        agent_id_card_pic2 = #{agentIdCardPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="agentTrustInstrumentPic != null" >
+        agent_trust_instrument_pic = #{agentTrustInstrumentPic,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passDate != null" >
+        pass_date = #{passDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.signit.domain.mysql.ProveInfo" >
+    update enterprise_prove
+    set user_id = #{userId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      regist_code = #{registCode,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      fill_in_person = #{fillInPerson,jdbcType=INTEGER},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      legal_person_id_card_code = #{legalPersonIdCardCode,jdbcType=VARCHAR},
+      legal_person_id_card_valid = #{legalPersonIdCardValid,jdbcType=INTEGER},
+      legal_person_id_card_valid_date = #{legalPersonIdCardValidDate,jdbcType=TIMESTAMP},
+      agent_name = #{agentName,jdbcType=VARCHAR},
+      agent_id_card_code = #{agentIdCardCode,jdbcType=VARCHAR},
+      agent_id_card_valid = #{agentIdCardValid,jdbcType=INTEGER},
+      agent_id_card_valid_date = #{agentIdCardValidDate,jdbcType=TIMESTAMP},
+      business_licence_pic = #{businessLicencePic,jdbcType=VARCHAR},
+      org_code_pic = #{orgCodePic,jdbcType=VARCHAR},
+      legal_person_id_card_type = #{legalPersonIdCardType,jdbcType=INTEGER},
+      legal_person_id_card_pic1 = #{legalPersonIdCardPic1,jdbcType=VARCHAR},
+      legal_person_id_card_pic2 = #{legalPersonIdCardPic2,jdbcType=VARCHAR},
+      agent_id_card_type = #{agentIdCardType,jdbcType=INTEGER},
+      agent_id_card_pic1 = #{agentIdCardPic1,jdbcType=VARCHAR},
+      agent_id_card_pic2 = #{agentIdCardPic2,jdbcType=VARCHAR},
+      agent_trust_instrument_pic = #{agentTrustInstrumentPic,jdbcType=VARCHAR},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      pass_date = #{passDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

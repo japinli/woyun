@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+<title>发生错误 | 易企签</title>
+</head>
+<body>
+	<div th:replace="system/pages/common/login-common.html :: copy-login-header"></div>
+	<div class="errorContainer">
+		<h2 class="fourzthead">服务器正在升级或维护中</h2>
+		<p class="textCenter"><img src="../images/error500.jpg" th:src=@{/static/error/images/error500.jpg}></p>
+		<div class="returnBtnCon">
+			<a class="returnBtn" th:href="@{/wesign/login.html}">返回登录页</a>
+			<a class="returnBtn ml5" href="javascript: history.go(-1);">返回上一页</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<!--说明：低浏览器的处理-->
+	<!-- ------------------------------------------- -->
+	<!-- head  fragment -->
+	<!-- ------------------------------------------- -->
+	<div th:fragment="copy-base-head" th:remove="tag">
+		<link rel="icon" href="../../../common/images/logo-ico.ico" th:href="@{/static/common/images/logo-ico.ico}" type="image/x-icon">
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="keywords" content="电子签章,电子签名,手机签章">
+	    <meta name="format-detection" content="telephone=no" >
+	    <meta content="email=no" name="format-detection" />
+	    <!--目前只有360旗下全系列双核浏览器识别该meta标签-->
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta name="description" content="Signit——互联网可信缔约管理服务商、电子签章、电子签名、移动签章、app、ios，端到端电子签章解决方案供应商，让电子签章应用更简单，自建部署方案，SaaS模式部署方案">
+	    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- 启用 WebApp 全屏模式 -->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
+	    <!-- Start of KF5 supportbox script -->
+	    <script src="//assets.kf5.com/supportbox/main.js" id="kf5-provide-supportBox" kf5-domain="signit.kf5.com"></script>
+	    <!-- End of KF5 supportbox script -->
+	    
+	    <link type="text/css" href="../css/bootstrap.min.css" th:href=@{/static/home/css/bootstrap.min.css} rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="../css/index-es.css" th:href=@{/static/home/css/index-es.css}>
+	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	      <script src="../../common/js/html5shiv.min.js" th:src=@{/static/common/js/html5shiv.min.js}></script>
+	      <script src="../../common/js/respond.min.js" th:src=@{/static/common/js/respond.min.js}></script>
+	    <![endif]-->
+	</div>	
+	
+	<!-- ------------------------------------------- -->
+	<!-- content-foot  fragment -->
+	<!-- ------------------------------------------- -->
+	<div th:fragment="copy-content-foot" th:remove="tag">
+		 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footerbg">
+          <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 plr0 footCon">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+              <p class="text-left subFootTii">联系我们</p>
+              <ul class="list-unstyled tiaoshi footFontS">
+                <li><a class="sublink" href="state.html" th:href=@{/state.html}>服务条款</a></li>
+                <li><span class="glyphicon glyphicon-earphone pr10"></span>400-168-8973</li>
+                <li><span class="glyphicon glyphicon-envelope pr10"></span>feedback@signit.cn</li>
+                <li><span>销售咨询QQ群：</span>559340344</li>
+              </ul>
+            </div>
+            <div class="hidden-xs col-sm-4 col-md-4 youlian">
+              <p class="subFootTii">友情链接</p>
+              <ul class="list-unstyled footFontS">
+                <li><a class="sublink" href="//www.tuishiben.com/" target="_blank">推事本</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="sublink" href="//jianguoyun.com/" target="_blank">坚果云</a></li>
+                <li><a class="sublink" href="//www.neihang.me/" target="_blank">内行网</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="sublink" href="//www.sicca.com.cn/" target="_blank">四川CA</a></li>
+                <li><a class="sublink" href="//www.evervc.com/" target="_blank">天天投</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="sublink" href="//www.sdca.com.cn/" target="_blank">山东CA</a></li>
+              </ul>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+              <p class="text-right subFootTii maml">扫码关注</p>
+              <p class="text-right"><img alt="关注我们微信公众号" title="扫码关注我" class="footimg" src="../images/wei_03.jpg" th:src=@{/static/home/images/wei_03.jpg}></p>
+            </div>
+          </div>
+        </div>
+        <!-- 拖底 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tud plr0">
+        	<div class="col-xs-12 col-sm-12 col-md-12">
+              <p class="text-center icp mb0">四川思安特科技有限公司 Copyright © 2015-<span id="copyrightNow">2016</span> 版权所有&nbsp;蜀ICP备14022777号</p>
+            </div>
+        <!-- <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 plr0">
+        	<div class="hidden-xs col-sm-12 col-md-12 text-center">
+              <ul class="list-unstyled list-inline marklist">
+                <li><a href="javascript:void(0);" tabindex="0" class="footip" role="button" data-toggle="popover" data-placement="top" data-trigger="hover" title="" data-content="400-168-8973"><span class="mark1"></span></a></li>
+                <li><a href="javascript:void(0);" tabindex="1" class="footip" role="button" data-toggle="popover" data-placement="top" data-trigger="hover" title="" data-content="微信号：signit"><span class="mark2"></span></a></li>
+                <li><a target="_blank" class="footip" href="http://shang.qq.com/wpa/qunwpa?idkey=47743aef2a603618010068940d63cadb4f3430ae7538561452d493b604a0298f"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="易企签咨询2群" title="易企签咨询2群"></a></li>
+              </ul>
+            </div>
+           <div class="col-xs-12 col-sm-12 col-md-12">
+              <p class="text-center icp mb0">四川思安特科技有限公司 Copyright © 2015-<span id="copyrightNow">2016</span> 版权所有&nbsp;蜀ICP备14022777号</p>
+            </div>
+          </div> -->
+        </div>
+	</div>
+	
+	<!-- ------------------------------------------- -->
+	<!-- base-foot  fragment -->
+	<!-- ------------------------------------------- -->
+	<div th:fragment="copy-base-foot" th:remove="tag">
+	
+	    <script src="../../common/js/jquery.min.js" th:src=@{/static/common/js/jquery.min.js}></script>
+	    <script src="../../common/js/bootstrap.min.js" th:src=@{/static/common/js/bootstrap.min.js}></script>
+	    <script type="text/javascript">
+	    document.getElementById("copyrightNow").innerHTML = (new Date()).getFullYear();
+	  	//弹出电话号码窗口
+	    $(function () {
+	      $('[data-toggle="popover"]').popover();
+	    });
+	  	</script>
+	</div>
+	
+</body>
+</html>

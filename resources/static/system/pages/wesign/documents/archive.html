@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>保全中心 | 云取证</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../css/doc-sign.css" th:href="@{/static/system/css/doc-sign.css}"/>
+</head>
+<body>
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
+<div class="container">
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+
+	<div class="rmain">
+	      <div class="lbar">
+	      		<div class="lbar-block">
+			        <ul id="doc-id-bar" class="lbar-link" name="1">
+			            <li id="allDocBarId" class="active">
+			            	<a href="javascript:;">
+			            		<i class="icon-alldoc-hollow"></i>
+			            		<span class="lbar-link-title">全部保全</span>
+			            	</a>
+						</li>
+			            <li id="waitMeBarId">
+			            	<a href="javascript:;">
+				            	<i class="icon-docsigned2-hollow"></i>
+				            	<span class="lbar-link-title">待我签署</span>
+				            </a>
+				        </li>
+			            <li id="waitOtherBarId">
+			            	<a href="javascript:;">
+			            		<i class="icon-disign-hollow"></i>
+			            		<span class="lbar-link-title">等待他人签署</span>
+			            	</a>
+			           </li>
+			           <li id="signedBarId">
+			            	<a href="javascript:;">
+			            		<i class="icon-disign-hollow"></i>
+			            		<span class="lbar-link-title">已完成</span>
+			            	</a>
+			           </li>
+			        </ul>
+		        </div>
+		        
+		        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-app">动态复用</div>
+		</div>
+
+	      <div class="rmain-main">
+	            <div class="rmain-operation-bar">
+	                <div class="search-form-group mr35 posRl dis-inline">
+				        <i id="submit-search-icon" class="icon-search-hollow"></i>
+				        <input id="search-input-id" class="search-input" type="text" name="" value="" placeholder="按主题搜索你的文件" />
+				    </div>
+	               <div class="dis-inline rmain-top-barr posAr"></div>
+	            </div> <!-- rmain-operation-bar -->
+	            <div class="rmain-show-area">
+	                <div class="area-operate"></div>
+	                <div class="rmain-view-container">
+	                	<div class="view plr30">
+               				<div class="thead">
+                				<div style="width:25%;" class="thead-td firstEle">状态</div>
+                				<div style="width:25%;" class="thead-td">主题</div>
+                				<div style="width:15%;" class="thead-td">时间</div>
+                				<div style="width:35%;" class="thead-td">操作</div>
+               				</div>
+                			<div id="docListContainer">
+                				<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">等待他人签署</span>
+										
+									</div>
+									<div class="td" style="width:25%;" title="完成入职合同签署明天之前快点完成完成完成明天之前">完成入职合同签署明天之前快点完成完成完成明天之前</div>
+									<div class="td" style="width:15%;">2016-04-27 10:13</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><a href="http://signit.cn/wesign/test/documents/preview.html" th:href=@{/wesign/test/documents/preview.html}><i class="icon-eye"></i></a></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">待我签署</span>
+										<span class="taskbtn">签名</span>
+									</div>
+									<div class="td" style="width:25%;" title="请假条签署">请假条签署</div>
+									<div class="td" style="width:15%;">2016-04-27 14:00</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+								
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">待我签署</span>
+										<span class="taskbtn">签名</span>
+									</div>
+									<div class="td" style="width:25%;" title="请假条签署">请假条签署</div>
+									<div class="td" style="width:15%;">2016-04-27 14:00</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">已完成</span>
+						
+									</div>
+									<div class="td" style="width:25%;" title="实习三方协议书">实习三方协议书</div>
+									<div class="td" style="width:15%;">2016-04-10 15:30</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+											<li title="下载"><a href="#"><i class="icon-download3"></i></a></li>
+											<li title="分享"><a href="#"><i class="icon-share"></i></a></li>
+											
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">待我签署</span>
+										<span class="taskbtn">签名</span>
+									</div>
+									<div class="td" style="width:25%;" title="请假条签署">请假条签署</div>
+									<div class="td" style="width:15%;">2016-04-27 14:00</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">已完成</span>
+						
+									</div>
+									<div class="td" style="width:25%;" title="租房合同">租房合同签约</div>
+									<div class="td" style="width:15%;">2016-04-10 21:30</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+											<li title="下载"><a href="#"><i class="icon-download3"></i></a></li>
+											<li title="分享"><a href="#"><i class="icon-share"></i></a></li>
+											
+										</ul>
+									</div>
+								</div>
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">等待他人签署</span>
+										
+									</div>
+									<div class="td" style="width:25%;" title="完成入职合同签署明天之前快点完成完成完成明天之前">完成入职合同签署明天之前快点完成完成完成明天之前</div>
+									<div class="td" style="width:15%;">2016-04-27 10:13</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="table-item" value="" name="">
+									<div class="td" style="width:25%;">
+										<!-- <div class="selectBoxTd dis-inline"></div> -->
+										<span title="点击打开文档" class="doc-name-td">等待他人签署</span>
+										
+									</div>
+									<div class="td" style="width:25%;" title="完成入职合同签署明天之前">完成入职确认书签署</div>
+									<div class="td" style="width:15%;">2016-04-27 10:13</div>
+									<div class="td" style="width:35%;">
+										<ul class="operateBarTd">
+											
+											<li title="详细信息"><i class="icon-circle-right"></i></li>
+											<li title="预览文档"><i class="icon-eye"></i></li>
+											<li title="删除" class="delete-doc-td"><i class="icon-bin"></i></li>
+										</ul>
+									</div>
+								</div>
+								
+								
+                			</div>
+                		</div>
+	                </div><!-- rmain-view-container -->
+	                <div class="bottom-oparate">
+	                	<div class="dis-inline posAr">
+	                		<div class="js_pagination bar-title"></div>
+	                	</div>
+	                </div>
+	            </div> <!-- rmain-show-area -->
+	        </div>
+	</div> <!--rmain-->
+</div>    
+
+<!--footer-->
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-syscommon-otherfooter">此处footer动态复用</div>
+<script th:src="@{/static/system/js/test-temp.js}" type="text/javascript"></script>
+
+<!--发送邮件-->
+<div id="senfileDialog" title="发送文档">
+  <form class="formCss">
+      <div><label for="js_send_emailto">收件人：</label><input id="js_send_emailto" type="text" name="" value="" placeholder="填写收件人邮箱" /></div>
+      <div class="formBtnCss"><span id="js_send_emailbtn" class="formbtn-ui">发送</span></div>
+  </form>
+</div>
+</body>
+</html>

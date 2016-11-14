@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>预览 | 易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+</head>
+<body>
+<div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
+<div class="container-header">
+	<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+</div>
+<!-- 固定栏 -->
+<div class="preview-bar">
+	<div class="preview-bar-left">
+		<span class="preview-title" th:title="${docName}"><i class="icon-eye"></i><span th:text="${docName}"></span></span>
+	</div>
+	 <div class="toolBarDoc-center">
+        <div class="toolBarDoc-innerCenter">
+         <span class="pre-back">
+               <span id="pre-page" class="toolBar-btn-color">上一页</span>
+               <input id="showPageNum" type="text" value="1" /> / <span id="numCount">1</span>
+               <input id="showPageNum-hidden" type="hidden" value="1" />
+               <span id="back-page" class="toolBar-btn-color">下一页</span>
+            </span>
+           
+        </div>
+    </div>
+	<div class="preview-bar-right">
+		<!-- <span class="prebar-item" title="下载文件"><i class="icon-download3"></i></span>
+		<span class="prebar-item" title="分享文件"><i class="icon-share"></i></span> -->
+		<a class="btn-bar-solidbg" th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}">返回文件中心</a>
+	</div>
+</div>
+<!-- 文档渲染 -->
+<div class="preview-container">
+	<div class="preview-container-scroll">
+		<div id="docViewer" class="preview-container-body">
+			<!-- 列表 -->
+			<div th:each= "page:${totalPages}" th:id="${page}" class="preview-page" th:style="|width:${pageWidth}px; height:${pageHeight}px;|">
+				<img th:id="|pageitem${page}|" th:style="|width:${pageWidth}px; height:${pageHeight}px;|"></img>
+                <div th:id="|esignForm${page}|" class="esignClass" th:value="${page}"></div>
+            </div> 
+		</div>
+	</div>
+</div>
+
+<!--footer-->
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-docpreview-footer">此处footer动态复用</div>
+</body>
+</html>

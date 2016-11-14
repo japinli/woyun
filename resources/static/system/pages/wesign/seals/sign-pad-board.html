@@ -1,0 +1,87 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>思安特科技-跨屏签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" th:href="@{/static/system/css/cropper.css}"/>
+<link rel="stylesheet" th:href="@{/static/system/css/signatureScanUpload.css}"/>
+
+</head>
+<!-- phone -->
+<body>
+<!-- style1 -->
+<div class="signature-scan">
+		<div id="header-container">
+			<div class="header-center">
+				<span id="sig-clearBtn" class="signatureReset">清除</span>
+				<p class="header-font">文档签署</p>
+				<span id="sig-submitBtn" title="生成签名" class="signatureSave">提交</span>
+			</div>
+		</div>
+		<div id="szpad" style="width: 100%;margin-bottom:4px;">
+			<div style="max-width:340px;min-width:250px;margin:0 auto;">
+				<div id="signatureWrite-block" class="m-signature-pad">
+					<div class="m-signature-pad--body">
+						<canvas id="signPadCanvas"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="szComDiv hidden">
+			<p>签名成功，正在发送，请到PC端浏览签名</p>
+		</div>
+	</div>
+	<!-- style2 -->
+<div class="upload-scan">
+  <div id="header-container">
+		<div class="header-center">
+			<p class="header-font">文档签署</p>
+		</div>
+  </div>
+  <div id="contain-upload">
+  <div style="height: 50px; line-height: 50px;border-bottom: 1px solid #171E28;"> 
+	  <div style="position:relative;height: 50px; line-height: 50px;text-align: center;width:160px;float:left;">
+	  	<span> 上传图片: </span><a href="javascript:;" class="file">选择文件<input type="file" accept="image/*" id="uploadImage" value="上传" capture="camera" onchange="selectFileImage(this);" /></a>  
+	  </div> 
+      <div style="position:relative;height: 50px; line-height:50px;text-align: center;width:100px;float:right;">
+			<button type="button" class="file btn" id="button"><span style="font-size:13px;font-family: '微软雅黑';">提交签名</span></button>
+      </div>     
+  </div>
+  <div class="container">
+	 <img id="image" style="opacity:0;" th:src="@{/static/system/images/sfzback.png}" alt="Picture"/>
+  </div>
+  </div>
+  <div class="szComupload hidden">
+	<p>提交成功，正在发送，请到PC端浏览签名</p>
+  </div>
+</div>  
+<script th:src="@{/static/common/js/jquery.min.js}" type="text/javascript"></script>
+<script>
+  var PadRoom = ( window.location.href ).split("#")[2];
+  if(PadRoom == '1'){
+	  if($(".signature-scan")){
+		  $(".signature-scan").remove();
+	  } 
+	  
+  }
+  if(PadRoom == null || PadRoom == undefined){
+	  if($(".upload-scan")){
+		  $(".upload-scan").remove();
+	  }
+  }
+</script>
+  <script th:src="@{/static/common/js/sockjs/sockjs-0.3.4.min.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/stomp/stomp.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/mobileBUGFix.mini.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/jqui/jquery-ui-zh.min.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/jquery-jBox/jBox.min.js}" type="text/javascript"></script> 
+  <script th:src="@{/static/common/js/signature-pad/signature-pad.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/upload.js}" type="text/javascript"></script>
+  <script th:src="@{/static/system/js/common.js}" type="text/javascript"></script>
+  <script th:src="@{/static/common/js/cropper.js}" type="text/javascript"></script> 
+  <script th:src="@{/static/system/js/mobileScanBoard.js}" type="text/javascript"></script>
+  <!-- <script th:src="@{/static/system/js/uploadScan.js}" type="text/javascript"></script> -->
+</body>
+</html>

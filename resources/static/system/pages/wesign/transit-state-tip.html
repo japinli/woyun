@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>云取证</title>
+<div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
+</head>
+<body style="background-color: #f0f3f5;">
+	<div th:replace="system/pages/common/login-common.html :: copy-logo-header"></div>
+	<div class="transit-box">
+		<!-- 非注册用户，进行注册 -->
+		<div th:if="${state == 1}">
+			<p class="transit-title">注册</p>
+			<form class="transit-form" th:action="@{/wesign/transit-state-tip.html?state=1}" th:object="${transitForms}" method="POST">
+				<div>
+					<label for="registEmail" class="info-label">邮箱</label>
+					<input id="registEmail" class="info-input onlyread" name="username" type="text" th:value="${transitForms.username}" readonly="readonly" />
+				</div>
+				<div class="mt10">
+					<label for="registPwd" class="info-label">密码</label>
+					<input id="registPwd" type="password" name="password" th:field="*{password}" class="info-input">
+				</div>
+				<div class="mt10">
+					<label for="registRePwd" class="info-label">确认密码</label>
+					<input id="registRePwd" class="info-input" name="" type="password" />
+				</div>
+				<div class="mt10">
+					<input type="hidden" name="transRef" th:value="${transRef}" readonly="readonly"/> 
+					<input type="hidden" name="realName" th:value="${transitForms.realName}" readonly="readonly"/>
+					<input type="hidden" name="docId" th:value="${transitForms.docId}" readonly="readonly"/>
+					<input type="hidden" name="wfId" th:value="${transitForms.wfId}" readonly="readonly"/>
+				</div>
+				<div class="mt26">
+					<!-- 前端注意：此处submit改为button，方便js对输入的校验/加密等其他操作的控制，然后通过js的$.submit()来提交表单 -->
+					<input type="submit" value="注册" class="solidBtn">
+					<a class="hasOldCount" th:href="${transRef5}">已有账号，登录</a>
+					<span th:if="${error != null}" th:text=${error} class="tipWarning"/>
+				</div>
+			</form>
+		</div>
+		<!-- 要求实名认证提示 -->
+		<div class="transit-tip-box" th:if="${state == 2}">
+			<form action="#" th:action="@{/wesign/transit-state-tip.html?state=2}" th:object="${transitForms}" method="POST">
+				<p><span th:text="|${sponsor}(${sponsorContact})|">李伟（987707344@qq.com）</span></p>
+				<p>邀请您使用证书签名，请前往易企签实名认证中心认证，</p>
+				<p>认证通过易企签将为您免费颁发专有证书。</p>
+				<div class="mt10">
+					<input type="hidden" name="transRef" th:value="${transRef}" readonly="readonly"/>
+					<input type="hidden" name="realName" th:value="${transitForms.realName}" readonly="readonly"/>
+					<input type="hidden" name="username" th:value="${transitForms.username}" readonly="readonly"/>
+				</div>
+				<!-- 前端注意：此处submit改为button，方便js对输入的校验/加密等其他操作的控制，然后通过js的$.submit()来提交表单 -->
+				<input type="submit" value="免费申请证书" class="solidBtnMid mt26">
+			</form>
+		</div>
+	    <!-- 1.非注册用户，注册成功后登录 ; 2.已注册但无证书用户登录-->
+		<div th:if="${state == 3 || state == 4}">
+			<p class="transit-title">登录</p>
+			<form class="transit-form" action="#" th:action="@{/wesign/transit-state-tip.html?state=}+${state}" th:object="${transitForms}" method="POST">
+				<div>
+					<label for="readEmail" class="info-label">邮箱</label>
+					<input id="readEmail" class="info-input onlyread" name="username" type="text" value="" th:value="${transitForms.username}" readonly="readonly" />
+				</div>
+				<div class="mt10">
+					<label for="loginPwd" class="info-label">密码</label>
+					<input id="loginPwd" class="info-input" name="password" type="password" th:field="*{password}" />
+				</div>
+				<div th:if="${enableCaptcha}" class="mb10" th:classappend="${not enableCaptcha}? 'displayNo'" >
+					<label for="captcha" class="info-label">验证码:</label>
+					<input type="text" name="captcha" th:field="*{captcha}" id="loginCaptcha" class="info-input-code">
+					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
+					<span class="js-change-verimg tipNormal login-event">换一个</span>
+				</div>
+				<div class="mt26">
+					<!-- 前端注意：此处submit改为button，方便js对输入的校验/加密等其他操作的控制，然后通过js的$.submit()来提交表单 -->
+					<input type="submit" value="登录" class="solidBtn">
+					<span class="tipWarning" th:if="${error != null}" th:text=${error} />
+				</div>
+			</form>
+		</div>
+		<!-- 已有账号的登录 -->
+		 <div th:if="${state == 5}">
+			<p class="transit-title">登录</p>
+			<form class="transit-form" th:action="@{/wesign/transit-state-tip.html?state=5}" th:object="${transitForms}" method="POST">
+				<div>
+					<label for="hasCount" class="info-label">账号</label>
+					<input id="hasCount" class="info-input" name="username" type="text" value="" th:field="*{username}" />
+				</div>
+				<div class="mt10">
+					<label for="hasPwd" class="info-label">密码</label>
+					<input id="hasPwd" class="info-input" name="password" type="password" th:field="*{password}" />
+				</div>
+				<div th:if="${enableCaptcha}" class="mb10" th:classappend="${not enableCaptcha}? 'displayNo'" >
+					<label for="captcha" class="info-label">验证码:</label>
+					<input type="text" name="captcha" th:field="*{captcha}" id="loginCaptcha" class="info-input-code">
+					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
+					<span class="js-change-verimg tipNormal login-event">换一个</span>
+				</div>
+				<div class="mt10">
+					<input type="hidden" name="transRef" th:value="${transRef}" readonly="readonly"/>
+					<input type="hidden" name="docId" th:value="${transitForms.docId}" readonly="readonly"/>
+					<input type="hidden" name="wfId" th:value="${transitForms.wfId}" readonly="readonly"/>
+					<input type="hidden" name="usernameRef" th:value="${usernameRef}" readonly="readonly"/>
+				</div>
+				<div class="mt26">
+					<!-- 前端注意：此处submit改为button，方便js对输入的校验/加密等其他操作的控制，然后通过js的$.submit()来提交表单 -->
+					<input type="submit" value="登录" class="solidBtn">
+					<span class="tipWarning" th:if="${error != null}" th:text=${error} />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+	<!-- <script src="../../js/activate-tip.js" th:src="@{/static/system/js/activate-tip.js}" type="text/javascript"></script> -->
+</body>
+</html>

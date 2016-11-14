@@ -1,0 +1,458 @@
+/********
+**last edit time: 2016-5-5
+**author: duYanMei
+**content: UI of the following pages: 
+				login, register, find-password, reset-password, active-tip, active-result
+				error pages——403,404,500,503
+********/
+
+/***
+ *all common
+ ***/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,th,td{margin:0;padding:0;}
+ul,ol,li{list-style: none;}
+input,select,img{vertical-align: middle;}
+label{vertical-align: middle;}
+input:focus,textarea:focus{outline: none;}
+body{
+	color: #333333;
+	font-family:"Microsoft Yahei";
+	font-size: 14px;
+}
+a{ text-decoration:none; }
+.mt26{ margin-top:26px; }
+.mt10{ margin-top:10px; }
+.mt40{ margin-top:40px; }
+.mt57{ margin-top:57px; }
+.mt90{ margin-top:90px; }
+.ml5{ margin-left:5px; }
+.mb10{ margin-bottom:10px; }
+.font12{ font-size:12px; }
+.font18{ font-size:18px; }
+.bold{ font-weight:bold; }
+.textCenter{ text-align:center; }
+.displayNo{ display:none; }
+.tipNormal{ color:#999; }
+.tipWarning,
+.errorWarning{ color:#ff6700; }
+.tipDefault{ color:#095db1; }
+.p20{padding:20px;}
+.onlyread{background-color: #dbdee2;}
+/* 低浏览器提醒 */
+.browser-bar{
+	background-color:#fffbec;
+	border-bottom:#fff7d2 1px solid;
+	color:#735900;
+	padding:10px 26px;
+	font-size:14px;
+	position:fixed;
+	top:60px;
+	left:0;
+	right:0;
+	z-index:9999999;
+}
+.browser-bar a{
+	color:#494949;
+}
+.browser-bar a:hover{
+	text-decoration:underline;
+}
+.close-btn{
+	float:right;
+	color:#735900;
+	background-color:#fffbec;
+	border:0;
+	font-size:18px;
+	cursor:pointer;
+}
+.close-btn:hover{
+	color:#bb9100;
+}
+
+/* header */
+#header{
+	height:60px;
+	background: #095db1;
+}
+#header .container-new{
+	height:60px;
+	margin:0 auto;
+	padding:0 30px;
+}
+#header .container-new .logo-new{
+	float:left;
+}
+#header .container-new .logo-new a{
+	display: block;
+	height:60px;
+	width:200px;
+	overflow: hidden;
+	background: url(../../common/images/Cloudlogo.png) no-repeat center center;
+	text-indent: 100%;
+}
+#header .container-new .login-area{
+	float:right;
+}
+#header .container-new .login-area li{
+	list-style: none;
+}
+#header .container-new .login-area a{
+	display: inline-block;
+	color:#fff;
+	padding:0 10px;
+	width: auto;
+	height: 60px;
+	line-height: 60px;
+	font-size: 14px;
+	cursor: pointer;
+}
+#header .container-new .login-area a:hover{
+	background-color: #3a7dc1;
+	color:#fff;
+}
+
+/* footer */
+.ui-nologin-footer{
+     z-index: -1;
+    background: #22212a;
+    height: 50px;
+    margin-top: 122px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+    overflow: auto;
+}
+.ui-nologin-copy{  
+	height: 50px;
+    margin: 0 auto;
+    padding: 0 30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    color: #656778;
+    font-size: 14px; 
+    overflow: hidden;   
+}
+
+/* page common  UI : container, input, btn ...*/
+.containerBg{
+	width:100%;
+	height:100%;
+	background:url(../images/s-regbg.jpg) no-repeat 0 0;
+	background-size:100% 82%;
+	overflow:hidden;
+}
+.containerBox{
+	width:760px;
+	height:400px;
+	background-color:#fff;
+	margin:0 auto;
+	margin-top:50px;
+	padding:50px 70px;
+	overflow:hidden;
+	position:relative;
+    border: solid 1px #e4e8ee;
+    -webkit-box-shadow: 3px 10px 10px #e4e8ee;
+    box-shadow: 3px 10px 10px #e4e8ee;
+}
+.regContainerBox{
+	height:460px;
+}
+.reg-title{
+	font-weight:normal;
+	margin-bottom:20px;
+}
+
+/* input */
+.info-label{
+	font-size:14px;
+	line-height:2;
+	display:block;
+}
+.info-input,
+.info-input-code{
+	padding:0 8px;
+	height:34px;
+	border:1px #dbdee2 solid;
+}
+.info-input{
+	width:271px;
+}
+.info-input-code{
+	width:120px;
+}
+.registItem{
+	text-align: center;
+	padding-top: 5px;
+}
+.registItem a{
+	color:#095db1;
+}
+.registItem a:hover{
+	text-decoration:underline;
+}
+/* btn */
+.loginRegistBtn,
+.solidBtnMid,
+.solidBtn, 
+.borderBtn{
+	height: 40px;
+	line-height: 40px;
+	font-size:14px;
+	text-align: center;
+	cursor:pointer;
+}
+.loginRegistBtn,
+.solidBtn,
+.solidBtnMid{
+	background: #095db1;
+	border: 0;
+	color: #fff;
+}
+.solidBtnMid{
+	width:140px;
+	display:inline-block;
+}
+.loginRegistBtn, .registItem{
+	width:289px;
+}
+.solidBtn{width: 138px;}
+.borderBtn{
+	width: 138px;
+	border: 1px solid #095db1;
+	background-color:#fff;
+	color: #095db1;
+	margin:50px 66px auto 66px;
+	display:inline-block;
+}
+.loginRegistBtn:hover,
+.solidBtn:hover,
+.solidBtnMid:hover{
+	background-color:#166cc1;
+	color:#fff;
+}
+.borderBtn:hover{
+	background-color:#095db1;
+	color:#fff;
+}
+.btnNormal{
+	background-color:#e8e8e8;
+	color:#333;
+}
+
+/*** 
+   *page self UI 
+    login, register, find-password, reset-password, active-tip, active-result
+***/
+
+/* login page  & register page*/
+.login-event{
+	font-size:12px;
+	margin-left:8px;
+	cursor:pointer;
+}
+.login-event:hover{
+	text-decoration:underline;
+}
+.forgetPwd{
+	vertical-align:middle;
+	margin-left:140px;
+	color:#333;
+}
+.forgetPwd:hover{
+	text-decoration:underline;
+}
+#remember-me{
+	width:16px;
+	padding:0;
+	border:none;
+}
+.checkbox-reme{
+	width: 14px;
+    height: 14px;
+    margin-top: 3px;
+}
+.verify-img{
+	cursor: pointer;
+    width: 100px;
+    height: 36px;
+    vertical-align: middle;
+}
+.exitContain{
+	position:absolute;
+	top:0;
+	right:0;
+	width:269px;
+	height:100%;
+	border-left:1px solid #e4e8ee;
+}
+.exitImg{
+	width:269px;
+}
+.queryJoin{
+	position:absolute;
+	top:0;
+	left:0;
+	font-size:14px;
+	line-height:1.8;
+	color:#fff;
+	margin:40px 0px 0px 32px;
+}
+.theseJoin{
+	position:absolute;
+	top:234px;
+	left:38px;
+	font-size:14px;
+	color:#fff;
+}
+.theseJoin span{
+	font-size:34px;
+}
+.active-title{
+	font-weight: 300;
+	margin-top:38px;
+  	margin-bottom: 20px;
+}
+.activeNow:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+/* find-password page */
+.find-code{
+	dispaly:inline-block;
+	padding:0 8px;
+	width:122px;
+	height:32px;
+	border: 1px #dbdee2 solid;
+}
+.getCode{
+	width:140px;
+	height:34px;
+	border:1px solid #095db1;
+	background:#fff;
+	color:#1968b6;
+	text-align:center;
+	cursor:pointer;
+}
+.getCode:hover{
+	background:#1968b6;
+	color:#fff;
+}
+
+.findContainer{
+	width:500px;
+	height:100%;
+	margin-left: 230px;
+}
+.findpwd-title{
+	text-align:left;
+	font-size:22px;
+	padding-bottom:50px;
+	padding-left:18px;
+}
+.findpwd-title li{
+	display:inline;
+	color:#999999;
+	padding-left:10px;
+	padding-right:10px;
+	cursor:pointer;
+}
+.findpwd-title li.active{
+	color:#333;
+}
+.feedbackMsg{
+	margin-top: 10px;
+	display: block;
+}
+.disabled{
+	opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+/*** 
+   *error page UI: 403,404,500,503
+***/
+.errorContainer{
+	width:450px;
+	margin: 150px auto 0;
+	clear:both;
+}
+.fourzthead{
+	text-align:center;
+	font-size:20px;
+	padding-bottom:42px;
+	font-weight: 400;
+  	letter-spacing: 2px;
+}
+.returnBtnCon{
+	text-align:center;
+	padding-top:30px;	
+}
+.returnBtn{
+	display:inline-block;
+	width:196px;
+	height:42px;
+	line-height:42px;
+	text-align:center;
+	font-size:16px;
+	color:#095db1;
+	border:1px solid #095db1;
+}
+.returnBtn:hover{
+	background-color:#095db1;
+	color:#fff;
+}
+.whyToThis{
+	padding-left:46px;
+	float:left;
+	margin-top:25px;
+	color:#b5b9c5;
+}
+.whyToThis .whyTo{
+	color:#7f8492;
+}
+.howToDo{
+	padding-right:26px;
+	float:right;
+	margin-top:25px;
+}
+.howTo,
+.whyTo{
+	font-size:18px;
+	line-height:2.8;
+	color:#7f8492;
+}
+.hidden{
+	display: none;
+}
+
+/***
+	*transit-sate-tip
+***/
+.transit-box{
+	margin:60px auto; 
+	width:550px;
+	background-color:#fff;
+	border: solid 1px #e4e8ee;
+}
+.transit-tip-box{
+	text-align:center;
+	padding:80px 0;
+}
+.transit-title{
+	font-size:18px;
+	padding:10px;
+	border-bottom: solid 1px #e4e8ee;
+}
+.transit-form{
+	padding:50px 0 50px 130px;
+}
+.hasOldCount{
+	margin-left: 48px;
+    color: #166cc1;
+}
+.hasOldCount:hover{
+	text-decoration:underline;
+}

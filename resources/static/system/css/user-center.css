@@ -1,0 +1,142 @@
+hr{
+    height: 1px;
+    border: none;
+    border-top: 1px solid #e4e8ee;
+}
+.centerBlock{
+    margin-top: 60px;
+    height: 300px;
+    width: 100%;
+}
+.userInfo{
+    margin-top: 60px; 
+    text-align: center;   
+}
+.userImg{
+    font-size: 120px;
+    color: #c3c3c3;
+}
+.userName{    
+    line-height: 70px;
+}
+.restAmount{
+    color: #f39a78;
+    display:inline-block;
+    width: 35px;
+}
+.centerLinkContainer{
+    float: left;
+    width: 243px;
+    height: 243px;
+    margin-left: 41.25px;
+    border: 1px solid #e4e8ee;
+    border-radius: 5px;
+}
+.centerLinkContainer:hover{
+    border: 1px solid #66a3ff;
+}
+.centerLink{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.signFlowImg{
+    width: 243px;
+    height: 120px;
+}
+.centerLinkText{
+    margin-top: 20px;
+    text-align: center;
+    color: #b4b4b4; 
+}
+.signSelfImg{
+    background: url("../images/justme-icon.png") no-repeat bottom;
+}
+.signAllImg{
+    background: url("../images/me-others.png") no-repeat bottom;
+}
+.signOthersImg{
+    background: url("../images/justothers-icon.png") no-repeat bottom;
+}
+.upgradeStepList{
+    position: absolute;  
+    height: 180px; 
+    width: 900px;
+}
+.stepList,
+.stepListThree{
+    position: relative;    
+    height: 100%;
+    margin-top: 40px;
+    text-align: left;
+    float: left; 
+    display: inline;
+}
+.stepList{
+    width: 46%;
+}
+.stepListThree{
+    width: 8%;
+}
+.bg-container{
+	margin-left: 16px;
+    display:inline-block;
+    padding: 0;
+}
+.step-container-css{
+    display: inline-block;
+    background-color: #66a3ff;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 50%;
+    border:1px solid #e4e8ee;
+    font-size: 18px;
+    color: #fff;
+    font-family: "Microsoft YaHei", sans-serif;
+    font-weight:bold;
+}
+.dash{
+    display: inline-block;
+    width: 320px;
+    height: 4px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    background: url('../images/dash.png');
+}
+.stepListText{
+    margin: 20px 0 12px 12px;
+}
+.stateShow{
+    line-height: 25px;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+}
+.compStatus{
+    border: 1px solid #e4e8ee;
+}
+.inCompStatus{
+    display: block;
+    color: #fff;
+    border: 1px solid #66a3ff;
+    background-color: #66a3ff;
+    cursor: pointer;
+}
+.inCompStatus:hover{
+    background-color: #6198f2;
+}
+.downloadIcon{
+    font-size: 60px;
+    padding-top: 55px;
+    text-align: center;
+    color: #b4b4b4;
+}
+.QRcode{
+    display: block;
+    width: 243px;
+    height: 243px;
+    background: url('../images/download_app.png') no-repeat center;
+}
+.downloadBlock{
+	margin-bottom: 100px;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的中心 | 云取证</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" th:href="@{/static/system/css/user-center.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="container-header">
+        <div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+    </div>
+    <div class="view" style="padding-top: 60px;background-images:url('../../images/back.png');">
+        <div class="ui-nav-content centerContent" style="width: 900px;">
+            <div class="userInfo">
+                <i class="icon-user-solid userImg"></i>
+               <p class="userName fs24" th:text="${session.loginUser.availableUserName()}"></p>
+              
+                <!-- <p>证据文件总数：99个</p>
+                <p>今日新增文件：06个</p> -->
+                <p th:if="${userInfo != null and (userInfo.identify=='未认证' or userInfo.identify=='未通过' or userInfo.identify=='审核中')}">证据文件总数：<span class="restAmount ">0</span></p>
+                <div th:if="${userInfo != null and (userInfo.identify=='已认证')}">
+                    <p>今日新增文件：<span class="restAmount withCert">0</span></p>
+                    <p><span style="visibility: hidden;"></span>证据文件总数：<span class="restAmount noCert">0</span></p>
+                </div>
+          <!--   <hr> -->
+            <div class="centerBlock">
+                <div class="fs32 textCenter">
+                    <span>实名认证</span>
+                </div>
+                <div class="upgradeProcess">
+                    <ol class="upgradeStepList mt20">
+                        <li id="stepOne" class="stepList">
+                           <!--  <div class="bg-container"><i class="step-container-css">1</i></div>
+                            <div class="dash"></div> -->
+                            <p class="stepListText"></p>
+                            <div class=" stateShow authIdentify" th:if="${userInfo != null and (userInfo.identify=='' or userInfo.identify=='')}" th:text="${userInfo.identify}"></div>  
+                            <div class=" stateShow authIdentify unauthorized" th:if="${userInfo != null and (userInfo.identify=='' or userInfo.identify=='')}" th:text="${userInfo.identify}"></div>                           
+                        </li>
+                        <li id="steoTwo" class="stepList">
+                            <!-- <div class="bg-container"><i class="step-container-css">2</i></div>
+                            <div class="dash"></div> -->
+                            <p class="stepListText">实名认证</p>
+                            <div class="compStatus stateShow authIdentify" th:if="${userInfo != null and (userInfo.identify=='已认证' or userInfo.identify=='审核中')}" th:text="${userInfo.identify}"></div>  
+                            <div class="inCompStatus stateShow authIdentify unauthorized" th:if="${userInfo != null and (userInfo.identify=='未认证' or userInfo.identify=='未通过')}" th:text="${userInfo.identify}"></div>
+                            <!-- <a class="inCompStatus stateShow chooseCombo">选择套餐</a> -->
+                        </li>
+                        <!-- <li id="stepThree" class="stepListThree">
+                            <div class="bg-container"><i class="step-container-css">3</i></div>
+                            <p class="stepListText">进行签名</p>
+                        </li> -->
+                    </ol>
+                </div>
+            </div>
+           <!--  <hr> -->
+<!--             <div class="centerBlock downloadBlock">
+                <div class="fs32 textCenter">
+                    <span>下载易企签手机APP</span>
+                </div>
+                <div class="mt50">
+                    <div class="centerLinkContainer">
+                        <a class="centerLink" href="https://itunes.apple.com/us/app/wei-qian/id967142560?l=zh&ls=1&mt=8" target="_blank">
+                            <div class="downloadIcon">
+                                <i class="icon-apple"></i>
+                            </div>                      
+                            <div class="centerLinkText fs16">
+                                <span>IOS版</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="centerLinkContainer">
+                        <a class="centerLink" href="http://zhushou.360.cn/detail/index/soft_id/2958640?recrefer=SE_D_#nogo" target="_blank">
+                            <div class="downloadIcon">
+                                <i class="icon-android"></i>
+                            </div>                      
+                            <div class="centerLinkText fs16">
+                                <span>Android版</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="centerLinkContainer">                        
+                        <span class="QRcode"></span>                        
+                    </div>
+                </div>              
+            </div> -->
+        </div>
+    </div>
+    <div class="tipMsg hidden" title="提示">
+        <div class="tipMsgContent"></div>
+        <div id="js_btn_group" class="confirmBtn textCenter">
+        </div>
+    </div>
+</div>  
+<!-- footer -->  
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-sysbase-footer">此处footer动态复用</div>
+<script type="text/javascript" th:src="@{/static/system/js/user-center.js}"></script>
+</body>
+</html>

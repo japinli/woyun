@@ -1,0 +1,56 @@
+/*
+ * File list
+ */
+#fileList {
+  float:right;
+  width: 330px;
+  height:196px;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	color: gray;
+  
+  font-size: 12px;
+  
+  overflow: auto;
+}
+
+#fileList .file {
+  width: 290px;
+  margin-bottom: 15px;
+}
+
+#fileList .info {
+  width: 290px;
+  height: 26px;
+  display: block;
+  overflow: hidden;
+  
+  line-height: 13px;
+}
+
+#fileList .filename {
+  font-weight: bold;
+}
+
+#fileList .bar {
+  border: solid 1px #C0C0C0;
+  height: 12px;
+  margin-top: 5px;
+  padding: 1px;
+  width: 290px;
+}
+
+#fileList .progress {
+  height: 12px;
+  background-color: #00CCFF;
+}
+
+#fileList span.success {
+  color: #009900;
+}
+
+#fileList span.error {
+  color: #990000;
+}
+

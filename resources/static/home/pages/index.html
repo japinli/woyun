@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    	<title>首页|易企签</title>
+    	<div th:replace="home/pages/common/quote-common.html :: copy-base-head"></div>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- 顶部 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topStyle">
+          <div class="col-xs-4 col-sm-3 col-lg-1 col-md-1">
+          <a href="index.html" th:href=@{/index.html}>
+          	<img src="../images/logo_01.jpg" th:src=@{/static/home/images/logo_01.jpg} class="logo">
+          </a>
+          </div>
+          <div class="hidden-xs col-sm-3 col-lg-2 col-md-3 pull-right">
+            <p class="text-center tellphone">
+              400-168-8973
+            </p>
+          </div>
+          <div class="visible-xs-inline-block pull-right">
+            <p class="text-center tellphone">
+              400-168-8973
+            </p>
+          </div>
+        </div>
+        <!-- 头图 -->
+        <div class="hidden-xs col-sm-12 col-md-12 col-lg-12 mlr0 headerbg">
+          <div class="hidden-xs col-sm-offset-6 col-sm-6 col-md-offset-6 col-md-6 col-lg-offset-6 col-lg-6">
+            <h1 class="head-title">易企签</h1>
+            <p class="head-tit2">快速、安全、具有法律效力的在线电子签名商业应用</p>
+            <a href="login.html" th:href=@{/wesign/login.html} class="trybtn" >免费试用</a>
+            <small class="hasAccount"><a href="login.html" th:href=@{/wesign/login.html} >已有账号></a></small>
+            <img src="../images/ppp_03.png" th:src=@{/static/home/images/ppp_03.png}  class="img-responsive" alt="下载app试用">
+            <span class="head-ma">扫描二维码下载APP试用</span>
+          </div>
+        </div>
+        <!-- 头图移动端适配 -->
+        <div class="visible-xs-block headerbg">
+          <div class="head-content">
+            <div class="best">快速、安全、具有法律效力的在线电子签名商业应用</div>
+            <div>
+            <a class="btn btn-primary down-ap" id="downApp" href="http://www.signit.cn/erweiAppDown.html" target="_blank">立即下载</a>
+            </div>
+          </div>
+        </div>
+        <!-- 给企业带来的价值 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mlr0 valuebg">
+          <h2 class="text-center titlecol mt100">给企业带来的价值</h2>
+          <h5 class="hidden-xs text-center titlecol mb80">易企签以最快速、安全和具有法律效力的方式<br>取代过时的打印、传真、扫描、存储纸质文件，使每项业务审批和决策数字化</h5>
+          <h5 class="visible-xs-block text-center titlecol mb80">易企签以最快速、安全和具有法律效力的方式，取代过时的打印、传真、扫描、存储纸质文件，使每项业务审批和决策数字化</h5>
+          <div class="hidden-xs col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 valuehide">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="ppi" style="background:url(../images/x2_03.jpg) no-repeat 50% 50%" th:style="'background:url('+@{/static/home/images/x2_03.jpg}+') no-repeat 50% 50%'"></div>
+              <div class="plr30 whitebg">
+                <p class="text-center subTit "> - 管理人员 -</p>
+                <p class="text-left">随时随地参与业务审批与决策</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="ppi" style="background:url(../images/x2_05.jpg) no-repeat 50% 50%"  th:style="'background:url('+@{/static/home/images/x2_05.jpg}+') no-repeat 50% 50%'"></div>
+              <div class="plr30 whitebg">
+                <p class="text-center subTit">- 业务员 -</p>
+                <p class="text-left">快速达成交易，提升销售效率</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="ppi" style="background:url(../images/x2_07.jpg) no-repeat 50% 50%"  th:style="'background:url('+@{/static/home/images/x2_07.jpg}+') no-repeat 50% 50%'"></div>
+              <div class="plr30 whitebg">
+                <p class="text-center subTit">- 员工或个人 -</p>
+                <p class="text-left">告别繁琐的纸质工作，聚焦价值创造</p>
+              </div>
+            </div>
+          </div>
+          <!-- 适配移动端 -->
+          <div class="visible-xs-block">
+            <dl class="text-center p30" >
+              <dt><img src="../images/x2_03.jpg" th:src=@{/static/home/images/x2_03.jpg} width="100" height="100" class="img-circle"  alt="管理人员使用"></dt>
+              <dd class="text-center xsubTit">- 管理人员 -</dd>
+              <dd class="xfontc">随时随地参与业务审批与决策</dd>
+            </dl>
+            <dl class="text-center p30">
+              <dt><img src="../images/x2_05.jpg"  th:src=@{/static/home/images/x2_05.jpg} width="100" height="100" class="img-circle" alt="业务人员使用"></dt>
+              <dd class="text-center xsubTit">- 业务员 -</dd>
+              <dd class="xfontc">快速达成交易，提升销售效率</dd>
+            </dl>
+            <dl class="text-center p30">
+              <dt ><img src="../images/x2_07.jpg"  th:src=@{/static/home/images/x2_07.jpg} width="100" height="100" class="img-circle" alt="员工或个人使用"></dt>
+              <dd class="text-center xsubTit">- 员工或个人 -</dd>
+              <dd class="xfontc">告别繁琐的纸质工作，聚焦价值创造</dd>
+            </dl>
+          </div>
+        </div>
+        <!-- 3-合同在线管理 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onlinebg">
+          <h2 class="text-center onlinecol mt60">合同在线管理</h2>
+          <h5 class="text-center onlinecol mb0">只需一个账号，减少异地合同签署成本，随时跟踪合同签署状态。</h5>
+        </div>
+        <!-- 4-拍照签 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="text-center photocol mt60">拍照签</h2>
+          <h5 class="text-center photocol mb60">还原真实书写笔迹，只需拍你所签。</h5>
+          <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+            <p class="text-center"><img alt="支持拍照签名" class="photobg" src="../images/x4_03.jpg" th:src=@{/static/home/images/x4_03.jpg}></p>
+          </div>
+        </div>
+        <!-- 跨屏签名  -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 extrabg">
+          <h2 class="text-center extracol ptb10 mt40">跨屏签名</h2>
+          <h5 class="text-center extracol mb60">扫描二维码，手机“变身”签字屏</h5>
+        </div>
+        <!-- 用户案例 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 userbg">
+          <h2 class="text-center titlecol mtb80">用户案例</h2>
+          <div class="hidden-xs col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+            <div class="topic-user">
+              <div class="topic-img" style="background-image:url(../images/x6_03.png)"  th:style="'background-image:url('+@{/static/home/images/x6_03.png}+')'"></div>
+              <div class="topic-img">
+                <h4 class="text-left userTit">海尔电子合同案例</h4>
+                <p class="topic-font">电子化解决方案，实现了海尔中国区终端共享平台全程无纸化，分公司/经销商登录系统后，填写并确认合同/协议，点击发送即可实现版式合同生成。生成的电子签章具备与纸质文档同等法律效力</p>
+              </div>
+            </div>
+            <div class="topic-user">
+              <div class="topic-img-right">
+                <h4 class="text-left userTit pl20">普惠金融业务数字化</h4>
+                <p class="topic-font-left">实现移动化办公，面对面签章，依靠电子签名技术，改变过时的纸质文档业务流程，构建快速、简单、方便、安全、成本更低的企业数字化业务管理平台。</p>
+              </div>
+              <div class="topic-img-right2" style="background-image:url(../images/x6_07.jpg)" th:style="'background-image:url('+@{/static/home/images/x6_07.jpg}+')'"></div>
+            </div>
+            <div class="topic-user">
+              <div class="topic-img" style="background-image:url(../images/x6_10.png)" th:style="'background-image:url('+@{/static/home/images/x6_10.png}+')'"></div>
+              <div class="topic-img">
+                <h4 class="text-left userTit">绵阳市智慧政务案例</h4>
+                <p class="topic-font">智慧政务，方便公民，无需出行，任意时间任意地点，签署无需排队。消除纸张处理成本、提升业务处理效率、降低法律风险，加快政务智慧化进程。</p>
+              </div>
+            </div>
+            <div class="topic-user">
+              <div class="topic-img-right">
+                <h4 class="text-left userTit pl20">绵阳市中心医院医疗数字化</h4>
+                <p class="topic-font-left">实现全流程数字化管理电子病理报告单，降低纸质打印签章的成本，实现电子处方全程数字化管理，提升业务处理效率，集成简单，独立应用。</p>
+              </div>
+              <div class="topic-img-right2" style="background-image:url(../images/x6_12.png)" th:style="'background-image:url('+@{/static/home/images/x6_12.png}+')'"></div>
+            </div>
+          </div>
+          <!-- 适配移动端 -->
+          <div class="visible-xs-block">
+            <ul class="list-unstyled list-inline text-center">
+              <li><img alt="我们的客户案例-海尔" src="../images/x6_03.png" th:src=@{/static/home/images/x6_03.png} width="130" height="70"></li>
+              <li><img alt="我们的客户案例-普惠金融" src="../images/x6_07.jpg" th:src=@{/static/home/images/x6_07.jpg} width="130" height="70"></li>
+            </ul>
+            <ul class="list-unstyled list-inline text-center">
+              <li><img alt="我们的客户案例-绵阳智慧政务" src="../images/x6_10.png" th:src=@{/static/home/images/x6_10.png} width="130" height="70"></li>
+              <li><img alt="我们的客户案例-绵阳市中心医院" src="../images/x6_12.png" th:src=@{/static/home/images/x6_12.png} width="130" height="70"></li>
+            </ul>
+          </div>
+        </div>
+        <!-- 安全保障 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 safebg">
+          <h2 class="text-center titlecol mt80b50">安全保障</h2>
+          <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+            <div class="col-xs-6 col-sm-3 col-md-3">
+              <p class="text-center"><img alt="国家级数字证书" class="safeimg" src="../images/sx7_03.jpg" th:src=@{/static/home/images/sx7_03.jpg}></p>
+              <div class="text-center">
+                <h5><strong>国家级数字证书</strong></h5>
+                <p class="savef2">上海数字认证受理中心授权服务，保障安全</p>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+              <p class="text-center"><img alt="法律保障" class="safeimg" src="../images/x5_05.jpg" th:src=@{/static/home/images/x5_05.jpg}></p>
+              <div class="text-center">
+                <h5><strong>法律保障</strong></h5>
+                <p class="savef2">电子合同签署<br/>《电子签名法》保驾护航</p>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+              <p class="text-center"><img alt="安全存储" class="safeimg" src="../images/sx7_07.jpg"  th:src=@{/static/home/images/sx7_07.jpg}></p>
+              <div class="text-center">
+                <h5><strong>安全存储</strong></h5>
+                <p class="savef2">实时存证<br/>让在线签约更放心<br/>电子合同更可信</p>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+              <p class="text-center"><img alt="更多安全技术" class="safeimg" src="../images/x5_09.jpg" th:src=@{/static/home/images/x5_09.jpg}></p>
+              <div class="text-center">
+                <h5><strong>更多安全技术</strong></h5>
+                <p class="savef2">身份信息认证、文档完整性检验、数字签名加密、签名时间源可靠、签名日志记录</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 资质证明 -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 aptitutebg">
+          <h2 class="text-center titlecol mt80b50">相关法规</h2>
+          <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 plr0">
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center ri"><img alt="中华人民共和国商务部" class="aptituteimg" src="../images/x8_03.png" th:src=@{/static/home/images/x8_03.png}></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center le"><img alt="中华人民共和国工信部" class="aptituteimg" src="../images/x8_05.jpg" th:src=@{/static/home/images/x8_05.jpg}></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center ri"><img alt="国家标准化管理委员会" class="aptituteimg" src="../images/x8_07.png" th:src=@{/static/home/images/x8_07.png}></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center le"><img alt="工商行政管理总局" class="aptituteimg" src="../images/x8_12.png" th:src=@{/static/home/images/x8_12.png}></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center ri"><img alt="最高人民法院" class="aptituteimg" src="../images/x8_13.png" th:src=@{/static/home/images/x8_13.png}></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-4">
+              <p class="text-center le"><img alt="公安部" class="aptituteimg" src="../images/x8_14.png" th:src=@{/static/home/images/x8_14.png}></p>
+            </div>
+          </div>
+        </div>
+        <!-- 底部 -->
+        <div th:replace="home/pages/common/quote-common.html :: copy-content-foot"></div>
+      </div>
+    </div>
+    
+	<div th:replace="home/pages/common/quote-common.html :: copy-base-foot"></div>
+  	<script type="text/javascript">
+  //判断当前的手机使用的浏览器状态
+  var is_android = (function(){
+    if (/android/i.test(navigator.userAgent)) {
+      return true;
+    }else{
+      return false;
+    }
+  })();
+  var is_ios = (function(){
+    if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+      return true;
+    }else{
+      return false;
+    }
+  })();
+  var is_weixin = (function() {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          return true;
+      } else {
+          return false;
+      }
+  })();
+	window.onload = function(){
+	  if(is_ios){
+	    $("#downApp").attr("href","https://itunes.apple.com/us/app/wei-qian/id967142560?l=zh&ls=1&mt=8");
+	  }else if(is_android){
+	    $("#downApp").attr("href","http://zhushou.360.cn/detail/index/soft_id/2958640?recrefer=SE_D_#nogo");
+	  }else{
+	    $("#downApp").attr("href","http://www.signit.cn/erweiAppDown.html");
+	  }
+	}
+    </script>
+  </body>
+</html>

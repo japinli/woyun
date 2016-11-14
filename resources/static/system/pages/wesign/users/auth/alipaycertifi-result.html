@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>个人实名认证 | 易企签</title>
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
+<link rel="stylesheet" href="../../css/setting.css" th:href="@{/static/system/css/setting.css}"/>
+</head>
+<body>
+<div class="container">
+	<div class="container-header">
+		<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
+	</div>
+	<div class="view" style="top:52px;">
+			<!-- <div class="setting-header setting-header-color"><i class="set-sprite-css icon-account-box headerIcon-title"></i><br><span class="title-text">个人实名认证</span></div> -->
+		<div class="setting-header setting-header-color">
+			<p><span class="comboTab comboTab-active">个人实名认证</span>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<a class="comboTab" th:href="@{'/wesign/'+${session.loginRole}+'/enterprise-auth.html'}">企业实名认证</a></p>
+		</div>
+			<div class="setting-nav posR">
+				<div>
+					<div id="js_step_lineone" class="list-step-line active-line"></div>
+					<div id="js_step_linetwo" class="list-step-line active-line"></div>
+					<div id="js_step_linethree" class="list-step-line active-line"></div>
+					<div id="js_step_linefour" class="list-step-line active-line"></div>
+				</div>
+				<ol class="setting-nav-list">
+					<li id="js_step_listone" class="active-step">
+						<div class="bg-container"><i class="step-container-css">1</i></div>
+						<span>身份信息验证</span>
+					</li>
+					<li id="js_step_listtwo" class="active-step">
+						<div class="bg-container"><i class="step-container-css">2</i></div>
+						<span class="js_step_twoItem">支付宝验证</span>
+					</li>
+					<li id="js_step_listthree" class="active-step">
+						<div class="bg-container"><i class="step-container-css">3</i></div>
+						<span>提交成功</span>
+					</li>
+				</ol>
+			</div>
+		    <div class="step-form-container" th:if="${state}==1">
+	    		<div id="js_step_final" class="final-form-container">
+	    			<p class="step-final-title">恭喜您，您已完成实名认证！</p>
+	    			<p>易企签已为您颁发专有证书，<a class="successClass" th:href="@{'/wesign/'+${session.loginRole}+'/certificates/details.html'}">点击查看</a></p>
+	    			<p class="mt60"><a class="return-link-css formItemBtn nextBtn" th:href="@{'/wesign/'+${session.loginRole}+'/my-info.html'}">返回我的账户</a></p>
+	    		</div>
+		    </div>
+		    <div class="step-form-container"  th:if="${state}!=1">
+	    		<div id="js_step_final" class="final-form-container">
+	    			<p class="step-final-title">认证失败！</p>
+	    			<p>对不起，认证失败，请重新认证。</p>
+	    			<p class="mt60"><a class="return-link-css formItemBtn nextBtn" th:href="@{'/wesign/'+${session.loginRole}+'/my-info.html'}">返回我的账户</a></p>
+	    		</div>
+		    </div>              
+	</div> <!-- view -->
+</div>    
+
+<!--footer-->
+<div th:replace="system/pages/common/sys-quote-common.html :: copy-sysbase-footer"></div>
+
+<script  type="text/javascript" th:src="@{/static/common/js/spark-md5.min.js}"></script>
+<script  type="text/javascript" th:src="@{/static/system/js/auth/commonAuth.js}"></script>
+<script type="text/javascript" th:src="@{/static/system/js/auth/personAuth.js}"></script>
+</body>
+</html>

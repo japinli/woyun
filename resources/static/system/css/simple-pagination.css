@@ -1,0 +1,144 @@
+/**
+* CSS themes for simplePagination.js
+* Author: Flavius Matis - http://flaviusmatis.github.com/
+* URL: https://github.com/flaviusmatis/simplePagination.js
+*/
+ul.simple-pagination {
+	list-style: none;
+}
+
+.simple-pagination {
+	display: block;
+	overflow: hidden;
+	padding: 0 5px 5px 0;
+	margin: 0;
+	font-family:"Microsoft YaHei",sans-serif;
+}
+
+.simple-pagination ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.simple-pagination li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+/*------------------------------------*\
+	Compact Theme Styles
+\*------------------------------------*/
+
+.compact-theme a, .compact-theme span {
+	float: left;
+	color: #333;
+	font-size:14px;
+	line-height:24px;
+	font-weight: normal;
+	text-align: center;
+	border: 1px solid #AAA;
+	border-left: none;
+	min-width: 14px;
+	padding: 0 7px;
+	background: #efefef; 
+}
+
+.compact-theme a:hover {
+	text-decoration: none;
+	background: #efefef; 
+}
+
+.compact-theme li:first-child a, .compact-theme li:first-child span {
+	border-left: 1px solid #AAA;
+}
+
+.compact-theme li:last-child a, .compact-theme li:last-child span {
+	/* border-radius: 0 3px 3px 0; */
+}
+
+.compact-theme .current {
+	cursor: default;
+	background: #bbbbbb; 
+}
+
+.compact-theme .ellipse {
+	background: #EAEAEA;
+	padding: 0 10px;
+	cursor: default;
+}
+
+/*------------------------------------*\
+	Light Theme Styles
+\*------------------------------------*/
+
+.light-theme a, .light-theme span {
+	float: left;
+	color: #939398;
+	font-size:14px;
+	line-height:24px;
+	font-weight: normal;
+	text-align: center;
+	min-width: 14px;
+	padding: 0 7px;
+	margin: 0 5px 0 0;
+}
+.light-theme a{
+	text-decoration:none;
+}
+.light-theme a:hover {
+	text-decoration: underline;
+	color:#000;
+}
+
+.light-theme .current {
+	color: #000;
+	cursor: default;
+}
+
+.light-theme .ellipse {
+	background: none;
+	border: none;
+	box-shadow: none;
+	font-weight: bold;
+	cursor: default;
+}
+
+/*------------------------------------*\
+	Dark Theme Styles
+\*------------------------------------*/
+
+.dark-theme a, .dark-theme span {
+	float: left;
+	color: #CCC;
+	font-size:14px;
+	line-height:24px;
+	font-weight: normal;
+	text-align: center;
+	border: 1px solid #222;
+	min-width: 14px;
+	padding: 0 7px;
+	margin: 0 5px 0 0;
+}
+
+.dark-theme a:hover {
+	text-decoration: none;
+	background: #444;
+}
+
+.dark-theme .current {
+	background: #222;
+	color: #FFF;
+	cursor: default;
+}
+
+.dark-theme .ellipse {
+	background: none;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	font-weight: bold;
+	cursor: default;
+}
