@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>保全中心 | 云取证</title>
+<title>全部文件 | 蜗云</title>
 <div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
 <link rel="stylesheet" href="../../css/simple-pagination.css" th:href="@{/static/system/css/simple-pagination.css}">
 </head>
@@ -15,8 +15,8 @@
 	      <div class="lbar">
 	      		<div class="lbar-block">
 	      			<a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
-	      			    <i class="icon-add addSignFlow"></i>
-	      			    <span>新建保全</span>
+	      			    <i class="addSignFlow"></i>
+	      			    <span>全部文件</span>
 	      			</a>
 			        <ul id="doc-id-bar" class="lbar-link" name="1">
 			            <!-- <li id="allDocBarId" class="active">
@@ -41,16 +41,32 @@
 			            	<a href="javascript:;">
 			            		<i class="circle-state success-bg"></i>
 			            		<!-- <span class="lbar-link-title">已完成</span> -->
-			            		<span class="lbar-link-title">保全列表</span>
+			            		<span class="lbar-link-title">图片</span>
 			            	</a>
 			           </li>
 			           <li id="waitMeBarId">
 			            	<a href="javascript:;">
 				            	<i class="circle-state default-bg"></i>
-				            	<span class="lbar-link-title">出证列表</span>
+				            	<span class="lbar-link-title">文档</span>
+				            </a>
+				        </li>
+				        <li id="waitMeBarId">
+			            	<a href="javascript:;">
+				            	<i class="circle-state default-bg"></i>
+				            	<span class="lbar-link-title">视频</span>
+				            </a>
+				        </li>
+				        <li id="waitMeBarId">
+			            	<a href="javascript:;">
+				            	<i class="circle-state default-bg"></i>
+				            	<span class="lbar-link-title">其他</span>
 				            </a>
 				        </li>
 			        </ul>
+			        <a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
+	      			    <i class="addSignFlow"></i>
+	      			    <span>回收站</span>
+	      			</a>
 		        </div>
 		        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-app">动态复用</div>
 		</div>
@@ -68,10 +84,10 @@
 	                <div class="rmain-view-container">
 	                	<div class="view plr30">
                				<div class="thead">
-                				<div class="thead-td firstEle td-f1">保全状态</div>
-                				<div class="thead-td td-f2">保全号</div>
-                				<div class="thead-td td-f3">保全时间</div>
-                				<div class="thead-td td-f4">操作</div>
+                				<div class="thead-td firstEle td-f1">文件名</div>
+                				<div class="thead-td td-f2">大小</div>
+                				<div class="thead-td td-f3">修改时间</div>
+                				<!-- <div class="thead-td td-f4">操作</div> -->
                				</div>
                 			<div id="docListContainer"></div>
                 		</div>

@@ -17,11 +17,11 @@
 	<div th:fragment="copy-headerbar-left" th:remove="tag">
 		 <div class="left-nav">
 			 <div class="logo"></div>
-			 <ul id="id-first-nav" class="first-nav-list">
+			<!--  <ul id="id-first-nav" class="first-nav-list">
 			    <li title="我的中心"><a th:href="@{'/wesign/index.html'}">我的中心</a></li>
 			 	<li title="我的文件"><a th:href="@{'/wesign/documents/index.html'}">我的文件</a></li>
 		        <li title="我的账户"><a th:href="@{'/wesign/my-info.html'}">我的账户</a></li> 
-			 </ul>
+			 </ul> -->
 		</div>
 	</div>	
 	
@@ -56,11 +56,11 @@
 	 <div th:fragment="copy-headerbar" th:remove="tag">
 		 <div class="left-nav">
 			 <div class="logo"></div>
-			 <ul id="id-first-nav" class="first-nav-list">
+			<!--  <ul id="id-first-nav" class="first-nav-list">
 			 	<li title="我的中心"><a th:href="@{'/wesign/index.html'}">我的中心</a></li>
 			 	<li title="我的保全"><a th:href="@{'/wesign/documents/index.html'}">我的保全</a></li>
 		        <li title="我的账户"><a th:href="@{'/wesign/my-info.html'}">我的账户</a></li> 
-			 </ul>
+			 </ul> -->
 		</div>	<!-- left-nav -->
 		<div class="right-nav">
 			<div class="dis-inline">
@@ -77,6 +77,7 @@
 			 					<li><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-workflow.html'}" title="跳转到我与他人签的页面">他人签</a></li> 
 				 				<li><a th:href="@{'/wesign/'+${session.loginRole}+'/person-auth.html'}" title="实名认证">实名认证</a></li>
 				 				<li class="diver-css"><a th:href="@{'/wesign/'+${session.loginRole}+'/certificates/details.html'}" title="我的证书">我的证书</a></li> -->
+				 				<li><a th:href="@{'/wesign/my-info.html'}" class="js_header_logout" title="个人资料">个人资料</a></li>
 				 				<li class="diver-css"><a href="#" th:href="@{'/wesign/logout.html'}" class="js_header_logout" title="退出登陆"><i title="退出登陆" class="icon-switch"></i>退出登陆</a></li>
 				 			</ul>
 			 			</div>

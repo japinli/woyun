@@ -36,6 +36,7 @@ import cn.signit.cons.PageLogicPath;
 import cn.signit.cons.RegexType;
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.user.UserPageController.LoginForms;
+import cn.signit.controller.user.UserPageController.RegisterForms;
 import cn.signit.domain.mysql.User;
 import cn.signit.service.EmailService;
 import cn.signit.service.UserService;
@@ -110,6 +111,12 @@ public class UserController {
 	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
 		LOG.info("用户:" + ((User)request.getSession().getAttribute(SessionKeys.LOGIN_USER)).availableUserName() + "退出登录!");
 		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
+		return PageLogicPath.LOGIN.path();
+	}
+	
+	@RequestMapping(value=UrlPath.PAGE_USER_REGISTER, method=RequestMethod.POST)
+	public String userRegister(@ModelAttribute RegisterForms forms, Model model, HttpServletRequest request) {
+		LOG.info("用户注册!");
 		return PageLogicPath.LOGIN.path();
 	}
 	
