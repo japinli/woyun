@@ -1,6 +1,7 @@
 package cn.signit.controller.user;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.signit.domain.mysql.User;
 

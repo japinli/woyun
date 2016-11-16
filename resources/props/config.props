@@ -84,6 +84,11 @@ jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
 []
+#================Hadoop配置======================
+[hadoop]
+hadoop_url=hdfs://localhost:9000
+[]
+
 #================MongoDB数据库配置================#
 mongo_auth_dbname=XL
 mongo_username=SignItSqlWorker

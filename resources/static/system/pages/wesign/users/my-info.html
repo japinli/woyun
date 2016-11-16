@@ -83,10 +83,10 @@
 						<div class="certificate-detail">
 							<i class="set-sprite-css icon-phone certificate-icon-size mb30"></i>
 							<p>手机认证</p>
-							<a th:if="${userInfo != null and userInfo.phoneIdentify=='未认证'}" th:href="@{'/wesign/'+${session.loginRole}+'/my-info/reset-phone.html'}">
+							<!-- <a th:if="${userInfo != null and userInfo.phoneIdentify=='未认证'}" th:href="@{'/wesign/'+${session.loginRole}+'/my-info/reset-phone.html'}">
 								<span th:text="${userInfo.phoneIdentify}" class="mt20 certificateBtn btn-active"></span>
 							</a>
-							<span th:if="${userInfo != null and userInfo.phoneIdentify=='已认证'}" th:text="${userInfo.phoneIdentify}" class="mt20 certificateBtn"></span>
+							<span th:if="${userInfo != null and userInfo.phoneIdentify=='已认证'}" th:text="${userInfo.phoneIdentify}" class="mt20 certificateBtn"></span> -->
 						</div>
 					</div>
 					
@@ -94,7 +94,7 @@
 					<div class="accout-info fs16">
 						<div class="floatL account-details">
 							<p class="info-title">我的账号：</p>
-							<p class="accout-result" th:text="${userInfo.account}" ></p>
+							<p class="accout-result" th:text="${userInfo.availableUserName()}" ></p>
 						</div>
 						<!-- <div class="floatL account-details ml135">
 							<p class="info-title">账户类型：</p>

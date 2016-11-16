@@ -95,8 +95,9 @@ public class UserPageController implements InUserPageController{
 	*/
 	@RequestMapping(value=UrlPath.PAGE_USER_MY_INFO,method=RequestMethod.GET)
 	@Override
-	public String getMyInfoPage(User user, Model model) {
-		return PageLogicPath.USER_HOME.path();
+	public String getMyInfoPage(@ModelAttribute(SessionKeys.LOGIN_USER) User user, Model model) {
+		model.addAttribute("userInfo", user);
+		return PageLogicPath.USER_MY_INFO.path();
 	}
 
 

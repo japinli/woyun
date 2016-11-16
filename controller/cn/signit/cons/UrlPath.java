@@ -59,7 +59,7 @@ public class UrlPath {
 
 			//登录后
 			public final static String PAGE_USER_HOME = USER_ROOT+PAGE_HOME;//用户个人中心页面
-			public final static String PAGE_USER_MY_INFO = USER_ROOT+"/my-info.html";//用户个人信息页面
+			public final static String PAGE_USER_MY_INFO = SYSTEM_ROOT+"/my-info.html";//用户个人信息页面
 			public final static String PAGE_USER_INFO_RESET_PWD = USER_ROOT+"/my-info/reset-password.html";//用户个人重设登录密码页面
 			public final static String PAGE_USER_INFO_RESET_PHONE  = USER_ROOT+"/my-info/reset-phone.html";//用户个人绑定或重设手机页面
 			public final static String PAGE_USER_INFO_RESET_EMAIL = USER_ROOT+"/my-info/reset-email.html";//用户个人绑定或重设邮箱页面
