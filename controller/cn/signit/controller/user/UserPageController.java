@@ -1,7 +1,5 @@
 package cn.signit.controller.user;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +13,6 @@ import cn.signit.cons.UrlPath;
 import cn.signit.domain.mysql.User;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.message.SessionKeys;
-import jodd.madvoc.RootPackages;
 
 
 /**
@@ -69,6 +66,13 @@ public class UserPageController implements InUserPageController{
 		model.addAttribute(SessionKeys.ENABLE_CAPTCHA,false);
 		
 		return PageLogicPath.LOGIN.path();
+	}
+	
+	@RequestMapping(value=UrlPath.PAGE_USER_REGISTER,method=RequestMethod.GET)
+	@Override
+	public String getRegistPage(@RequestParam(required = false) String error, Model model) {
+		model.addAttribute(new RegisterForms());
+		return PageLogicPath.REGISTER.path();
 	}
 
 	/**

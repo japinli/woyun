@@ -114,6 +114,12 @@ public class UserController {
 		return PageLogicPath.LOGIN.path();
 	}
 	
+	/**
+	 *  用户注册
+	 * @param forms
+	 * @param model 需要动态填充的数据模型
+	 * @return 注册成功跳转到用户登录页面
+	 */
 	@RequestMapping(value=UrlPath.PAGE_USER_REGISTER, method=RequestMethod.POST)
 	public String userRegister(@ModelAttribute RegisterForms forms, Model model, HttpServletRequest request) {
 		LOG.info("用户注册!");
