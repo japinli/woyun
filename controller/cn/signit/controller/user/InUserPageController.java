@@ -30,4 +30,6 @@ public interface InUserPageController {
 	
 	//个人中心页
 	public String getMyInfoPage(User user,Model model);
+	
+	public String getUploadPage(String error, Model model);
 }

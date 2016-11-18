@@ -160,8 +160,12 @@ public class User {
 	}
     
     public String availableUserName(){
-		if(getEmail() != null && !getEmail().trim().equals("")){
+    	if (getRealName() != null && !getRealName().trim().equals("")) {
+    		return getRealName();
+    	} else if (getEmail() != null && !getEmail().trim().equals("")) {
 			return getEmail();
+		} else if (getPhone() != null && !getPhone().trim().equals("")) {
+			return getPhone();
 		}
 		return "unknown";
 	}

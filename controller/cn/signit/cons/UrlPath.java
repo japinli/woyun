@@ -26,7 +26,7 @@ public class UrlPath {
 			public final static String COMMON_ROOT = SYSTEM_ROOT+"/common";//公共资源目
 			public final static String USER_ROOT = SYSTEM_ROOT+"/user";
 			public final static String USER_ANY_ROOT = SYSTEM_ROOT+"/user";
-			public final static String DOC_ROOT =USER_ROOT+"/documents";//用户文档资源
+			public final static String DOC_ROOT =SYSTEM_ROOT+"/documents";//用户文档资源
 				//用户文档资源(包含匿名角色)
 			public final static String DOC_ANY_ROOT =USER_ANY_ROOT+"/documents";
 			public final static String CERT_ROOT =USER_ROOT+"/certificates";//用户证书资源
@@ -68,6 +68,7 @@ public class UrlPath {
 			public final static String PAGE_USER_ENTERPRISE_AUTH = USER_ROOT+"/enterprise-auth.html";//用户企业实名认证页面
 			public final static String PAGE_USER_LOGOUT = SYSTEM_ROOT+"/logout.html";//用户个人信息页面
 			public final static String PAGE_USER_DOC_HOME = DOC_ROOT+"/index.html";//用户个人信息页面
+			public final static String PAGE_USER_DOC_SIGN_SELF = DOC_ROOT+"/sign-self.html";
 
 			
 			//====================证书页面路径（登录后）=======================

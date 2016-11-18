@@ -68,24 +68,25 @@ public class UserPageController implements InUserPageController{
 		return PageLogicPath.LOGIN.path();
 	}
 	
+	/**
+	 * 用户注册页面
+	 * @param error
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value=UrlPath.PAGE_USER_REGISTER,method=RequestMethod.GET)
 	@Override
 	public String getRegistPage(@RequestParam(required = false) String error, Model model) {
 		model.addAttribute(new RegisterForms());
 		return PageLogicPath.REGISTER.path();
 	}
-
-	/**
-	*@param user
-	*@param model
-	*@return
-	*@see (参阅)
-	*/
-	@RequestMapping(value=UrlPath.PAGE_USER_DOC_HOME,method=RequestMethod.GET)
+	
+	@RequestMapping(value=UrlPath.PAGE_USER_DOC_SIGN_SELF, method=RequestMethod.GET)
 	@Override
-	public String getDocumentPage(User user, Model model) {
-		return PageLogicPath.DOC_HOME.path();
+	public String getUploadPage(@RequestParam(required = false) String error, Model model) {
+		return PageLogicPath.DOC_SIGN_SELF.path();
 	}
+	
 
 	/**
 	*@param user
@@ -100,6 +101,18 @@ public class UserPageController implements InUserPageController{
 		return PageLogicPath.USER_MY_INFO.path();
 	}
 
+	/**
+	*@param user
+	*@param model
+	*@return
+	*@see (参阅)
+	*/
+	@RequestMapping(value=UrlPath.PAGE_USER_DOC_HOME,method=RequestMethod.GET)
+	@Override
+	public String getDocumentPage(@ModelAttribute(SessionKeys.LOGIN_USER) User user, Model model) {
+		model.addAttribute("userInfo", user);
+		return PageLogicPath.DOC_HOME.path();
+	}
 
 	/**
 	* 登录表单数据
@@ -147,11 +160,12 @@ public class UserPageController implements InUserPageController{
 	* @version 1.2.0
 	*/
 	public static class RegisterForms{
-		protected String username;
+		protected String username;  // Email or Phone number
 		protected String realName;
 		protected String password;
 		protected Long type;
 		protected String captcha;
+		
 		public String getUsername() {
 			return username;
 		}

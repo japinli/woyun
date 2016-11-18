@@ -1,6 +1,6 @@
 package cn.signit.hdfs;
 
-public class ItemInfo {
+public class FileItem {
 	
 	private String path;   // 文件路径
 	private String name;   // 文件名
@@ -8,7 +8,7 @@ public class ItemInfo {
 	private long size;     // 文件大小
 	private boolean isdir; // 是否是目录
 	
-	public ItemInfo() {
+	public FileItem() {
 		
 	}
 	

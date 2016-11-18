@@ -123,6 +123,12 @@ public class UserController {
 	@RequestMapping(value=UrlPath.PAGE_USER_REGISTER, method=RequestMethod.POST)
 	public String userRegister(@ModelAttribute RegisterForms forms, Model model, HttpServletRequest request) {
 		LOG.info("用户注册!");
+		String username = forms.getUsername();
+		User user = userService.getUser(username);
+		if (user != null) {
+			return PageLogicPath.REGISTER.path();
+		}
+		
 		return PageLogicPath.LOGIN.path();
 	}
 	

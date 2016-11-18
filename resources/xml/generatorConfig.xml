@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration >
-	<classPathEntry location="C:\Users\Liwen/.m2/repository/mysql/mysql-connector-java/5.1.32/mysql-connector-java-5.1.32.jar" />
+	<classPathEntry location="/home/japin/.m2/repository/mysql/mysql-connector-java/5.1.32/mysql-connector-java-5.1.32.jar" />
 	<context id="info_for_eSignServer" targetRuntime="Mybatis3" >
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
@@ -25,12 +25,12 @@
 		<!-- <table schema="${jdbc_user}" tableName="parterner" domainObjectName="AppInfo" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table> -->
-		 <table schema="${jdbc_user}" tableName="user" domainObjectName="User" enableCountByExample="false"
+		 <table schema="${jdbc_user}" tableName="user_files" domainObjectName="UserFiles" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table>
-		 <table schema="${jdbc_user}" tableName="enterprise_prove" domainObjectName="ProveInfo" enableCountByExample="false"
+		<!-- <table schema="${jdbc_user}" tableName="enterprise_prove" domainObjectName="ProveInfo" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table>
+		</table> -->
 	
 		
 	</context>

@@ -11,7 +11,7 @@
 	<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
 </div>
 <div class="view" style="padding-top: 60px;">
-    <input class="userIdentify" type="hidden" th:value="${userInfo.identify}" />
+    <!-- <input class="userIdentify" type="hidden" th:value="${userInfo.identify}" /> -->
     <div class="ui-nav-content" style="width: 900px;">    
 		<div id="addFilesBlock">
 			<span class="fs20 partTitle">上传文档</span>
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		<div class="nextStep">
-			<a th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}"><button type="button" class="submitSignInfo cl-white">完成</button></a>		
+			<a th:href="@{'/wesign/documents/index.html'}"><button type="button" class="submitSignInfo cl-white">完成</button></a>		
 			<span class="warning"></span>
 		</div>
 	</div>	
