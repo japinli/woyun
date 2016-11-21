@@ -1,7 +1,6 @@
 package cn.signit.controller.user;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.signit.domain.mysql.User;
 
@@ -31,5 +30,5 @@ public interface InUserPageController {
 	//个人中心页
 	public String getMyInfoPage(User user,Model model);
 	
-	public String getUploadPage(String error, Model model);
+	public String getUploadPage(User user, Model model);
 }

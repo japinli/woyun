@@ -83,7 +83,8 @@ public class UserPageController implements InUserPageController{
 	
 	@RequestMapping(value=UrlPath.PAGE_USER_DOC_SIGN_SELF, method=RequestMethod.GET)
 	@Override
-	public String getUploadPage(@RequestParam(required = false) String error, Model model) {
+	public String getUploadPage(@ModelAttribute(SessionKeys.LOGIN_USER) User user, Model model) {
+		model.addAttribute("userInfo", user);
 		return PageLogicPath.DOC_SIGN_SELF.path();
 	}
 	
