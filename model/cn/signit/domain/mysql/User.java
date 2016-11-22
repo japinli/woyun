@@ -3,6 +3,7 @@ package cn.signit.domain.mysql;
 import java.util.Date;
 
 import cn.signit.cons.OriginalSerialCodeMaker;
+import cn.signit.crypto.SerialCodeMaker;
 
 public class User {
     private Long id;
@@ -35,6 +36,11 @@ public class User {
 
     private Integer level;
 
+    
+    /*非数据库字段*/
+	//解密正常的用户原始序列码
+	private String normalSerialCode;
+    
     public Long getId() {
         return id;
     }
@@ -116,6 +122,9 @@ public class User {
     }
 
     public Boolean getActivated() {
+    	if(activated==null){
+    		return false;
+    	}
         return activated;
     }
 
@@ -160,13 +169,17 @@ public class User {
 	}
     
     public String availableUserName(){
-    	if (getRealName() != null && !getRealName().trim().equals("")) {
-    		return getRealName();
-    	} else if (getEmail() != null && !getEmail().trim().equals("")) {
+		if(getEmail() != null && !getEmail().trim().equals("")){
 			return getEmail();
-		} else if (getPhone() != null && !getPhone().trim().equals("")) {
-			return getPhone();
 		}
 		return "unknown";
 	}
+    
+    public String normalSerialCode() {
+		if(this.normalSerialCode == null && this.originalSerialCode != null){
+			normalSerialCode = SerialCodeMaker.getPlain(this.originalSerialCode);
+		}
+		return normalSerialCode;
+	}
+	
 }

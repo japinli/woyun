@@ -152,6 +152,11 @@ select:focus{
     padding: 10px; 
     width: 330px;
 }
+.file-encryption{
+    margin-top: 10px; 
+    padding: 10px; 
+    width: 330px;
+}
 .msgContent{
     margin-bottom: 40px;
 }

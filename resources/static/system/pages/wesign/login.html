@@ -2,7 +2,7 @@
 <html>
 <head>
 <div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
-<title>登录 | 蜗云</title>
+<title>登录 | 云取证</title>
 </head>
 <body>
 	<!--header-->
@@ -22,12 +22,12 @@
 					<input type="password" name="password" th:field="*{password}" value="" id="loginPwd" class="info-input">
 					<span id="js_pwd_error" class="errorWarning"></span>
 				</div>
-				<!-- <div th:if="${enableCaptcha}" class="mb10" th:classappend="${not enableCaptcha}? 'displayNo'" >
+				<div th:if="${enableCaptcha}" class="mb10" th:classappend="${not enableCaptcha}? 'displayNo'" >
 					<label for="captcha" class="info-label">验证码:</label>
 					<input type="text" name="captcha" th:field="*{captcha}" id="loginCaptcha" class="info-input-code">
 					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
 					<span class="js-change-verimg tipNormal login-event">换一个</span>
-				</div> -->
+				</div>
 				 <div class="mb10">
 					<label for="reme-me">自动登录</label>
 					<input type="checkbox" name="remember-me" id="reme-me" class="checkbox-reme" checked="checked">

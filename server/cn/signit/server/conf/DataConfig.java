@@ -22,7 +22,6 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mongodb.DB;
 
 import cn.signit.conf.ConfigProps;
 
@@ -66,7 +65,6 @@ public class DataConfig{
 	public DataSource dataSource() {
 		//LOG.info("======================>>  配置数据源（采用DRUID数据源）( {} ) ",DruidDataSource.class.getName());
 		DruidDataSource dataSource = new DruidDataSource(true);
-		LOG.info("======================>>  配置 MySQL 数据库服务器 ( {} ) ", ConfigProps.get("db.mysql.jdbc_url"));
 		/*数据库连接*/
 		dataSource.setUrl(ConfigProps.get("db.mysql.jdbc_url"));
 		dataSource.setDriverClassName(ConfigProps.get("db.mysql.jdbc_driver"));

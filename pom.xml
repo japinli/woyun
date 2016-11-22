@@ -24,6 +24,18 @@
 			<artifactId>cloudsign-sdk-base</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+		<!-- CA依赖 -->
+		<dependency>
+			<groupId>cn.signit</groupId>
+			<artifactId>cloudsign-ca-sdk</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+			<!-- fastjson依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.16</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -48,7 +60,7 @@
 		<dependency>
 			<groupId>cn.signit</groupId>
 			<artifactId>pkcs</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -86,12 +98,27 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
-		<!-- <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j-log4j12.version}</version>
-		</dependency> -->
+		<!-- jackson依赖 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		 <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			 <artifactId>jackson-core</artifactId> 
+			<version>${jackson.version}</version>
+			</dependency> 
+		<dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-databind</artifactId> 
+			<version>${jackson.version}</version> 
+		</dependency> 
+			<dependency> 
+			<groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version> 
+		</dependency>
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
+			<version>${slf4j-log4j12.version}</version> </dependency> -->
 		<!-- Spring依赖 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -401,26 +428,9 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-common</artifactId>
-			<version>${hadoop.version}</version>
-			<exclusions>
-    			<exclusion>
-        			<groupId>org.slf4j</groupId>
-        			<artifactId>slf4j-log4j12</artifactId>
-    			</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-hdfs</artifactId>
-			<version>${hadoop.version}</version>
-		</dependency>		
 	</dependencies>
-	
 	<build>
-		<finalName>woyun</finalName>
+		<finalName>cloud-forensic</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -506,6 +516,5 @@
 		<spring-security-oauth2.version>2.0.8.RELEASE</spring-security-oauth2.version>
 		<javassist.version>3.20.0-GA</javassist.version>
 		<ognl.version>3.1.2</ognl.version>
-		<hadoop.version>2.7.3</hadoop.version>
 	</properties>
 </project>

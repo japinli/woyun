@@ -1,0 +1,4 @@
+bad.user.password=Bad user password
+invalid.tsa.1.response.code.2=Invalid TSA '{1}' response, code {2}
+tsa.1.failed.to.return.time.stamp.token.2=TSA '{1}' failed to return time stamp token: {2}
+failed.to.get.tsa.response.from.1=Failed to get TSA response from '{1}'

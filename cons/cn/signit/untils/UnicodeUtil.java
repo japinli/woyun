@@ -5,6 +5,7 @@
 */
 package cn.signit.untils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -52,5 +53,14 @@ public class UnicodeUtil {
 		     str = str.replace(matcher.group(1), ch + "");    
 		 }
 		 return str;
+	}
+	
+	public static String utf8ToString(String str){
+		try {
+			return java.net.URLDecoder.decode(str,   "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return str;
+		}
 	}
 }

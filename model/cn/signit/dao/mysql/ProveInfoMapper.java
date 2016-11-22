@@ -14,4 +14,6 @@ public interface ProveInfoMapper {
     int updateByPrimaryKeySelective(ProveInfo record);
 
     int updateByPrimaryKey(ProveInfo record);
+    
+    ProveInfo selectByUserId(Long userId);
 }

@@ -1,18 +1,18 @@
 $(document).ready(function(){
 	//登录后相关设置
 	globalUserInfo();
-	
+
     $(".confirmDialog").dialog({ //通用确认框
         autoOpen: false,
         width: 400,
         modal: true
     });
-    
+
     //一级菜单提示框设置
    $('#id-first-nav').setBarCss("active");
    $(".lbar-link").setBarCss("active");
-    
-    $(".user-msg-tooltip").jBox("Tooltip",{
+
+   $(".user-msg-tooltip").jBox("Tooltip",{
 	  	width:'auto',
 	  	height:'auto',
 	  	closeOnMouseleave:true,
@@ -20,7 +20,28 @@ $(document).ready(function(){
         title: '',
         content: $("#id-userMenu-content")
     });
-  
+   
+   $(".tip-component").off("click").on("click", function(){
+	   $(".confirmDialog").html(
+			     '<div class="confirmContent">'
+			        +'<h3><i class="icon-lock-single"></i>标准证书 <h3>'
+			    	+'<p>标准证书要求签署方在签署合同之前经过实名认证。 </p>'
+			    	+'<p>适用场景：您希望合同具有最高级别的安全性，需要保证签署方实名。比如在线交易、金融交易等 </p>'
+			    	 +'<h3><i class="icon-lock-single"></i>一次性证书 <h3>'
+			    	+'<p>不需要签署方实名认证，只需要邮箱或手机认证即可。</p>'
+			    	+'<p>适用场景：您知道签署方真实身份，不需要对方进行实名认证环节，快速实现签名。</p>'
+			    +'</div>'
+			    +'<div class="confirmBtn textRight borderTop">'
+			    +'<span class="confirmNo btn-border-default-m mr25">我知道了</span>'
+			    +'</div>'
+		).dialog({autoOpen: true, title: "提示"});
+		
+		$('.confirmNo').unbind('click').click(function(){ //取消
+			$(".ui-dialog-titlebar-close").click();
+		});
+		
+   });
+
   //二维码
   $("#show-app-mod").mouseEnterLeave("#lbar-app-mod", "hidden");
 
@@ -30,8 +51,7 @@ $(document).ready(function(){
 function globalUserInfo(){
 	//添加logo触发事件
 	$(".logo").on("click",function(){
-		 /*window.location.href=gfALLDATA("userHref")+"/index.html";*/
-		window.location.href="/wesign/user/index.html";
+		 window.location.href=gfALLDATA("alipayPage")+"/index.html";
 	});
 }
 
@@ -43,7 +63,7 @@ function setLogoutingCommon(){
 		 //删除“动态”项的tab状态检测
 		 $.totalStorage.deleteItem("activityTabType");
 		 //删除“xxx”项的tab状态检测
-		$(this).attr('href','/user/sys/users/logout'); 
+		$(this).attr('href','/user/sys/users/logout');
 	});
 }
 
@@ -71,15 +91,25 @@ function hideLoading(){  //隐藏动画
     $('#loadingTip').clearQueue().stop().fadeOut('normal');
 }
 
+//***定时保存专用动画提示
+function showLightInfo(infoText){  //信息提示
+    $('#commomTipBox').clearQueue().stop().text(infoText);
+    $('#commomTipBox').css({'color':'#cdd7e1;','background-color': '#226ab2;', 'border':'0', 'top': '16px', 'left': '180px', 'padding': '5px 15px'}).show();
+    setTimeout(function(){
+        $('#commomTipBox').fadeOut('normal');
+    }, 3000);//设置提示出现时间为3s
+}
+
 //通用请求
 function requestServer(option){
     $.ajax({
         url: option.requestURL,
         async: option.requestAsync || true,	//async: boolean类型
         type: option.requestType || 'POST',
-        dataType: option.requesDatatType || 'json',
+        dataType: option.requesDatatType || 'text json',
         contentType: option.requestContentType || 'application/json',
-        data: option.requestData,
+        data: option.requestData||{},
+				headers:option.requestHeaders||{},
         beforeSend: function(xhr){
             if(option.beforeCallback){
                 option.beforeCallback(xhr);
@@ -99,7 +129,7 @@ function requestServer(option){
             if(option.errorCallback)option.errorCallback(jqXHR, textStatus, errorThrown);
             if(jqXHR.status==403 && jqXHR.getResponseHeader("Referer") != null ){//登录超时错误
                 showInfo('连接超时，正在跳转到登录页');
-                window.location.href = jqXHR.getResponseHeader("Referer"); 
+                window.location.href = jqXHR.getResponseHeader("Referer");
             }else{
                 hideLoading();
             }
@@ -123,17 +153,6 @@ function uploadFileSizeConvertTip(fileByteSize){
 	}
 }
 
-//"null"字处理
-function dealStr(string){
-    var str = string;
-    if(str == "null" || str == null){
-        str = "";
-    }else{
-    	str = str;
-    }
-    return str;
-}
-
 //时间转换
 function transformTime(ms, link){
     var date = new Date(ms);
@@ -145,55 +164,14 @@ function transformTime(ms, link){
     }else{
         return {ymd : y, hmm : h};  //日期时间分开
     }
-}
 
-//一位数转两位数
-function dateFormat(value){
-	if(value != "null" && value != null){
-		return (value < 10 ? '0' + value : value);
-	}else{
-		return " ";
-	}
-}
-
-//时间戳
-function transetsaResult(value, num){	
-	if(value != "null" && value != null){
-		if(num == 0){
-			return (( (value.split('&'))[0] ).split('TimeStampDate:'))[1];
-		}else if(num == 1){
-			return (( (value.split('&'))[1] ).split('TimeStampServer:'))[1];
-		}
-	}else{
-		return " ";
-	}
-}
-
-//证书展示用到-不能删
-function transCertFrom(value){  //转意证书来自
-    var certFromArray = ["服务器端证书", "USBKEY证书", "一次一密证书"];
-    if(value != "null" && value != null){
-    	return certFromArray[value];
-    }else{
-    	return " ";
+    function dateFormat(value){
+    	if(value != "null" && value != null){
+    		return (value < 10 ? '0' + value : value);
+    	}else{
+    		return " ";
+    	}
     }
-}
-
-function transUseState(value){  //转意证书状态
-    var certFromArray = ["正常", "已停用", "已吊销"];
-    if(value != "null" && value != null){
-    	return certFromArray[value];
-    }else{
-    	return " ";
-    }
-}
-
-function transRealName(value){		//获取姓名
-	if(value != "null" && value != null){
-		return  ((value.split('CN='))[1]).split(',')[0];
-	}else{
-		return " ";
-	}
 }
 
 //动态鼠标移入移除
@@ -216,7 +194,7 @@ function transRealName(value){		//获取姓名
         var windowHref = ((window.location.pathname).split("/"))[((window.location.pathname).split("/")).length - 2] + '/' + ((window.location.pathname).split("/"))[((window.location.pathname).split("/")).length - 1];
         var linkHref = $(_this).children("li");
         var len = $(linkHref).length;
-        
+
         for(var i = 0; i < len; i++){
         	var _this = $($(linkHref)[i]);
         	var curHref = ((_this.find('a').attr("href")).split("/"))[((_this.find('a').attr("href")).split("/")).length - 2] + '/' + ((_this.find('a').attr("href")).split("/"))[((_this.find('a').attr("href")).split("/")).length - 1];
@@ -236,56 +214,80 @@ function transRealName(value){		//获取姓名
 /*
 ***生成uuid
  */
-
-// Generate four random hex digits.
-function S4() {
-   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-};
 // Generate a pseudo-GUID by concatenating random hexadecimal.
 function GUID() {
    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+   // Generate four random hex digits.
+   function S4() {
+      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+   };
 };
 
-/***
- * global parameter : gALLDATA
- * Parameter call : gALLDATA( "subparameter_name" )	//调用统一方式 gALLDATA("publicHref")
- * define: uRole-用户角色, uId-用户ID, uCode-用户编码, uName-用户名
- *            baseHref-IP+port+projectName		// eg: <base href="http://localhost:8080/cloudsign-wesign">
- *            publicHref-公共接口地址，userInfoHref-用户个人信息接口地址，docHref-文档接口地址，sealHref-签章接口地址，certHref-证书接口地址
- ***/
+	/***
+	 * global parameter : gALLDATA
+	 * Parameter call : gALLDATA( "subparameter_name" )	//调用统一方式 gALLDATA("publicHref")
+	 * define: uRole-用户角色, uId-用户ID, uCode-用户编码, uName-用户名
+	 *            baseHref-IP+port+projectName		// eg: <base href="http://localhost:8080/cloudsign-wesign">
+	 *            publicHref-公共接口地址，userInfoHref-用户个人信息接口地址，docHref-文档接口地址，sealHref-签章接口地址，certHref-证书接口地址
+	 ***/
 
-function gfALLDATA( para ){
-	var uRole = $("#USER_ROLE").attr("value") ,
-		  uId = $("#USER_ID").attr("value") ,
-		  uCode = $("#USER_SERIAL_CODE").attr("value") ,
-		  uName = $("#USER_BEST_NAME").attr("value") ,
-		  baseHref = $("base").attr("href") ,
-		  publicHref = baseHref + "/wesign/common" ,
-		  userHref = baseHref + "/wesign/" + uRole,
-		  userInfoHref = userHref + "/users/" + uId ,
-		  docHref = userHref + "/documents" ,	
-		  sealHref = userHref + "/seals" ,
-		  certHref = userHref + "/certificates" ,
-		  payHref = userHref + "/payments" ,
-		  alipayHref = userHref ,
-		  obj =	{
-						"uRole" : uRole ,
-						"uId" : uId ,
-						"uCode" : uCode ,
-						"uName" : uName ,
-						"baseHref" : baseHref ,		
-						"publicHref": publicHref ,
-						"userHref": userHref,
-						"docHref" : docHref ,	
-						"userInfoHref": userInfoHref ,
-						"sealHref": sealHref ,
-						"certHref": certHref,
-						"payHref": payHref,
-						"alipayHref": alipayHref
-					} ;
-	return obj[ para ] != undefined ? obj[ para ] : "error/" ;
-}
+var gfALLDATA=function( para ){
 
+	var obj=null;
+	return function(para){
+		if(!obj){
+			var uRole = $("#USER_ROLE").attr("value") ,
+					 uId = $("#USER_ID").attr("value") ,
+					 uCode = $("#USER_SERIAL_CODE").attr("value") ,
+					 uName = $("#USER_BEST_NAME").attr("value") ,
+					 uEmail= $("#USER_CONTACT_EMAIL").attr("value") ,
+					 uphone= $("#USER_CONTACT_PHONE").attr("value") ,
+					 baseHref = $("base").attr("href") ,
+					 publicHref = baseHref + "/wesign/common" ,
+					 userHref = baseHref + "/ws-rest/v1",
+					 userPublicHref = userHref + "/common",
+					 userInfoHref = userHref + "/users/" + uId ,
+					 docHref = userInfoHref + "/documents" ,
+					 sealHref = userInfoHref + "/seals" ,
+					 certHref = userInfoHref + "/certificates" ,
+					 payHref = userInfoHref + "/payments" ,
+					 alipayHref = userInfoHref ,
+					 envelopeHref = userInfoHref + "/envelopes",
+					 docPage = baseHref + "/wesign/documents" ,
+			         envePage = baseHref +"/wesign/envelopes",
+			         payPage = baseHref +"/wesign/payments",
+			         alipayPage = baseHref + "/wesign/users",
+			         certPage = baseHref + "/wesign/certificates",
+			         sealPage = baseHref + "/wesign/seals";
+				 obj =	{
+							 "uRole" : uRole ,
+							 "uId" : uId ,
+							 "uCode" : uCode ,
+							 "uName" : uName ,
+							 "uEmail" : uEmail ,
+							 "uPhone" : uphone ,
+							 "baseHref" : baseHref ,
+							 "publicHref": publicHref ,
+							 "userHref": userHref,
+							 "userPublicHref": userPublicHref,
+							 "docHref" : docHref ,
+							 "userInfoHref": userInfoHref ,
+							 "sealHref": sealHref ,
+							 "certHref": certHref,
+							 "payHref": payHref,
+							 "alipayHref": alipayHref,
+							 "envelopeHref": envelopeHref,
+							 "docPage": docPage,
+							 "envePage": envePage,
+							 "payPage": payPage,
+							 "alipayPage": alipayPage,
+							 "certPage": certPage,
+							 "sealPage": sealPage
+						 } ;
+		}
+		return obj[para] || "error/" ;
+	};
+}();
 //两个选择菜单
 /*nameLeft:左边按钮文字，nameRight:右边按钮文字，leftUrl:左边按钮链接，
 rightUrl:右边按钮额链接,msg：提示文字*/
@@ -296,11 +298,11 @@ function twoChooseMune( nameLeft,nameRight,leftUrl,rightUrl,msg ){
         +'<span class="confirmYes chooseRight">'+nameRight+'</span>'
     );
     $("#js_btn_group").html(msg);
-    $('.confirmNo').unbind('click').click(function(){ 
+    $('.confirmNo').unbind('click').click(function(){
         window.location.href=leftUrl;
         $(".ui-dialog-titlebar-close").click();
     });
-    $('.confirmYes').unbind('click').click(function(){ 
+    $('.confirmYes').unbind('click').click(function(){
         window.location.href=rightUrl;
         $(".ui-dialog-titlebar-close").click();
     });
@@ -315,7 +317,7 @@ function chooseMune( nameLeft,leftUrl,msg ){
         '<span class="confirmNo choosebtn">'+nameLeft+'</span>'
     );
     $("#js_btn_group").html(msg);
-    $('.confirmNo').unbind('click').click(function(){ 
+    $('.confirmNo').unbind('click').click(function(){
         window.location.href=leftUrl;
         $(".ui-dialog-titlebar-close").click();
     });
@@ -331,7 +333,6 @@ function getQueryString(name, url){
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
 
 /*
  * 第三方库

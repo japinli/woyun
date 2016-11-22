@@ -3,16 +3,29 @@ page_path=system/pages/wesign/login.html
 []
 ####=================系统配置===============####
 
+
+[mail.msg]
+common_nickname=云取证中心
+
+activate_subject=云取证系统注册邮箱验证(%s)
+activate_contents=<div style="border:1px solid #ebd9d9;background-color:#f1efef;padding:0;"> <div style="font-size:16px;padding:0px 20px;margin-top:20px;"><p>您好, <span style="font-weight:bold;font-size:18px">%s</span></p><p style="margin-top:15px;">您正在注册云取证系统，请点击下面链接验证您的邮箱：</p> <a href="%s" style="font-size:18px;color:#ff6666;margin-top:15px;" target="_blank">%s</a><p style="font-size:14px;color:#b5b2b2;margin:30px 0 3px 0;">如有什么问题，通过如下方式联系我们：</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Email : service@signit.cn</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;"></p></div><div style="font-size:14px;border-top:1px solid #ebd9d9;color:#b5b2b2;padding:8px 20px;margin-bottom:0"><span style="float:left;display:inline-block;">技术支持:四川思安特科技有限公司</span><a style="color:#b5b2b2;text-decoration:none;float:right;display:inline-block;" href="http://www.signit.cn" target="_blank"></a><div style="clear:both;"></div></div></div>
+
+find_pwd_subject=注册找回密码请求(%s)
+find_pwd_contents=<div style="border:1px solid #ebd9d9;background-color:#f1efef;padding:0;"> <div style="font-size:16px;padding:0px 20px;margin-top:20px;"><p>您好, <span style="font-weight:bold;font-size:18px">%s</span></p><p style="margin-top:15px;">您正在申请找回密码的请求，请点击下面链接找回您的密码：</p> <a href="%s" style="font-size:18px;color:#ff6666;margin-top:15px;" target="_blank">%s</a><p style="font-size:14px;color:#b5b2b2;margin:30px 0 3px 0;">如有什么问题，通过如下方式联系我们：</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Email : service@signit.cn</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Tel : 028-85294307</p></div><div style="font-size:14px;border-top:1px solid #ebd9d9;color:#b5b2b2;padding:8px 20px;margin-bottom:0"><span style="float:left;display:inline-block;">四川思安特科技有限公司.易企签服务</span><a style="color:#b5b2b2;text-decoration:none;float:right;display:inline-block;" href="http://www.signit.cn" target="_blank">我们的官网：signit.cn</a><div style="clear:both;"></div></div></div>
+
+[]
+
 ###配置节点证书
-[cacert]
+[peers]
 path.cert=/cert/SignitCA.cer
 path.keystore=/cert/SignitCA.keystore
-alias=EsignCA
-password=EsignCA2015
+keystore.alias=EsignCA
+keystore.password=EsignCA2015
+signAlgorithm=SHA1WithRSAEncryption
 []
 ###配置节点类型 EDGE(边缘节点),RENDEZVOUS(集合点),节点连接信息等.一下信息为节点第一次加入网络必须初始化的。
 [peer]
-type=RENDEZVOUS
+model=Manager
 url=peer1.dl.signit.cn
 ip=10.10.10.189
 name=CenterLi
@@ -25,12 +38,26 @@ rendezvous.url=
 []
 
 
-
+####====系统连接加密相关=====####
 [server]
 session_max_alive_seconds=1800
 ##all,no,auto
 request_requires_secure=no
 []
+
+####====时间戳服务器配置=====####
+[timestamp]
+url=http://10.10.10.42:9000/tsa
+[]
+
+#================证书请求相关服务接口配置==============#
+[cert.request]
+server.url=http://10.10.10.42:12000/api
+auth.appid=2016041101287712
+auth.key=lmn9uic6bk4vbcmmlxxv5z87rxkfwnzq
+[]
+
+
 
 ####====邮件相关=====####
 [email]
@@ -84,6 +111,7 @@ jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
 []
+
 #================Hadoop配置======================
 [hadoop]
 hadoop_url=hdfs://localhost:9000

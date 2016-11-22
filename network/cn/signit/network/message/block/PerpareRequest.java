@@ -14,20 +14,21 @@ import cn.signit.sdk.BaseRequest;
 * @see (参阅)
 */
 public class PerpareRequest implements BaseRequest<PrepareResponse>,ReqMessage{
-
+	private Long blockHight;//区块高度
+	private Long viewId;//视图编号
+	private Long peerId;//发送的节点编号
+	private String blockSignature;//包含merkle根及其签名值等,经过Base64编码后的值
+	
 	/**
-	*(这里用一句话描述这个重写方法的作用) 
 	*@return
 	*@see (参阅)
 	*/
 	@Override
 	public String getApiMethodName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	*(这里用一句话描述这个重写方法的作用) 
 	*@return
 	*@see (参阅)
 	*/
@@ -38,7 +39,6 @@ public class PerpareRequest implements BaseRequest<PrepareResponse>,ReqMessage{
 	}
 
 	/**
-	*(这里用一句话描述这个重写方法的作用) 
 	*@return
 	*@see (参阅)
 	*/
@@ -49,7 +49,6 @@ public class PerpareRequest implements BaseRequest<PrepareResponse>,ReqMessage{
 	}
 
 	/**
-	*(这里用一句话描述这个重写方法的作用) 
 	*@return
 	*@see (参阅)
 	*/
@@ -60,7 +59,6 @@ public class PerpareRequest implements BaseRequest<PrepareResponse>,ReqMessage{
 	}
 
 	/**
-	*(这里用一句话描述这个重写方法的作用) 
 	*@param apiVersion
 	*@see (参阅)
 	*/

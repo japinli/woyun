@@ -72,7 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
     //自定义安全请求规则
 	private void customRequestSecureRules(HttpSecurity http) throws Exception{
-		String val = ConfigProps.get("server.request_requires_secure");
+		String val = ConfigProps.get("server"
+				+ ""
+				+ ".request_requires_secure");
 		
 		//设置Http协议规则
 		if(val == null || "auto".equals(val)){

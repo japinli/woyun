@@ -29,13 +29,16 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <!-- 根据用户名邮箱获取用户对象 -->
-  <select id="selectByAvaiableName" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select
-  	<include refid="Base_Column_List" />
-  	from user u
-  	where ( u.email = #{name, jdbcType=VARCHAR} or u.phone = #{name, jdbcType=VARCHAR})
-  </select>
+  <!-- 通过可用的唯一名字查询用户 -->
+   <select id="selectByAvailableName" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from user u
+    where(
+     u.email=#{name,jdbcType=VARCHAR}
+     or u.phone=#{name,jdbcType=VARCHAR}
+    )
+   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user
@@ -56,6 +59,104 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.signit.domain.mysql.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="originalSerialCode != null" >
+        original_serial_code,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="locationCode != null" >
+        location_code,
+      </if>
+      <if test="registDate != null" >
+        regist_date,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="randomCode != null" >
+        random_code,
+      </if>
+      <if test="activated != null" >
+        activated,
+      </if>
+      <if test="rootDir != null" >
+        root_dir,
+      </if>
+      <if test="rootDirName != null" >
+        root_dir_name,
+      </if>
+      <if test="portrait != null" >
+        portrait,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="originalSerialCode != null" >
+        #{originalSerialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="locationCode != null" >
+        #{locationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registDate != null" >
+        #{registDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="randomCode != null" >
+        #{randomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="activated != null" >
+        #{activated,jdbcType=BIT},
+      </if>
+      <if test="rootDir != null" >
+        #{rootDir,jdbcType=VARCHAR},
+      </if>
+      <if test="rootDirName != null" >
+        #{rootDirName,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+   <insert id="insertAndGetId" keyProperty="id" parameterType="cn.signit.domain.mysql.User" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

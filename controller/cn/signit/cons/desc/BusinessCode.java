@@ -19,6 +19,8 @@ public enum BusinessCode {
 	PAY_PAY("0032"),
 	//API相关
 	PAY_API("0033"),
+	//账户实名认证业务
+	ACCOUNT_AUTH("0022"),
 
 	;
 	

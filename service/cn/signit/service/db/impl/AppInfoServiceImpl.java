@@ -12,7 +12,6 @@ import cn.signit.domain.mysql.ParternerExtInfo;
 import cn.signit.service.db.AppInfoService;
 
 /**
-*(这里用一句话描述这个类的作用)
 * @ClassName AppInfoServiceImpl
 * @author Liwen
 * @date 2016年4月29日-下午5:07:08

@@ -16,19 +16,13 @@ import cn.signit.domain.mysql.User;
 public interface InUserPageController {
 	//登录页
 	public String getLoginPage(String error,String logout,Model model);
-	
-	//注册页面
-	public String getRegistPage(String error, Model model);
 
 	//主页
 	public String getHomePage(User user,Model model);
 
-	
-	//文档中心页
-	public String getDocumentPage(User user,Model model);
+	//注册
+	public String getRegisterPage(Model model);
 	
 	//个人中心页
 	public String getMyInfoPage(User user,Model model);
-	
-	public String getUploadPage(User user, Model model);
 }

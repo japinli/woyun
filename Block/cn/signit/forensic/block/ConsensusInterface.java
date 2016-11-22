@@ -1,5 +1,7 @@
 package cn.signit.forensic.block;
 
+import cn.signit.forensic.block.beans.View;
+
 /**
 *基于共识算法所需完成的相关操作
 * @ClassName ConsensusInterface
@@ -34,5 +36,5 @@ public interface ConsensusInterface {
 	/**
 	 * 更换视图
 	 */
-	public void changeView();
+	public void changeView(View view);
 }

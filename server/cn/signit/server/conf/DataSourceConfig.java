@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Import;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
-import cn.signit.beans.SystemProps;
+import cn.signit.conf.ConfigProps;
+
 
 
 /**
@@ -26,8 +27,6 @@ import cn.signit.beans.SystemProps;
 @Import(BaseConfig.class)
 public class DataSourceConfig {
 	private final static Logger LOG = LoggerFactory.getLogger(DataSourceConfig.class);
-	@Autowired
-	private SystemProps props;
 	/**
 	* 配置数据源（采用DRUID数据源）
 	* 
@@ -39,17 +38,17 @@ public class DataSourceConfig {
 		LOG.info("======================>>  配置数据源( {} ) ",DruidDataSource.class.getName());
 		DruidDataSource dataSource = new DruidDataSource(true);
 		/*数据库连接*/
-		dataSource.setUrl(props.get("db.mysql.jdbc_url"));
-		dataSource.setDriverClassName(props.get("db.mysql.jdbc_driver"));
-		dataSource.setUsername(props.get("db.mysql.jdbc_user"));
-		dataSource.setPassword(props.get("db.mysql.jdbc_password"));
+		dataSource.setUrl(ConfigProps.get("db.mysql.jdbc_url"));
+		dataSource.setDriverClassName(ConfigProps.get("db.mysql.jdbc_driver"));
+		dataSource.setUsername(ConfigProps.get("db.mysql.jdbc_user"));
+		dataSource.setPassword(ConfigProps.get("db.mysql.jdbc_password"));
 		/*连接配置*/
 		//连接池最大连接数
 		dataSource.setMaxActive(20);
 		//连接池最大等待时间
 		dataSource.setMaxWait(60000);
 		//数据库测试使用
-		dataSource.setValidationQuery(props.get("db.mysql.validation_query"));
+		dataSource.setValidationQuery(ConfigProps.get("db.mysql.validation_query"));
 		//其他配置采用默认
 		
 		return dataSource;

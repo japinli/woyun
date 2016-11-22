@@ -1,0 +1,6 @@
+bad.user.password=用户密码错误
+invalid.tsa.1.response.code.2=不可用的时间戳回复 '{1}' , 代码 {2}
+tsa.1.failed.to.return.time.stamp.token.2=时间戳服务器 '{1}' 未成功返回时间戳: {2}
+failed.to.get.tsa.response.from.1=解析时间戳回复错误 '{1}'
+failed.to.get.ca.response.from.1=获取CA回复消息错误'{1}'
+failed.to.get.cert.1=获取用户证书错误'{1}'

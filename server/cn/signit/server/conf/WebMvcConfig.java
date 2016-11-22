@@ -132,13 +132,13 @@ public class WebMvcConfig extends WebMvcConfigurationSupport{
 	    protected void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
 	    	LOG.info("======================>> 配置异常解析器( {} ) ",HandlerExceptionResolver.class.getName());
 	    	SimpleMappingExceptionResolver b = new SimpleMappingExceptionResolver();
-	    	b.setDefaultErrorView("error/404");
+	    	b.setDefaultErrorView("error/pages/404");
 	    	b.setDefaultStatusCode(404);
-	    	b.addStatusCode("error/500", 500);
-	    	b.addStatusCode("error/503", 503);
+	    	b.addStatusCode("error/pages/500", 500);
+	    	b.addStatusCode("error/pages/503", 503);
 	        Properties mappings = new Properties();
-	        mappings.put("org.springframework.dao.DataAccessException", "error/genericError");
-	        mappings.put("java.lang.RuntimeException", "error/genericError");
+	       /* mappings.put("org.springframework.dao.DataAccessException", "error/genericError");
+	        mappings.put("java.lang.RuntimeException", "error/genericError");*/
 	        b.setExceptionMappings(mappings);
 	        list.add(b);
 	    }

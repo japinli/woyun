@@ -11,7 +11,7 @@
 	<div th:replace="system/pages/common/sys-bar-common.html :: copy-headerbar">动态复用</div>
 </div>
 <div class="view" style="padding-top: 60px;">
-    <!-- <input class="userIdentify" type="hidden" th:value="${userInfo.identify}" /> -->
+    <input class="userIdentify" type="hidden" th:value="${userInfo.identify}" />
     <div class="ui-nav-content" style="width: 900px;">    
 		<div id="addFilesBlock">
 			<span class="fs20 partTitle">上传文档</span>
@@ -21,19 +21,26 @@
 					<a href="#" class="cl-white">选择文件</a>
 					<input id="upload-files" class="uploadFilesBtn" tabindex="-1" type="file" name="file"/>
 				</span>
-				<p>支持文件类型为PDF、DOC、DOCX、XLS、XLSX、PPT、PPTX、WPS、ET、DPS、JPEG、GIF、PNG且不超过2M</p>				
+				<!-- <p>支持文件类型为PDF、DOC、DOCX、XLS、XLSX、PPT、PPTX、WPS、ET、DPS、JPEG、GIF、PNG且不超过2M</p>	 -->			
 			</div>
 			<div class="upload-files-container"></div>
 		</div>
-		<div id="addresserInfo">
-		    <span class="fs20 partTitle">本人信息</span>
-		    <!-- <span class="fs14 signCert" style="margin-left:75px;">签名类型：
+		<!-- <div id="addresserInfo">
+		    <span class="fs20 partTitle">本人信息</span> 
+		    <span class="fs20 partTitle">文件是否加密：</span>
+		    <input type="radio" name="toggle" value="0" id="encryption"/>是
+		    <input type="radio" name="toggle" value="1" id="no-encryption"/>否
+		    <div id="file-pass" style="display:none">
+		    <input type="text" class="file-encryption" id="file-password" placeholder="加密密码（必填）"/ >
+		    </div>
+
+		    <span class="fs14 signCert" style="margin-left:75px;">签名类型：
                 <button type="button" class="certChoose signWith">有证书</button><button type="button" class="certChoose signWithout">无证书</button>
-            </span> -->
+            </span>
 		    <hr>
 		    <input type="text" class="addresserName self-addresserName" placeholder="姓名（必填）"/>
 		    <input type="text" class="addresserEmail valid-email self-addresserEmail" placeholder="邮箱（必填）"/>
-		</div>
+		</div> -->
 		<!-- <div id="addRecipientBlock">
 			<span class="fs20 partTitle">添加接收人</span>
 			<hr>
@@ -48,19 +55,31 @@
 			</div>
 		</div> -->
 		<div id="addMessageBlock">
-			<span class="fs20 partTitle">添加信息</span>
+			<span class="fs20 partTitle">文档信息</span>
 			<hr>
+			<div id="addresserInfo">
+			    <span class="fs20 partTitle">文档是否加密：</span>
+			    <input type="radio" name="toggle" value="true" checked id="encryption"/>是
+			    <input type="radio" name="toggle" value="false" id="no-encryption"/>否
+			    <!-- <div id="file-pass" style="display:none"> -->
+			    <div id="file-pass" >
+			    <input type="password" class="file-encryption" id="file-password" placeholder="文档加密秘钥（必填）"/ >
+			    </div>
+			</div>
 			<div class="msgTitle">
-				<h3>信息标题：</h3>
-				<input type="text" class="docTitle" placeholder="（必填）"/>
+				<p class="fs20" >文档签名秘钥：</p>
+				<!-- <h3>文档签名秘钥：</h3> -->
+				<input type="password" class="docTitle" placeholder="文档签名秘钥（必填）"/>
 			</div>
 			<div class="msgContent">
-				<h3>消息（可选）：</h3>
+				<p class="fs20" >附加信息（可选）：</p>
+				<!-- <h3>附加信息（可选）：</h3> -->
 				<textarea class="msgContentTxt" rows="4"></textarea>
 			</div>
 		</div>
 		<div class="nextStep">
-			<a th:href="@{'/wesign/documents/index.html'}"><button type="button" class="submitSignInfo cl-white">完成</button></a>		
+			<a th:href="@{'/wesign/documents/index.html'}"><button type="button" class="submitSignInfo cl-white" onclick="uploadFile();">完成</button></a>		
+			<!-- <button type="button" class="submitSignInfo cl-white" onclick="uploadFile();">完成</button> -->
 			<span class="warning"></span>
 		</div>
 	</div>	

@@ -16,7 +16,9 @@ import cn.signit.server.conf.MongoConfig;
 import cn.signit.server.conf.SecurityConfig;
 import cn.signit.server.conf.ServiceConfig;
 import cn.signit.server.conf.StandardTimesConfig;
+import cn.signit.server.conf.SystemConfig;
 import cn.signit.server.conf.ThymeleafConfig;
+import cn.signit.server.conf.V2CAServiceConfig;
 import cn.signit.server.conf.WebMvcConfig;
 
 /**
@@ -54,7 +56,9 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	protected Class<?>[] getServletConfigClasses() {
 		 LOG.info("======================>>  配置@Configuration标注的web应用上下文");
 		 return new Class[]{					
+				 									SystemConfig.class,
 				 						            ServiceConfig.class,
+				 						            V2CAServiceConfig.class,
 				 						            ThymeleafConfig.class,
 				 									WebMvcConfig.class
 				 									};

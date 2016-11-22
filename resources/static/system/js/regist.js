@@ -43,11 +43,11 @@ $(document).ready(function() {
 		$("#js_register_error").text("");		//清除注册提示
 	});
 	
-	$("#regCaptcha").val("").focusout(function(){		//验证码
-		var tipSelector = $(this).siblings('span').eq(1);
-		captchaValidator(this, tipSelector);
-		$("#js_register_error").text("");		//清除注册提示
-	});
+	// $("#regCaptcha").val("").focusout(function(){		//验证码
+	// 	var tipSelector = $(this).siblings('span').eq(1);
+	// 	captchaValidator(this, tipSelector);
+	// 	$("#js_register_error").text("");		//清除注册提示
+	// });
 	
 	registBtnObj.click(function(){
 		finalValidate();
@@ -80,10 +80,10 @@ function finalValidate(){
 	var $passwordMsg = $("#userPassword").siblings('span').eq(0).text();
 	var $passwordAgainMsg =$("#passwordAgain").siblings('span').eq(0).text();
 	var $realNameMsg=$("#invented_realName").siblings('span').eq(0).text();
-	var $verifyCode=$("#regCaptcha").siblings('span').eq(1).text();
+	// var $verifyCode=$("#regCaptcha").siblings('span').eq(1).text();
 	if($("#emailOrPhone").val().indexOf("@") > -1){	//邮箱
 		
-		if( $emailMsg == 'ok' && $accountMsg == 'ok' && $passwordMsg=='ok' && $passwordAgainMsg=='ok'&&$realNameMsg=='ok' && $verifyCode=='ok'){
+		if( $emailMsg == 'ok' && $accountMsg == 'ok' && $passwordMsg=='ok' && $passwordAgainMsg=='ok'&&$realNameMsg=='ok'){
 			// 注册按钮状态变化
 			registBtnSubmitStyle($("#regSubmitBtn"));
 			$("#realName").attr("value",unicode($("#invented_realName").val()));
@@ -121,13 +121,13 @@ function checkRegistInfo(){
 	var name=$("#invented_realName").val().length;
 	var password=$("#userPassword").val().length;
 	var rePassword=$("#passwordAgain").val().length;
-	var verifyCode=$("#regCaptcha").val().length;
+	// var verifyCode=$("#regCaptcha").val().length;
 	//判断是否含有中文的正则表达式
 	var warningInfo=$(".errorWarning").text();
 	var reg=/^[ok]{0,}$/;
 	var isHasError=reg.test(warningInfo);
 	//不含有错误提示信息，且含有未填选项
-	if (isHasError && (!account || !name || !password || !rePassword || !verifyCode)) {
+	if (isHasError && (!account || !name || !password || !rePassword )) {
 		$("#js_register_error").text("您还未完成注册信息的填写！");
 	}
 }

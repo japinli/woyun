@@ -15,6 +15,12 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     
-    // 根据用户名获取用户对象
-    User selectByAvaiableName(String name);
+    //自行添加的查询
+    User selectByAvailableName(String name);
+    
+    Long insertAndGetId(User user);
+    
+    //List<User> selectAllUsers();
+    
+    
 }

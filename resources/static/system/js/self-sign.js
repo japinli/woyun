@@ -1,19 +1,21 @@
 $(document).ready(function(){
+    //文件是否加密
+    fileEncryption();
 	//添加
-    addRecipient();			
+    //addRecipient();			
     //删除联系人
-	$(document).delegate('.deleteRecipient','click',function(){
-	    $(this).parent().remove(); 
-	});
+	/*$(document).delegate('.deleteRecipient','click',function(){
+	     $(this).parent().remove(); 
+	 });*/
     //邮箱校验
-    $(document).delegate('.valid-email','focusout',function(){
-        var emailValue = $(this).val();
+     /*$(document).delegate('.valid-email','focusout',function(){
+         var emailValue = $(this).val();
            if(!validEmail(emailValue)){               
                showErrorMsg($(this).next().next(),"请输入正确的邮箱");
            }                        
-    });
+    });*/
 	//点击下一步发送数据    
-    $('.submitSignInfo').unbind('click').click(function(){  
+   /* $('.submitSignInfo').unbind('click').click(function(){  
         var _this = this;
         if($('.addresserName').prop("readonly") == false){
             addRealName();
@@ -25,11 +27,11 @@ $(document).ready(function(){
         setTimeout(function(){
             $(_this).prop("disabled",false);
         }, 500);
-    });   	
+    });   */	
 });
 
 //添加接收人信息
-function addRecipient(){
+/*function addRecipient(){
     $('.addRecipient').unbind('click').click(function(){
         if($('.recipientInfo').size()<10){
             $('.self-recipientInfoArea').append(
@@ -46,7 +48,7 @@ function addRecipient(){
         }               
     });	
 }
-
+*/
 //本人签相关信息
 function relatedInfo(callback){
     var aUserName    = [],
@@ -160,4 +162,17 @@ function sendRelatedInfo(relatedData){
         }
     });
 }
+//文件加密信息设置
+function fileEncryption(){
+    var show = document.getElementById('encryption'); 
+    var hide = document.getElementById('no-encryption');
+    var filePassword = document.getElementById('file-pass');
+    show.onclick = function() {
+        filePassword.style.display = 'block';
+    };
+    hide.onclick = function() {
+        filePassword.style.display = 'none';
+    }
+}
+
 

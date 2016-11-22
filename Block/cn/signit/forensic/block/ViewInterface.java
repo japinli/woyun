@@ -1,5 +1,7 @@
 package cn.signit.forensic.block;
 
+import cn.signit.forensic.block.beans.View;
+
 /**
 *视图相关操作
 *<br>算法具体实现，参考小蚁共识算法-第5页
@@ -10,5 +12,5 @@ package cn.signit.forensic.block;
 * @see (参阅)
 */
 public interface ViewInterface {
-	public void changeView();
+	public View changeView(View view);
 }

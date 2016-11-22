@@ -1,13 +1,13 @@
 $(document).ready(function(){  
     //填充发起人信息
-    getAddresserInfo();
+    // getAddresserInfo();
     //选择签名类型
-    comboRest(function(){
+   /* comboRest(function(){
         signWithCert();
-    });
+    });*/
     
     //添加联系人UI
-    changeAddUI();
+    //changeAddUI();
     //点击上传文档
     uploadFile();     
     //删除文档
@@ -22,16 +22,16 @@ $(document).ready(function(){
 });
 
 //添加联系人UI
-function changeAddUI(){
+/*function changeAddUI(){
     $('.addRecipient').mouseover(function(){
         $('.addRecipientIcon').css("color","#a9a9a9");
     }).mouseout(function(){
         $('.addRecipientIcon').css("color","#095db1");
     });
-}
+}*/
 
 //添加接收人信息(多人签)
-function addMultiRecipient(){
+/*function addMultiRecipient(){
     $('.addRecipient').unbind('click').click(function(){
         if($('.orderTrig').attr('name') == "nope"){  //未选择顺序发送
             $('.recipientInfo:last').after(
@@ -67,10 +67,10 @@ function addMultiRecipient(){
         }   
         sequence();
     }); 
-}
+}*/
 
 //删除接收人信息
-function removeRecipient(){
+/*function removeRecipient(){
     $(document).delegate('.deleteRecipient','click',function(){
         if($('.deleteRecipient').length > 1){
             $(this).parent().remove();
@@ -78,9 +78,9 @@ function removeRecipient(){
         getSendOrder();
     });
 }
-
+*/
 //排序
-function sequence(){
+/*function sequence(){
     $('.recipientInfoArea').sortable({      
         handle: $('.sortHandle'),
         axis: "y",
@@ -89,19 +89,19 @@ function sequence(){
                   getSendOrder();
               }
     });
-}
+}*/
 
 //获取发送顺序
-function getSendOrder(){    
+/*function getSendOrder(){    
     $('.orderDisplay').each(function(i){
         var _this = this;
         var sendOrder = i + 1;
         $(_this).attr('value',sendOrder);
     });
-}
+}*/
 
 //顺序发送处理
-function sendInOrder(){
+/*function sendInOrder(){
     $('.orderTrig').on('click',function(){
         var _this = this;
         if($(_this).attr('name') == "nope"){
@@ -122,10 +122,10 @@ function sendInOrder(){
             $(_this).attr('name','nope');           
         }
     }); 
-}
+}*/
 
 //套餐剩余情况
-function comboRest(callback){
+/*function comboRest(callback){
     requestServer({
     requestURL:gfALLDATA("payHref")+'/combos/remain',
     requestType: 'GET',
@@ -141,10 +141,10 @@ function comboRest(callback){
         } 
     }
     });
-}
+}*/
 
 //有无证书签名选择
-function signWithCert(){
+/*function signWithCert(){
     if($('.userIdentify').data('withcert')=="0"){ //有证书套餐0
         $('.signWith').prop("disabled",true).css("cursor","not-allowed");
         $('.signWithout').addClass('choosen');
@@ -167,10 +167,10 @@ function signWithCert(){
             $('.userIdentify').prop("readonly",true);
         });
     }
-}
+}*/
 
 //获取发起人信息
-function getAddresserInfo(){
+/*function getAddresserInfo(){
     requestServer({
         requestURL: gfALLDATA("userInfoHref"),
         requestType: 'get',        
@@ -190,10 +190,13 @@ function getAddresserInfo(){
             } 
         }
     });
-}
+}*/
 
 //上传文档
 function uploadFile(){
+    
+    //var password = $('#file-password').val();
+   
     var $fileContent = $('.upload-files-container');
     var statusCode = {
         "100130000": "上传成功",
@@ -205,23 +208,36 @@ function uploadFile(){
         "100130105": "上传失败，未预测到的错误或异常，请重新操作或联系我们",
         "100130106": "上传失败，存在失败的上传"           
     };
+   
     $('#upload-files').fileupload({
         dataType: 'json',
         type: 'post',
-        autoUpload: true,
-        singleFileUploads: true,
+       /* autoUpload: true,*/
+        /*singleFileUploads: true,*/
+        sequentialUploads: true,
+        //formData:{properties:JSON.stringify(properties)},
         acceptFileTypes: /(\.|\/)(pdf|doc|docx|xls|xlsx|ppt|pptx|wps|et|dps|jpeg|jpg|jpe|gif|png)$/i ,
         maxFileSize: 2097152,   //1024*1024*2(M)
         formAcceptCharset: 'UTF-8'
     }).on('fileuploadadd', function(e, data){
+    	var isEncrypted = $('#addresserInfo input[name="toggle"]:checked').val();
+    	 var password = $('#file-password').val();
+    	    var signPassword = $('.docTitle').val();
+    	    var msgContent = $('.msgContentTxt').val();
+    	    var properties ={ //文件附加信息
+    	            "password":password,
+    	            "isEncrypted":isEncrypted,
+    	            "signPassword":signPassword,
+    	            "msgContent":msgContent,
+    	    }
         $fileContent.html("");
         data.context = $fileContent;
-        
+        data.formData={properties:JSON.stringify(properties)};
         $.each(data.files, function(index, file){
             var aFileSplit = file.name.split(".");                      
             aFileSplit.splice(-1);
             var fileName = aFileSplit.join(".");
-            $('.docTitle').attr('value', fileName); //上传文档时给信息标题自动赋值
+            // $('.docTitle').attr('value', fileName); //上传文档时给信息标题自动赋值
            
             var node = $('<div class="file-node-container" />') 
                       .append($('<div class="file-node-info" />').html('<i class="icon-description file-thumbnail"></i><span title="'+ file.name +'" class="file-node-name">'+ file.name +'</span><span class="file-node-size">('+ uploadFileSizeConvertTip( file.size ) +')</span><i class="icon-highlight-remove file-node-remove"></i>'))
@@ -283,13 +299,13 @@ function deleteFile(){
 }
 
 //邮箱校验
-function validEmail(value){
+/*function validEmail(value){
     var re=/^([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     return value==' '? false : re.test(value);
-}
+}*/
 
 //判断填写重复值
-function emailDittoControl(Array,callback){
+/*function emailDittoControl(Array,callback){
     var newArray = Array.join(",") + ",";
     for(var i = 0;i < Array.length; i++){
         if(newArray.replace(Array[i]+ ",", "").indexOf(Array[i]+ ",")>-1){
@@ -300,10 +316,10 @@ function emailDittoControl(Array,callback){
         }
     }
     callback(result);
-}
+}*/
 
 //添加本人real_name
-function addRealName(){
+/*function addRealName(){
     var newRealName = $('.addresserName').val();       
     unicode(newRealName) == false ? newRealName : (newRealName = unicode(newRealName));    
     var jsonData = {
@@ -326,7 +342,7 @@ function addRealName(){
             }
         }
     });
-}
+}*/
 
 //Unicode编码转换
 function unicode(text){

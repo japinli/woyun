@@ -2,7 +2,7 @@
 <html>
 <head>
 <div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
-<title>立即注册 | 蜗云</title>
+<title>立即注册|云取证</title>
 </head>
 <body>
 	<div th:replace="system/pages/common/login-common.html :: copy-login-header"></div>
@@ -36,20 +36,20 @@
 					<span class="errorWarning"></span>
 					
 				</div>
-				<div class="mb10">
+				<!-- <div class="mb10">
 					<label for="captcha" class="info-label">验证码:</label>
 					<input type="text" name="captcha" th:field="*{captcha}" id="regCaptcha" maxLength="10" class="info-input-code">
 					<img id="js-show-verimg" src="#" th:src="@{/wesign/common/captcha/image}" class="js-change-verimg verify-img">
 					<span class="js-change-verimg tipNormal login-event">换一个</span>
 					<span class="errorWarning"></span>
-				</div>
+				</div> -->
 				<div class="mt26" th:switch="${error}">
 					<input type="button" value="立即注册" class="loginRegistBtn" id="regSubmitBtn">
 					<span id="js_register_error" class="errorWarning"></span>
 					<span th:case="'disabled'" class="tipWarning">账户尚未激活，<a class="errorWarning activeNow" th:href="${resultUrl}">立即激活？</a></span>
 					<span th:case="*" th:text=${error} class="tipWarning"/>
 		        </div> 
-		        <p class="tipNormal registItem">点击注册即同意我们的<a th:href=@{/state.html} target="_blank">服务条款</a></p>
+		        <!-- <p class="tipNormal registItem">点击注册即同意我们的<a th:href=@{/state.html} target="_blank">服务条款</a></p> -->
 			</form>
 			<div class="exitContain">
 				<img class="exitImg" alt="您还不是易企签的用户？ 马上加入我们吧" src="../../images/s-joinSignit.jpg" th:src="@{/static/system/images/s-joinSignit.jpg}">

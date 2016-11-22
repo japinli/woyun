@@ -6,7 +6,7 @@
 package cn.signit.service;
 
 /**
- *(这里用一句话描述这个类的作用)
+ *邮件发送
  * @ClassName: EmailService
  * @author: Liwen   
  * @date:2016年3月24日-上午11:19:06 

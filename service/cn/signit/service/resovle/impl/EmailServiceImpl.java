@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import cn.signit.conf.ConfigProps;
 import cn.signit.service.EmailService;
 import cn.signit.untils.mail.impl.NormalAffixMail;
-import cn.signit.untils.mail.impl.NormalMail;
 import cn.signit.untils.mail.impl.SendInfo;
 import cn.signit.untils.mail.impl.ServerInfo;
 

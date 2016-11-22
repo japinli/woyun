@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import cn.signit.beans.SystemProps;
-//import com.datech.jce.provider.DatechCrypto;
+import cn.signit.conf.ConfigProps;
+
 
 /**
 *基础配置文件
@@ -30,17 +30,16 @@ public class BaseConfig {
 			static{
 				LOG.info("======================>>  配置全局安全提供者( {} ) ",BouncyCastleProvider.class.getName());
 				Security.addProvider(new BouncyCastleProvider());
-//				Security.addProvider(new DatechCrypto());
 			}
 			
-			private SystemProps props;
+			private ConfigProps props;
 			
 			@Bean
-			public SystemProps props(){
+			public ConfigProps props(){
 				if(props!=null){
 					return props;
 				}else{
-					this.props=new SystemProps();
+					this.props=new ConfigProps();
 				}
 				return props;
 			}
