@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.hadoop.fs.Hdfs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ import cn.signit.controller.user.UserPageController.LoginForms;
 import cn.signit.domain.mysql.User;
 import cn.signit.service.EmailService;
 import cn.signit.service.db.UserService;
+import cn.signit.service.files.HdfsService;
 import cn.signit.tools.utils.MD5Utils;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.http.HttpUtil;
@@ -58,8 +60,12 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
+	
 	@Resource
 	private EmailService emailService;
+	
+	@Resource
+	private HdfsService hdfsService;
 
 	
 	protected final static String LOGIN_JSP="/"+ConfigProps.get("welcome.page_path");
@@ -141,10 +147,21 @@ public class UserController {
 		user.setActivated(false);
 		user.setPassword(MD5Utils.toMD5(registerForms.getPassword()));
 		user.setRealName(registerForms.getRealName());
+		user.setRootDirName(registerForms.getUsername());  // 使用邮件名创建目录
 		Long id = null;
 		userService.addUserAndGetId(user);
 		id=user.getId();
 		if(id!=null){
+			// 用户注册成功，创建目录
+			String path = hdfsService.createDirectory(registerForms.getUsername());
+			if (path == null) {
+				LOG.info("创建用户目录失败！");
+			} else {
+				LOG.info("创建用户目录成功！{}", path);
+				user.setRootDir(path);
+				userService.updateUser(user);
+			}
+			
 			String activateLink=GenerateLinkUtils.generateActivateLink(request, UrlPath.USER_REGIEST_CHECK_ROOT+"/"+id+"/"
 					+GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode())
 					+"/activate");
@@ -223,11 +240,11 @@ public class UserController {
 		}*/
 		boolean isVerifyed=GenerateLinkUtils.verifyCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode(), checkCode);
 		if(isVerifyed){
-			user.setActivated(true);;
+			user.setActivated(true);
 			user.setRandomCode(UUID.randomUUID().toString());
 		}else{
 			//链接无效
-			user.setActivated(false);;
+			user.setActivated(false);
 			user.setRandomCode(UUID.randomUUID().toString());
 			model.addAttribute(SessionKeys.RESULT_ERROR, VerifyResult.FAILURE_URL_INVALID.getDescription());
 			model.addAttribute(SessionKeys.RESULT_CODE, VerifyResult.FAILURE_URL_INVALID.getCode());

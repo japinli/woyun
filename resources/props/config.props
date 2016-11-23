@@ -5,10 +5,10 @@ page_path=system/pages/wesign/login.html
 
 
 [mail.msg]
-common_nickname=云取证中心
+common_nickname=蜗云
 
-activate_subject=云取证系统注册邮箱验证(%s)
-activate_contents=<div style="border:1px solid #ebd9d9;background-color:#f1efef;padding:0;"> <div style="font-size:16px;padding:0px 20px;margin-top:20px;"><p>您好, <span style="font-weight:bold;font-size:18px">%s</span></p><p style="margin-top:15px;">您正在注册云取证系统，请点击下面链接验证您的邮箱：</p> <a href="%s" style="font-size:18px;color:#ff6666;margin-top:15px;" target="_blank">%s</a><p style="font-size:14px;color:#b5b2b2;margin:30px 0 3px 0;">如有什么问题，通过如下方式联系我们：</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Email : service@signit.cn</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;"></p></div><div style="font-size:14px;border-top:1px solid #ebd9d9;color:#b5b2b2;padding:8px 20px;margin-bottom:0"><span style="float:left;display:inline-block;">技术支持:四川思安特科技有限公司</span><a style="color:#b5b2b2;text-decoration:none;float:right;display:inline-block;" href="http://www.signit.cn" target="_blank"></a><div style="clear:both;"></div></div></div>
+activate_subject=蜗云注册邮箱验证(%s)
+activate_contents=<div style="border:1px solid #ebd9d9;background-color:#f1efef;padding:0;"> <div style="font-size:16px;padding:0px 20px;margin-top:20px;"><p>您好, <span style="font-weight:bold;font-size:18px">%s</span></p><p style="margin-top:15px;">您正在注册蜗云，请点击下面链接验证您的邮箱：</p> <a href="%s" style="font-size:18px;color:#ff6666;margin-top:15px;" target="_blank">%s</a><p style="font-size:14px;color:#b5b2b2;margin:30px 0 3px 0;">如有什么问题，通过如下方式联系我们：</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Email : service@signit.cn</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;"></p></div><div style="font-size:14px;border-top:1px solid #ebd9d9;color:#b5b2b2;padding:8px 20px;margin-bottom:0"><span style="float:left;display:inline-block;">技术支持:四川思安特科技有限公司</span><a style="color:#b5b2b2;text-decoration:none;float:right;display:inline-block;" href="http://www.signit.cn" target="_blank"></a><div style="clear:both;"></div></div></div>
 
 find_pwd_subject=注册找回密码请求(%s)
 find_pwd_contents=<div style="border:1px solid #ebd9d9;background-color:#f1efef;padding:0;"> <div style="font-size:16px;padding:0px 20px;margin-top:20px;"><p>您好, <span style="font-weight:bold;font-size:18px">%s</span></p><p style="margin-top:15px;">您正在申请找回密码的请求，请点击下面链接找回您的密码：</p> <a href="%s" style="font-size:18px;color:#ff6666;margin-top:15px;" target="_blank">%s</a><p style="font-size:14px;color:#b5b2b2;margin:30px 0 3px 0;">如有什么问题，通过如下方式联系我们：</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Email : service@signit.cn</p><p style="font-size:14px;color:#b5b2b2;margin:3px 0;">Tel : 028-85294307</p></div><div style="font-size:14px;border-top:1px solid #ebd9d9;color:#b5b2b2;padding:8px 20px;margin-bottom:0"><span style="float:left;display:inline-block;">四川思安特科技有限公司.易企签服务</span><a style="color:#b5b2b2;text-decoration:none;float:right;display:inline-block;" href="http://www.signit.cn" target="_blank">我们的官网：signit.cn</a><div style="clear:both;"></div></div></div>
@@ -114,7 +114,7 @@ validation_query=${validation_query}
 
 #================Hadoop配置======================
 [hadoop]
-hadoop_url=hdfs://localhost:9000
+url=hdfs://localhost:9000
 []
 
 #================MongoDB数据库配置================#

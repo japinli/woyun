@@ -428,6 +428,22 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+			<exclusions>
+    			<exclusion>
+        			<groupId>org.slf4j</groupId>
+        			<artifactId>slf4j-log4j12</artifactId>
+    			</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>	
 	</dependencies>
 	<build>
 		<finalName>cloud-forensic</finalName>
@@ -516,5 +532,6 @@
 		<spring-security-oauth2.version>2.0.8.RELEASE</spring-security-oauth2.version>
 		<javassist.version>3.20.0-GA</javassist.version>
 		<ognl.version>3.1.2</ognl.version>
+		<hadoop.version>2.7.3</hadoop.version>
 	</properties>
 </project>
