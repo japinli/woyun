@@ -161,7 +161,7 @@ public class UserController {
 				user.setRootDir(path);
 				userService.updateUser(user);
 			}
-			
+			// 发送邮件验证
 			String activateLink=GenerateLinkUtils.generateActivateLink(request, UrlPath.USER_REGIEST_CHECK_ROOT+"/"+id+"/"
 					+GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode())
 					+"/activate");
@@ -178,7 +178,6 @@ public class UserController {
 				model.addAttribute(registerForms);
 				return RestPagePath.REGISTER_LOC;
 			}
-			
 		}else{
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.PROCESS_FAILURE);
 			model.addAttribute(registerForms);
@@ -264,12 +263,12 @@ public class UserController {
 	*@return 用户激活账号提示页面逻辑地址
 	*@since 0.0.2
 	*@author Zhanghongdong
-	*//*
+	*/
 	@RequestMapping(value=RestPagePath.ACTIVATE_TIP,method=RequestMethod.GET)
 	public String getActivateTipPage(Model model){
 		model.addAttribute(SessionKeys.RESULT_TYPE, 2);
 		return RestPagePath.ACTIVATE_TIP_LOC;
-	}*/
+	}
 	
 
 	/**
