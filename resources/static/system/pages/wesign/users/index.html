@@ -15,7 +15,7 @@
 	      <div class="lbar">
 	      		<div class="lbar-block">
 	      			<!-- <a class="creat-doc-enter" th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-self.html'}"> -->
-	      			   <a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
+	      			<a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
 	      			    <i class="icon-add addSignFlow"></i>
 	      			    <span>新建保全</span>
 	      			</a>
@@ -38,7 +38,7 @@
 			            		<span class="lbar-link-title">等待他人签署</span>
 			            	</a>
 			           </li> -->
-			           <li id="signedBarId" class="active">
+			           <li id="signedBarId">
 			            	<a href="javascript:;">
 			            		<i class="circle-state success-bg"></i>
 			            		<!-- <span class="lbar-link-title">已完成</span> -->
@@ -52,6 +52,10 @@
 				            </a>
 				        </li>
 			        </ul>
+			        <a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
+	      			    <i class="icon-add addSignFlow"></i>
+	      			    <span>新建保全</span>
+	      			</a>
 		        </div>
 		        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-app">动态复用</div>
 		</div>
