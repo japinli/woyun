@@ -79,7 +79,7 @@ validation_query=SELECT 1 FROM DUAL
 #开发模式
 [db.mysql<DEVELOP>]
 jdbc_driver=com.mysql.jdbc.Driver
-jdbc_url=jdbc:mysql://localhost:3306/woyun?${jdbc_url_query_string}
+jdbc_url=jdbc:mysql://10.10.4.41:3306/woyun?${jdbc_url_query_string}
 jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
@@ -88,7 +88,7 @@ validation_query=${validation_query}
 #测试模式
 [db.mysql<TEST>]
 jdbc_driver=com.mysql.jdbc.Driver
-jdbc_url=jdbc:mysql://localhost:3306/woyun?${jdbc_url_query_string}
+jdbc_url=jdbc:mysql://10.10.4.41:3306/woyun?${jdbc_url_query_string}
 jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
@@ -97,7 +97,7 @@ validation_query=${validation_query}
 #预发模式
 [db.mysql<PRE_RELEASE>]
 jdbc_driver=com.mysql.jdbc.Driver
-jdbc_url=jdbc:mysql://localhost:3306/woyun?${jdbc_url_query_string}
+jdbc_url=jdbc:mysql://10.10.4.41:3306/woyun?${jdbc_url_query_string}
 jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
@@ -106,7 +106,7 @@ validation_query=${validation_query}
 #正式模式
 [db.mysql<RELEASE>]
 jdbc_driver=com.mysql.jdbc.Driver
-jdbc_url=jdbc:mysql://localhost:3306/woyun?${jdbc_url_query_string}
+jdbc_url=jdbc:mysql://10.10.4.41:3306/woyun?${jdbc_url_query_string}
 jdbc_user=admin
 jdbc_password=@dm!n
 validation_query=${validation_query}
