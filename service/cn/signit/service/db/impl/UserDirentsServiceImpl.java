@@ -2,10 +2,13 @@ package cn.signit.service.db.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.signit.dao.mysql.UserDirentsMapper;
 import cn.signit.domain.mysql.UserDirents;
 import cn.signit.service.db.UserDirentsService;
 
+@Service("userDirentsService")
 public class UserDirentsServiceImpl implements UserDirentsService {
 
 	@Resource

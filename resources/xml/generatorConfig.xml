@@ -6,7 +6,7 @@
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/woyun" userId="admin"
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://10.10.4.41:3306/woyun" userId="admin"
 			password="@dm!n" />
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false"/>
