@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.signit.dao.mysql.UserDirentsMapper" >
+  <resultMap id="BaseResultMap" type="cn.signit.domain.mysql.UserDirents" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="ppath" property="ppath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, path, ppath
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_dirents
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 自定义 -->
+  <select id="selectByUidAndPath" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_dirents
+    where uid = #{uid,jdbcType=BIGINT} and path = #{path,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_dirents
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.signit.domain.mysql.UserDirents" >
+    insert into user_dirents (id, uid, path, 
+      ppath)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, 
+      #{ppath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.signit.domain.mysql.UserDirents" >
+    insert into user_dirents
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="ppath != null" >
+        ppath,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="ppath != null" >
+        #{ppath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.signit.domain.mysql.UserDirents" >
+    update user_dirents
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="ppath != null" >
+        ppath = #{ppath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.signit.domain.mysql.UserDirents" >
+    update user_dirents
+    set uid = #{uid,jdbcType=BIGINT},
+      path = #{path,jdbcType=VARCHAR},
+      ppath = #{ppath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

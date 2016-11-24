@@ -6,7 +6,7 @@
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql:localhost:3306/forensicdb" userId="admin"
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/woyun" userId="admin"
 			password="@dm!n" />
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false"/>
@@ -22,34 +22,11 @@
 			>
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
-		<!-- <table schema="${jdbc_user}" tableName="parterner" domainObjectName="AppInfo" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table> -->
+		
 		<!--  <table schema="${jdbc_user}" tableName="user" domainObjectName="User" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table>
-		 <table schema="${jdbc_user}" tableName="enterprise_prove" domainObjectName="ProveInfo" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table> -->
-		<!-- <table schema="${jdbc_user}" tableName="block_info" domainObjectName="BlockInfo" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table> -->
-		<!-- <table schema="${jdbc_user}" tableName="certificate" domainObjectName="UserCertificate" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table>
-		<table schema="${jdbc_user}" tableName="evidence_info" domainObjectName="EvidenceInfo" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table>
-		<table schema="${jdbc_user}" tableName="re_block_evidence" domainObjectName="ReBlockEvidence" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table> -->
-		<!-- <table schema="${jdbc_user}" tableName="re_user_evidence" domainObjectName="ReUserEvidence" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table> -->
-		<!-- <table schema="${jdbc_user}" tableName="evidence_info" domainObjectName="EvidenceInfo" enableCountByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table> -->
-		<table schema="${jdbc_user}" tableName="certificate" domainObjectName="UserCertificate" enableCountByExample="false"
+		<table schema="${jdbc_user}" tableName="user_dirents" domainObjectName="UserDirents" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table>
 		

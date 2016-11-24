@@ -65,4 +65,9 @@ public class RestPath {
 	}
 
 	private final static String REGEX_PLACE_HOLDER = "\\{[^}]*\\}";
+	
+	public final static String VERSION = "v1";
+	public final static String REST_PREFIX = "/api";
+	public final static String REST_ROOT = REST_PREFIX + "/" + VERSION;
+	public final static String REST_NEW_DIR = REST_ROOT + "/create-directory";
 }

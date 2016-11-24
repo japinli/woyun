@@ -128,7 +128,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport{
 	    /**
 		  *配置异常解析器
 		  */
-		@Override
+		/*@Override
 	    protected void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
 	    	LOG.info("======================>> 配置异常解析器( {} ) ",HandlerExceptionResolver.class.getName());
 	    	SimpleMappingExceptionResolver b = new SimpleMappingExceptionResolver();
@@ -137,11 +137,11 @@ public class WebMvcConfig extends WebMvcConfigurationSupport{
 	    	b.addStatusCode("error/pages/500", 500);
 	    	b.addStatusCode("error/pages/503", 503);
 	        Properties mappings = new Properties();
-	       /* mappings.put("org.springframework.dao.DataAccessException", "error/genericError");
-	        mappings.put("java.lang.RuntimeException", "error/genericError");*/
+	        mappings.put("org.springframework.dao.DataAccessException", "error/genericError");
+	        mappings.put("java.lang.RuntimeException", "error/genericError");
 	        b.setExceptionMappings(mappings);
 	        list.add(b);
-	    }
+	    }*/
 	    
 		/**
 		  *对文件上传的支持
