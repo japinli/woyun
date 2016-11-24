@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import cn.signit.cons.rest.RestPath;
 import cn.signit.domain.mysql.User;
-import cn.signit.domain.mysql.UserDirents;
 import cn.signit.service.db.UserDirentsService;
 import cn.signit.untils.message.CommonResp;
 import cn.signit.untils.message.SessionKeys;
