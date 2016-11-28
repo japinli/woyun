@@ -459,7 +459,7 @@
 		</dependency>	
 	</dependencies>
 	<build>
-		<finalName>cloud-forensic</finalName>
+		<finalName>woyun</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
