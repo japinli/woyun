@@ -36,4 +36,15 @@ public class DirentsController {
 		
 		return new CommonResp().basicFailureMsg("新建目录失败");
 	}
+	
+	@RequestMapping(value=RestPath.REST_DEL_DIR, method=RequestMethod.DELETE)
+	@ResponseBody
+	public CommonResp deleteDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, String path) {
+		boolean flag = direntsServie.deleteDirectory(user.getId(), path);
+		if (flag) {
+			return new CommonResp().basicSuccessMsg("删除目录成功");
+		}
+		
+		return new CommonResp().basicFailureMsg("删除目录失败");
+	}
 }

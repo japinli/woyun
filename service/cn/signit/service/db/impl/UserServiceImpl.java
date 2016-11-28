@@ -4,10 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.signit.dao.mysql.ProveInfoMapper;
 import cn.signit.dao.mysql.UserMapper;
-import cn.signit.domain.mysql.ProveInfo;
 import cn.signit.domain.mysql.User;
+import cn.signit.service.NormalService;
 import cn.signit.service.db.UserService;
 
 /**
@@ -19,11 +18,9 @@ import cn.signit.service.db.UserService;
 * @see (参阅)
 */
 @Service("userService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl extends NormalService implements UserService{
 	@Resource
 	private UserMapper userDao;
-	@Resource
-	private ProveInfoMapper proveDao;
 
 	/**
 	*@param account
@@ -73,25 +70,6 @@ public class UserServiceImpl implements UserService{
 	*/
 	@Override
 	public boolean updateUser(User user) {
-		
 		return toBoolean(userDao.updateByPrimaryKeySelective(user));
-	}
-
-	/**
-	*@param userId
-	*@return
-	*@see (参阅)
-	*/
-	@Override
-	public ProveInfo getUserProveInfo(Long userId) {
-		return proveDao.selectByUserId(userId);
-	}
-
-	private boolean toBoolean(Integer n){
-		if(n>0){
-			return true;
-		}else{
-			return false;
-		}
 	}
 }

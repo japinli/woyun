@@ -31,4 +31,13 @@ public class UserDirentsServiceImpl implements UserDirentsService {
 		
 		return true;
 	}
+	
+	public boolean deleteDirectory(Long uid, String path) {
+		UserDirents dirents = userDirentsDao.selectByUidAndPath(uid, path);
+		if (dirents != null && userDirentsDao.deleteByPrimaryKey(dirents.getId()) == 1) {
+			return true;
+		}
+	
+		return false;
+	}
 }

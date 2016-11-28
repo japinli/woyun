@@ -102,8 +102,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport{
 	    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(){
 	    	MappingJackson2HttpMessageConverter jsonConverter =  new MappingJackson2HttpMessageConverter();
 	    	//空值不进行序列化
-	    	jsonConverter.getObjectMapper().setSerializationInclusion(Include.NON_NULL)
-																				.setSerializationInclusion(Include.NON_EMPTY);
+	    	jsonConverter.getObjectMapper().setSerializationInclusion(Include.NON_NULL).setSerializationInclusion(Include.NON_EMPTY);
             return jsonConverter;
 	    }
 	    

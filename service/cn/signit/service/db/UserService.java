@@ -1,6 +1,5 @@
 package cn.signit.service.db;
 
-import cn.signit.domain.mysql.ProveInfo;
 import cn.signit.domain.mysql.User;
 
 /**
@@ -23,9 +22,4 @@ public interface UserService {
 	
 	public boolean updateUser(User user);
 	
-	/**
-	 * 根据用户Id获取用户的身份证明信息
-	 */
-	public ProveInfo getUserProveInfo(Long userId);
-
 }

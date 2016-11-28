@@ -161,6 +161,7 @@ public class UserController {
 				user.setRootDir(path);
 				userService.updateUser(user);
 			}
+			System.out.println(System.getProperty("user.dir"));
 			// 发送邮件验证
 			String activateLink=GenerateLinkUtils.generateActivateLink(request, UrlPath.USER_REGIEST_CHECK_ROOT+"/"+id+"/"
 					+GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode())

@@ -443,6 +443,12 @@
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-hdfs</artifactId>
 			<version>${hadoop.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+		<dependency>
+    		<groupId>org.eclipse.jgit</groupId>
+    		<artifactId>org.eclipse.jgit</artifactId>
+    		<version>${jgit.version}</version>
 		</dependency>	
 	</dependencies>
 	<build>
@@ -533,5 +539,6 @@
 		<javassist.version>3.20.0-GA</javassist.version>
 		<ognl.version>3.1.2</ognl.version>
 		<hadoop.version>2.7.3</hadoop.version>
+		<jgit.version>4.5.0.201609210915-r</jgit.version>
 	</properties>
 </project>

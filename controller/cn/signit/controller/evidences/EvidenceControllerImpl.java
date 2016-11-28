@@ -31,7 +31,7 @@ import cn.signit.controller.beans.ExtendUploadData;
 import cn.signit.controller.beans.UserInfoShow;
 import cn.signit.controller.beans.VerifyData;
 import cn.signit.domain.mysql.EvidenceInfo;
-import cn.signit.domain.mysql.ProveInfo;
+//import cn.signit.domain.mysql.ProveInfo;
 import cn.signit.domain.mysql.User;
 import cn.signit.pkcs.cert.X509CertSigner;
 import cn.signit.pkcs.crypto.PBECoder;
@@ -239,17 +239,17 @@ public class EvidenceControllerImpl implements InEvidenceController,EvidenceCont
 		
 		int state=IdentifyStateDesc.UNTREATED.getState();//初始化状态为未认证
 		info.setIdentify(IdentifyStateDesc.getDescription(state));
-		ProveInfo proveInfo=userService.getUserProveInfo(user.getId());
+		/*ProveInfo proveInfo=userService.getUserProveInfo(user.getId());
 		if(proveInfo!=null){
 			return initByEnterpriseProveInfo(info,proveInfo);
-		}
+		}*/
 		return info;
 	}
 	
 	/**
 	 * 根据企业认证信息初始化账户的相关信息
 	 */
-	private UserInfoShow initByEnterpriseProveInfo(UserInfoShow info,ProveInfo ep){
+	/*private UserInfoShow initByEnterpriseProveInfo(UserInfoShow info,ProveInfo ep){
 		info.setRealName(ep.getName());//展示的信息，账户真实姓名为认证的企业名称
 		if(ep.getPhone()!=null){//根据06.16晚讨论的结果，如果账户已经绑定的手机登录账号，那么判断为已认证。如果账户的认证资料中包含手机号，那么也认为是已认证。
 			info.setPhoneIdentify(IdentifyStateDesc.PASS.getDescription());
@@ -257,7 +257,7 @@ public class EvidenceControllerImpl implements InEvidenceController,EvidenceCont
 		info.setIdentify(IdentifyStateDesc.getDescription(ep.getState()));
 		return info;
 		
-	}
+	}*/
 	/**
 	 * 获取用户账户名
 	 * @param user

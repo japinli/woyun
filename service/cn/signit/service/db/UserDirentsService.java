@@ -10,4 +10,12 @@ public interface UserDirentsService {
 	 * @return true - 成功, false - 失败
 	 */
 	boolean createDirectory(Long uid, String path);
+	
+	/**
+	 * 删除用户目录
+	 * @param uid 用户ID
+	 * @param path 用户目录路径
+	 * @return true - 成功, false - 失败
+	 */
+	boolean deleteDirectory(Long uid, String path);
 }

@@ -70,4 +70,5 @@ public class RestPath {
 	public final static String REST_PREFIX = "/api";
 	public final static String REST_ROOT = REST_PREFIX + "/" + VERSION;
 	public final static String REST_NEW_DIR = REST_ROOT + "/create-directory";
+	public final static String REST_DEL_DIR = REST_ROOT + "/delete-directory";
 }

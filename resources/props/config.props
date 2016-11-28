@@ -114,7 +114,7 @@ validation_query=${validation_query}
 
 #================Hadoop配置======================
 [hadoop]
-url=hdfs://localhost:9000
+url=hdfs://10.10.4.41:9000
 []
 
 #================MongoDB数据库配置================#
