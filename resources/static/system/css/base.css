@@ -303,7 +303,9 @@ div {
 	height:60px;
 	line-height:60px;
 	width:100%;
-	background-color: #095db1;
+	background:#00868B;
+	/* background-color: #095db1; */
+	/* background:#29543a; */
 	color:#ffffff;
 }
 .container-header{
@@ -352,11 +354,16 @@ div {
 
 /** 左菜单 **/
 .logo{
-    background:url('../../common/images/Cloudlogo.png') center center no-repeat;
+    background:url('../../common/images/cloude-9.png') center center no-repeat; 
     width:200px;
-    height:40px;
-    vertical-align: middle;
-    margin:0 72px 4px 45px;
+    height:60px;
+    margin:0 72px 0px 45px;
+    font-weight:400;
+	font-size:2.6rem;
+	color:white;
+	background-position-x:inherit;
+	background-size:contain;
+	text-align:center;
 }
 .lbar{
     width:210px;
