@@ -16,7 +16,7 @@
 	<!-- ------------------------------------------- -->
 	<div th:fragment="copy-headerbar-left" th:remove="tag">
 		 <div class="left-nav">
-			 <div class="logo"></div>
+			 <div class="logo">蜗云</div>
 			 <ul id="id-first-nav" class="first-nav-list">
 			    <!-- <li title="我的中心"><a th:href="@{'/wesign/'+${session.loginRole}+'/index.html'}">我的中心</a></li>
 			 	<li title="我的文件"><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}">我的文件</a></li>
@@ -63,7 +63,7 @@
 	 <!-- ------------------------------------------- -->
 	 <div th:fragment="copy-headerbar" th:remove="tag">
 		 <div class="left-nav">
-			 <a th:href="@{'/wesign/index.html'}"><div class="logo"></div></a>
+			 <a th:href="@{'/wesign/index.html'}"><div class="logo">蜗云</div></a>
 			 <ul id="id-first-nav" class="first-nav-list">
 			 	<!-- <li title="我的中心"><a th:href="@{'/wesign/'+${session.loginRole}+'/index.html'}">我的中心</a></li>
 			 	<li title="我的保全"><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}">我的保全</a></li>
@@ -89,7 +89,7 @@
 				 				<li class="diver-css"><a th:href="@{'/wesign/'+${session.loginRole}+'/certificates/details.html'}" title="我的证书">我的证书</a></li>
 				 				<li class="diver-css"><a href="#" th:href="@{'/wesign/'+${session.loginRole}+'/logout.html'}" class="js_header_logout" title="退出登陆"><i title="退出登陆" class="icon-switch"></i>退出登陆</a></li> -->
 				 				<!-- <li><a th:href="@{'/wesign/person-auth.html'}" title="实名认证">实名认证</a></li> -->
-				 				<li class="diver-css"><a th:href="@{'/wesign/my-info.html'}" title="我的账户">我的账户</a></li>
+				 				<li><a th:href="@{'/wesign/my-info.html'}" title="我的账户">我的账户</a></li>
 				 				<li class="diver-css">
 				 					<a href="#" th:href="@{'/wesign/logout.html'}" class="js_header_logout" title="退出登陆">
 				 					<i title="退出登陆" class="icon-switch"></i>退出登陆</a>

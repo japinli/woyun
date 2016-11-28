@@ -15,7 +15,7 @@ $(document).ready(function() {
 			}
 		}else{   //其他
 			var tipSelector = $(this).siblings('span').eq(0);
-			tipSelector.html('请输入正确的手机号或邮箱账号');
+			tipSelector.html('请输入正确的邮箱账号');
 			styleControl(tipSelector);
 		}
 		$("#js_register_error").text("");		//清除注册提示

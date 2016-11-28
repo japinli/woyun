@@ -2,7 +2,7 @@
 <html>
 <head>
 <div th:replace="system/pages/common/login-common.html :: copy-common-head"></div>
-<title>登录 | 云取证</title>
+<title>登录 | 蜗云</title>
 </head>
 <body>
 	<!--header-->
@@ -10,7 +10,7 @@
 		<div th:replace="system/pages/common/login-common.html :: copy-login-header">此处header动态复用</div>
 		<div class="containerBg">
 		<div class="containerBox">
-			<h2 class="reg-title">会员登录</h2>
+			<h2 class="reg-title">用户登录</h2>
 			<form id="login-form" action="#" th:action="@{/wesign/login.html}" th:object="${loginForms}" method="POST">
 				<div class="mb10">
 					<label for="email" class="info-label">账号:</label>
@@ -32,6 +32,7 @@
 					<label for="reme-me">自动登录</label>
 					<input type="checkbox" name="remember-me" id="reme-me" class="checkbox-reme" checked="checked">
 					<a class="forgetPwd" th:href="@{/wesign/find-password.html}">忘记密码？</a>
+					<a class="register" th:href="@{/wesign/register.html}">注册</a>
 				</div> 
 				<div class="mt26" th:switch="${param.error != null && param.error[0]=='disabled'}">
 					<input type="button" value="登录" class="loginRegistBtn" id="js-login">
@@ -42,16 +43,19 @@
 		            <span class="tipWarning" th:if="${param.resetpwd != null}" th:text="重置成功"/>
 				</div>
 			</form>
-			<div class="exitContain">
+			<!-- <div class="exitContain">
 				<img class="exitImg" alt="您还不是易企签的用户？ 马上加入我们吧" src="../../images/s-joinSignit.jpg" th:src="@{/static/system/images/s-joinSignit.jpg}">
 				<p class="queryJoin">您还不是我们的用户？<br/><span class="font18">马上加入我们吧</span></p>
 				<p class="theseJoin"><span id="userNumber">电子数据保全</span><br/>让权益保护不再难！</p>
 				<a th:href="@{/wesign/register.html}" class="borderBtn">立即注册</a>
-			</div>
+			</div> -->
 		</div>
 	</div>
-	
-	<div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div>
+	<script  src="../../../common/js/jquery.min.js" th:src=@{/static/common/js/jquery.min.js} type="text/javascript"></script>
+		<script src="../../../common/js/spark-md5.min.js" th:src=@{/static/common/js/spark-md5.min.js} type="text/javascript"></script>
+		<script src="../../../common/js/jquery.cookie.min.js"  th:src=@{/static/common/js/jquery.cookie.min.js} type="text/javascript"></script>
+		<script src="../../../common/js/jquery.enplaceholder.js" th:src=@{/static/common/js/jquery.enplaceholder.js} type="text/javascript"></script>
+	<!-- <div th:replace="system/pages/common/login-common.html  :: copy-login-footer">此处footer动态复用</div> -->
     <script src="../../js/login.js" th:src="@{/static/system/js/login.js}" type="text/javascript"></script> 
 </body>
 </html>
