@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.signit.dao.mysql.RepoMapper" >
+  <resultMap id="BaseResultMap" type="cn.signit.domain.mysql.Repo" >
+    <id column="repo_id" property="repoId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from repo
+    where repo_id = #{repoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.signit.domain.mysql.Repo" >
+    insert into repo (repo_id)
+    values (#{repoId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.signit.domain.mysql.Repo" >
+    insert into repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repoId != null" >
+        repo_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repoId != null" >
+        #{repoId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

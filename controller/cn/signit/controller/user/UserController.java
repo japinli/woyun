@@ -12,9 +12,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.hadoop.fs.Hdfs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import cn.signit.conf.ConfigProps;
 import cn.signit.cons.GenerateLinkUtils;
 import cn.signit.cons.OriginalSerialCodeMaker;
@@ -39,6 +35,7 @@ import cn.signit.controller.user.UserPageController.LoginForms;
 
 import cn.signit.domain.mysql.User;
 import cn.signit.service.EmailService;
+import cn.signit.service.db.UserLastLoginService;
 import cn.signit.service.db.UserService;
 import cn.signit.service.files.HdfsService;
 import cn.signit.tools.utils.MD5Utils;
@@ -66,6 +63,9 @@ public class UserController {
 	
 	@Resource
 	private HdfsService hdfsService;
+	
+	@Resource
+	private UserLastLoginService lastLoginService;
 
 	
 	protected final static String LOGIN_JSP="/"+ConfigProps.get("welcome.page_path");
@@ -97,12 +97,14 @@ public class UserController {
 			return PageLogicPath.LOGIN.path();
 		}
 		String password=MD5Utils.toMD5(forms.getPassword());
-		if(password.equals(user.getPassword())){
-			LOG.info("用户:"+forms.getUsername()+"登录成功!");
+		if (password.equals(user.getPassword())) {
 			//设置每个Session的最大有效时间（单位：秒）
 			request.getSession().setAttribute(SessionKeys.LOGIN_USER, user);
+			lastLoginService.updateLastLoginTime(user.getId(), username);
+			
+			LOG.info("用户: "+forms.getUsername()+" 登录");
 			return "redirect:"+UrlPath.PAGE_USER_HOME;
-		}else{
+		} else {
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.USER_NAME_OR_PWD_ERROR);
 		}
 		
@@ -115,6 +117,7 @@ public class UserController {
 	@RequestMapping(value=RestPagePath.USER_LOGOUT,method=RequestMethod.GET)
 	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
 		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
+		LOG.info("用户: "+forms.getUsername()+" 退出");
 		return PageLogicPath.LOGIN.path();
 	}
 	
@@ -152,16 +155,7 @@ public class UserController {
 		userService.addUserAndGetId(user);
 		id=user.getId();
 		if(id!=null){
-			// 用户注册成功，创建目录
-			String path = hdfsService.createDirectory(registerForms.getUsername());
-			if (path == null) {
-				LOG.info("创建用户目录失败！");
-			} else {
-				LOG.info("创建用户目录成功！{}", path);
-				user.setRootDir(path);
-				userService.updateUser(user);
-			}
-			System.out.println(System.getProperty("user.dir"));
+			
 			// 发送邮件验证
 			String activateLink=GenerateLinkUtils.generateActivateLink(request, UrlPath.USER_REGIEST_CHECK_ROOT+"/"+id+"/"
 					+GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode())
