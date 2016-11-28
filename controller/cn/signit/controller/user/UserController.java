@@ -141,11 +141,12 @@ public class UserController {
 	
 	private String registByEmail(RegisterForms registerForms,Model model,HttpServletRequest request){
 		User user=new User();
+		String uuid = UUID.randomUUID().toString();
 		Date date = Calendar.getInstance().getTime();
 		user.setEmail(registerForms.getUsername());
 		user.setRegistDate(date);
 		user.setIp(HttpUtil.getRealRemoteIpAddr(request));
-		user.setRandomCode(UUID.randomUUID().toString());
+		user.setRandomCode(uuid);
 		user.setOriginalSerialCode(OriginalSerialCodeMaker.secretMake());
 		user.setActivated(false);
 		user.setPassword(MD5Utils.toMD5(registerForms.getPassword()));
