@@ -12,12 +12,10 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import cn.signit.server.conf.BaseConfig;
 import cn.signit.server.conf.DataConfig;
-import cn.signit.server.conf.MongoConfig;
 import cn.signit.server.conf.SecurityConfig;
 import cn.signit.server.conf.ServiceConfig;
 import cn.signit.server.conf.StandardTimesConfig;
 import cn.signit.server.conf.ThymeleafConfig;
-import cn.signit.server.conf.V2CAServiceConfig;
 import cn.signit.server.conf.WebMvcConfig;
 
 /**
@@ -43,9 +41,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 					BaseConfig.class, 
 					SecurityConfig.class,
 					StandardTimesConfig.class,
-					/*SystemConfig.class,*/
 					DataConfig.class,
-					MongoConfig.class
 					};
 	}
 	
@@ -57,15 +53,13 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		 LOG.info("======================>>  配置@Configuration标注的web应用上下文");
 		 return new Class[]{ 
 				 ServiceConfig.class,
-				 V2CAServiceConfig.class,
 				 ThymeleafConfig.class,
 				 WebMvcConfig.class
 				 };
 	}
 	
 @Override
-protected FrameworkServlet createDispatcherServlet(
-		WebApplicationContext servletAppContext) {
+protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
 	  DispatcherServlet dispatcherServlet = new DispatcherServlet(servletAppContext);
       dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
       return dispatcherServlet;

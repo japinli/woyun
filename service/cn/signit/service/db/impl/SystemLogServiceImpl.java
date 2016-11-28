@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import cn.signit.dao.mysql.SystemLogMapper;
 import cn.signit.domain.mysql.SystemLog;
 import cn.signit.domain.web.SqlSystemLog;
+import cn.signit.service.NormalService;
 import cn.signit.service.db.SystemLogService;
 
 /**
@@ -20,7 +21,7 @@ import cn.signit.service.db.SystemLogService;
 * @see (参阅)
 */
 @Service
-public class SystemLogServiceImpl implements SystemLogService{
+public class SystemLogServiceImpl extends NormalService implements SystemLogService{
 	@Resource
 	private SystemLogMapper systemLogMapper;
 	/**
@@ -30,7 +31,7 @@ public class SystemLogServiceImpl implements SystemLogService{
 	*/
 	@Override
 	public boolean addSystemLog(SystemLog log) {
-		return Tool.toBoolean(systemLogMapper.insert(log));
+		return toBoolean(systemLogMapper.insert(log));
 	}
 
 	/**
