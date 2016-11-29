@@ -38,6 +38,7 @@ import cn.signit.service.EmailService;
 import cn.signit.service.db.UserLastLoginService;
 import cn.signit.service.db.UserService;
 import cn.signit.service.files.HdfsService;
+import cn.signit.service.git.GitService;
 import cn.signit.tools.utils.MD5Utils;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.http.HttpUtil;
@@ -66,6 +67,9 @@ public class UserController {
 	
 	@Resource
 	private UserLastLoginService lastLoginService;
+	
+	@Resource
+	private GitService gitService;
 
 	
 	protected final static String LOGIN_JSP="/"+ConfigProps.get("welcome.page_path");
@@ -88,8 +92,6 @@ public class UserController {
 	*/
 	@RequestMapping(value=UrlPath.PAGE_USER_LOGIN,method=RequestMethod.POST)
 	public String submitLoginForm(@ModelAttribute LoginForms forms,Model model,HttpServletRequest request) {
-		//交给Spring Security完成,当配置loginProcessingUrl("/j_spring_security_check")时，此项可用
-		//return PageLogicPath.LOGIN.redirectFromSystemPath();
 		String username=forms.getUsername();
 		User user=userService.getUser(username);
 		if(user==null){
@@ -101,7 +103,6 @@ public class UserController {
 			//设置每个Session的最大有效时间（单位：秒）
 			request.getSession().setAttribute(SessionKeys.LOGIN_USER, user);
 			lastLoginService.updateLastLoginTime(user.getId(), username);
-			
 			LOG.info("用户: "+forms.getUsername()+" 登录");
 			return "redirect:"+UrlPath.PAGE_USER_HOME;
 		} else {
@@ -116,6 +117,7 @@ public class UserController {
 	 */
 	@RequestMapping(value=RestPagePath.USER_LOGOUT,method=RequestMethod.GET)
 	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
+		LOG.info("用户: "+forms.getUsername()+" 退出");
 		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
 		LOG.info("用户: "+forms.getUsername()+" 退出");
 		return PageLogicPath.LOGIN.path();

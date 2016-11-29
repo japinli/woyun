@@ -37,6 +37,6 @@ public class UserLastLoginServiceImpl extends NormalService implements UserLastL
 			ret = userLastLoginDao.updateByPrimaryKey(lastLogin);
 		}
 		
-		LOG.info("用户{} 最后登录时间 {}, 数据库更新 {}", username, date.toString(), toBoolean(ret) ? "成功" : "失败");
+		LOG.info("用户 {} 最后登录时间 {}, 数据库更新{}", username, date.toString(), toBoolean(ret) ? "成功" : "失败");
 	}
 }

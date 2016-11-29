@@ -36,13 +36,13 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.16</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 		    <groupId>jdk.tools</groupId>
 		    <artifactId>jdk.tools</artifactId>
 		    <version>1.7</version>
 		    <scope>system</scope>
 		    <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
