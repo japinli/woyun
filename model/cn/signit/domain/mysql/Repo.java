@@ -87,4 +87,8 @@ public class Repo {
     	this.state = false;
     	this.createTime = Calendar.getInstance().getTime();
     }
+    
+    public Repo() {
+    	
+    }
 }

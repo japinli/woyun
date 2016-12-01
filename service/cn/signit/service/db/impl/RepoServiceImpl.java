@@ -2,7 +2,9 @@ package cn.signit.service.db.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -12,18 +14,22 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.Convert;
 import cn.signit.untils.RepoPath;
@@ -54,6 +60,8 @@ public class RepoServiceImpl implements RepoService {
 			Repository repository = builder.build();
 			repository.create();
 			
+			setRepositoryConfig(repository, user.getRealName(), user.getEmail());
+			
 			try (Git git = new Git(repository)) {
 				String commit_msg = String.format(RepoPath.create_repo_msg, repo);
 				git.commit().setMessage(commit_msg).call();
@@ -78,6 +86,25 @@ public class RepoServiceImpl implements RepoService {
 		}
 
 		return null;
+	}
+	
+	public List<Repo> getUserRepositories(String userEmail) {
+		return repoDao.selectByUserEmail(userEmail);
+	}
+	
+	public List<RepoInfo> getRepositoriesInfo(User user) throws IOException {
+		List<Repo> repositories = getUserRepositories(user.getEmail());
+		
+		List<RepoInfo> repoInfos = new ArrayList<RepoInfo>();
+		for (Repo repo : repositories) {
+			RepoInfo item = getRepositoryInfo(repo);
+			if (item == null) {
+				continue;
+			}
+			repoInfos.add(item);
+		}
+		
+		return repoInfos;
 	}
 
 	public boolean listRepository(String parent, String repo) {
@@ -174,5 +201,34 @@ public class RepoServiceImpl implements RepoService {
 			}
 		}
 	}
-
+	
+	/**
+	 * 修改仓库用户配置信息
+	 * @param repository 仓库对象
+	 * @param name 用户名
+	 * @param email 用户邮箱
+	 * @throws IOException
+	 */
+	private static void setRepositoryConfig(Repository repository, String name, String email) throws IOException {
+		StoredConfig config = repository.getConfig();
+		config.setString("user", null, "name", name);
+		config.setString("user", null, "email", email);
+		config.save();
+		LOG.info("修改仓库用户名为({})，邮件地址为({})", name, email);
+	}
+	
+	/**
+	 * 获取仓库基础信息
+	 * @param repo 仓库对象
+	 * @return
+	 * @throws IOException
+	 */
+	private static RepoInfo getRepositoryInfo(Repo repo) throws IOException {
+		RepoInfo info = new RepoInfo(repo);
+		Repository repository = getRepository(repo.getUserEmail(), repo.getRepoName());
+		File library = new File(repository.getWorkTree().toString(), repo.getRepoName());
+		info.setModifyTime(FS.DETECTED.lastModified(library));
+		info.setRepoSize(FS.DETECTED.length(library));
+		return info;
+	}
 }

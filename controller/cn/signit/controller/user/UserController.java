@@ -189,9 +189,10 @@ public class UserController {
 		String path = UrlPath.USER_REGIEST_CHECK_ROOT + "/" + user.getId() + "/";
 		String code = GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode());
 		String link = GenerateLinkUtils.generateActivateLink(request, path + code + "/activate");
-		
-		String subject = String.format(ConfigProps.get("mail.msg.activate_subject"), new SimpleDateFormat("yyyy-MM-dd"));
-		String message = String.format(ConfigProps.get("mail.msg.activate_contents"), user.availableUserName(), link, link);
+		String subject_format = ConfigProps.get("mail.msg.activate_subject");
+		String content_format = ConfigProps.get("mail.msg.activate_contents");
+		String subject = String.format(subject_format, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		String message = String.format(content_format, user.availableUserName(), link, link);
 		return emailService.send(subject,	user.getEmail(), message);
 	}
 	

@@ -114,6 +114,9 @@ public class UrlPath {
 	public final static String JSON_CERTS_RES = CERT_ROOT;// 用户证书列表资源接口地址
 
 	public final static String HANDLE_LOGIN = USER_ROOT + "/login";// 用户登录逻辑处理
+	
+	// ====================用户仓库相关路径==============================
+	public final static String REPO_LIST = USER_ROOT + "/repos";
 
 	/**
 	 * 解析含有占位符的指定URL路径
