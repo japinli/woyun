@@ -52,7 +52,8 @@ public class RepoServiceImpl implements RepoService {
 	}
 	
 	public RepoInfo createRepository(User user, String repo) {
-		String path = RepoPath.repo + user.getEmail() + RepoPath.sep + repo;
+		String repoId = UUID.randomUUID().toString();
+		String path = RepoPath.repo + user.getEmail() + RepoPath.sep + repoId;
 		
 		try {
 			FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -70,8 +71,7 @@ public class RepoServiceImpl implements RepoService {
 			LOG.info("用户 {} 创建仓库 {} 成功", user.getEmail(), repo);
 			
 			// 更新数据库
-			String uuid = UUID.randomUUID().toString();
-			Repo record = new Repo(uuid, repo, user.getEmail());
+			Repo record = new Repo(repoId, repo, user.getEmail());
 			if (Convert.toBoolean(repoDao.insert(record))) {
 				LOG.info("用户 {} 更新仓库({})信息成功", user.getEmail(), repo);
 				RepoInfo info = new RepoInfo(record);
@@ -92,12 +92,8 @@ public class RepoServiceImpl implements RepoService {
 		return null;
 	}
 	
-	public List<Repo> getUserRepositories(String userEmail) {
-		return repoDao.selectByUserEmail(userEmail);
-	}
-	
 	public List<RepoInfo> getRepositoriesInfo(User user) throws IOException {
-		List<Repo> repositories = getUserRepositories(user.getEmail());
+		List<Repo> repositories = repoDao.selectByUserEmail(user.getEmail());
 		
 		List<RepoInfo> repoInfos = new ArrayList<RepoInfo>();
 		for (Repo repo : repositories) {
@@ -229,7 +225,7 @@ public class RepoServiceImpl implements RepoService {
 	 */
 	private static RepoInfo getRepositoryInfo(Repo repo) throws IOException {
 		RepoInfo info = new RepoInfo(repo);
-		Repository repository = getRepository(repo.getUserEmail(), repo.getRepoName());
+		Repository repository = getRepository(repo.getUserEmail(), repo.getRepoId());
 		File library = new File(repository.getWorkTree().toString());
 		info.setModifyTime(FS.DETECTED.lastModified(library));
 		info.setRepoSize(FS.DETECTED.length(library));

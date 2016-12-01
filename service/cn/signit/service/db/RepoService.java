@@ -26,13 +26,6 @@ public interface RepoService {
 	RepoInfo createRepository(User user, String repo);
 	
 	/**
-	 * 根据用户邮箱获取用户的仓库对象
-	 * @param userEmail 用户邮件地址
-	 * @return
-	 */
-	List<Repo> getUserRepositories(String userEmail);
-	
-	/**
 	 * 获取用户所有仓库信息
 	 * @param user 用户对象
 	 * @return
