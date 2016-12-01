@@ -376,7 +376,7 @@ div {
     overflow-y:auto; /*设置position为relative,加上overflow:auto;文档模式在IE8下不兼容*/
     overflow-x:hidden;
 }
-.lbar, .lbar-title-name{background-color: #fff;}
+.lbar, .lbar-title-name{background-color:#F8F8FF;}
 .diver-bottom{
 	  height: 0;
 	  line-height: 0;
@@ -416,15 +416,15 @@ div {
 .lbar-link li a{
     display:inline-block;
     width:100%;
-    color:#1e1e1e;
+    color:#575757;
     font-size:16px;
 	font-size:1.6rem;
-	border-left:3px #f7f7f8 solid;
+	border-right:3px #8B8B7A solid;
 }
 .lbar-link li.active a, .lbar-link li a:hover{
-	background-color:#f0f3f5;
-	color:#1e1e1e;
-	border-left:3px #095db1 solid;
+	/* background-color:#f0f3f5; */
+	color:#575757;
+	border-right:3px #00868B solid;
 }
 .lbar-link li.active a i, .lbar-link li a:hover i{color:#000;}
 .lbar-link li a i{
@@ -652,6 +652,10 @@ a.color-main:hover{
 .userMenu-content-list li{
 	padding:15px;
 	/* text-align:center; */
+}
+.userMenu-content-list .sign-Link{
+	 padding:5px; 
+	 cursor:pointer;
 }
 .userMenu-content-list li a:hover{
 	color:#66a3ff;
