@@ -117,6 +117,7 @@ public class UrlPath {
 	
 	// ====================用户仓库相关路径==============================
 	public final static String REPO_LIST = USER_ROOT + "/repos";
+	public final static String REPO_NEW = USER_ROOT + "/repos";
 
 	/**
 	 * 解析含有占位符的指定URL路径

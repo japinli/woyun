@@ -51,7 +51,7 @@ public class RepoServiceImpl implements RepoService {
 		return true;
 	}
 	
-	public Repo createRepository(User user, String repo) {
+	public RepoInfo createRepository(User user, String repo) {
 		String path = RepoPath.repo + user.getEmail() + RepoPath.sep + repo;
 		
 		try {
@@ -74,7 +74,11 @@ public class RepoServiceImpl implements RepoService {
 			Repo record = new Repo(uuid, repo, user.getEmail());
 			if (Convert.toBoolean(repoDao.insert(record))) {
 				LOG.info("用户 {} 更新仓库({})信息成功", user.getEmail(), repo);
-				return record;
+				RepoInfo info = new RepoInfo(record);
+				File library = new File(repository.getWorkTree().toString(), record.getRepoName());
+				info.setModifyTime(FS.DETECTED.lastModified(library));
+				info.setRepoSize(FS.DETECTED.length(library));
+				return info;
 			}
 			
 		} catch (GitAPIException e) {
@@ -159,7 +163,7 @@ public class RepoServiceImpl implements RepoService {
 	 * @throws IOException
 	 */
 	private static Repository getRepository(String parent, String repo) throws IOException {
-		String path = RepoPath.repo + repo;
+		String path = RepoPath.repo + parent + RepoPath.sep + repo;
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		return builder.setGitDir(new File(path, RepoPath.git)).readEnvironment().build();
 	}
@@ -226,7 +230,7 @@ public class RepoServiceImpl implements RepoService {
 	private static RepoInfo getRepositoryInfo(Repo repo) throws IOException {
 		RepoInfo info = new RepoInfo(repo);
 		Repository repository = getRepository(repo.getUserEmail(), repo.getRepoName());
-		File library = new File(repository.getWorkTree().toString(), repo.getRepoName());
+		File library = new File(repository.getWorkTree().toString());
 		info.setModifyTime(FS.DETECTED.lastModified(library));
 		info.setRepoSize(FS.DETECTED.length(library));
 		return info;

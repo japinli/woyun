@@ -38,9 +38,23 @@ $(document).ready(function() {
 		outside: 'x' // Horizontal Tooltips need to change their outside position
 	});
 	
-	
+	fgetInit();
 	docsView.addDocUperView();
 });
+
+function fgetInit(){
+	$.ajax({
+		url:'/wesign/repos',
+		async:true,
+		type:'get',
+		contentType:'application/x-www-form-urlencoded',
+		success:function(data){
+			console.log(data);
+		}
+	});
+}
+
+
 var docsView = {
 	views: [],
 	docsContainer: null,

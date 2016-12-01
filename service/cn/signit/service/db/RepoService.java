@@ -23,7 +23,7 @@ public interface RepoService {
 	 * @param repo 仓库名
 	 * @return 成功返回 Repo 对象，失败返回 null
 	 */
-	Repo createRepository(User user, String repo);
+	RepoInfo createRepository(User user, String repo);
 	
 	/**
 	 * 根据用户邮箱获取用户的仓库对象
