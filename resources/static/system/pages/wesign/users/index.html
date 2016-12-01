@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>保全中心 | 云取证</title>
+<title>蜗云 | 文件中心</title>
 <div th:replace="system/pages/common/sys-quote-common.html :: copy-syscommon-headerstyle"></div>
 <link rel="stylesheet" href="../../css/simple-pagination.css" th:href="@{/static/system/css/simple-pagination.css}">
+<link rel="stylesheet"  th:href="@{/static/system/css/bodyfile.css}"/>
 </head>
 <body>
 <div th:replace="system/pages/common/browser-common.html :: copy-browser">动态复用</div>
@@ -14,88 +15,127 @@
 	<div class="rmain">
 	      <div class="lbar">
 	      		<div class="lbar-block">
-	      			<!-- <a class="creat-doc-enter" th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-self.html'}"> -->
-	      			<a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
-	      			    <i class="icon-add addSignFlow"></i>
-	      			    <span>新建保全</span>
-	      			</a>
 			        <ul id="doc-id-bar" class="lbar-link" name="1">
-			            <!-- <li id="allDocBarId" class="active">
+			            <li id="" class="active">
 			            	<a href="javascript:;">
-			            		<i class="icon-ownsign-hollow"></i>
-			            		<span class="lbar-link-title">全部保全文件</span>
+			            		<i class=""></i>
+			            		<span class="lbar-link-title">我的文件</span>
 			            	</a>
-						</li> -->
-			            <!-- <li id="waitMeBarId">
+						</li>
+			            <li id="">
 			            	<a href="javascript:;">
-				            	<i class="circle-state default-bg"></i>
-				            	<span class="lbar-link-title">待我签署</span>
-				            </a>
-				        </li> -->
-			            <!-- <li id="waitOtherBarId">
-			            	<a href="javascript:;">
-			            		<i class="circle-state transit-bg"></i>
-			            		<span class="lbar-link-title">等待他人签署</span>
-			            	</a>
-			           </li> -->
-			           <li id="signedBarId">
-			            	<a href="javascript:;">
-			            		<i class="circle-state success-bg"></i>
-			            		<!-- <span class="lbar-link-title">已完成</span> -->
-			            		<span class="lbar-link-title">保全列表</span>
-			            	</a>
-			           </li>
-			           <li id="waitMeBarId">
-			            	<a href="javascript:;">
-				            	<i class="circle-state default-bg"></i>
-				            	<span class="lbar-link-title">出证列表</span>
+				            	<i class=""></i>
+				            	<span class="lbar-link-title">我的视频</span>
 				            </a>
 				        </li>
+			            <li id="">
+			            	<a href="javascript:;">
+			            		<i class=""></i>
+			            		<span class="lbar-link-title">我的图片</span>
+			            	</a>
+			           </li>
+			           <li id="">
+			            	<a href="javascript:;">
+			            		<i class=""></i>
+			            		<span class="lbar-link-title">其他文件</span>
+			            	</a>
+			           </li>
 			        </ul>
-			        <a class="creat-doc-enter" th:href="@{'/wesign/documents/sign-self.html'}">
-	      			    <i class="icon-add addSignFlow"></i>
-	      			    <span>新建保全</span>
-	      			</a>
-		        </div>
-		        <div th:replace="system/pages/common/sys-bar-common.html :: copy-leftbar-app">动态复用</div>
+		        </div>  
 		</div>
+		<div class="rmain-main">
+			<div class="bodyFile" style="display:;">
+				<div class="myCook">
+					<div class="cook-left"><span>我的资料库</span></div>
+					<div class="cook-right"><button type="button" class="addBtn"><i class="icon-add-box"></i><span class="iconFont">新建资料库</span></button></div>
+				</div>
+				<div class="noneFile" style="display:none;">
+					<h2 class="font-create">您还未创建资料库</h2>
+					<p>你可以新建一个资料库来组织你的文件资料，比如为每个项目创建一个资料库，每个资料库可以单独地同步和共享。</p>
+				</div>
+				<div class="first-table">
+					<table class="file-tab">
+					  <tr class="tr-border">
+					  	<th class="th-1"><input type="checkbox"/></th>
+					    <th class="th-2">名称</th>
+					    <th class="th-3"></th>
+					    <th class="th-4">大小</th>
+					    <th class="th-5">更新时间</th>
+					  </tr>
+					  <tbody>
+					  	<tr class="tr-border">
+						  	<th class="th-1"><input type="checkbox"/></th>
+						    <th class="th-2"><i class="icon-ownsign-hollow all-icon"></i>资料库</th>
+						    <th class="th-3"><i class="icon-bin all-icon"></i><i class="icon-write-down all-icon deal-method"></i></th>
+						    <th class="th-4">12.Mb</th>
+						    <th class="th-5">22小时前</th>
+					  	</tr>
+					  </tbody>
+					 </table>
+				</div>
+			</div>
+			<div class="lookFile" style="display:;">
+				<div class=""><span><a class="a-hover" href="javascript:;">我的资料库</a></span><span class="path-split">/</span><span>资料库</span></div>
+				<div class="btn-choose">
+					<div class="div-input"><input type="file" class="btn-input" name="上传文件" id="upload-files" multiple/></div>
+					<button type="button" class="allBtn"><span class="allBtnFont">新建文件夹</span></button>
+					<button type="button" class="allBtn"><span class="allBtnFont">新建文件</span></button>
+					<button type="button" class="listBtn"><span class="allBtnFont">横向</span></button>
+					<button type="button" class="listBtn"><span class="allBtnFont">纵向</span></button>
+					<span class="trash-file"><i class="icon-bin"></i><i class="icon-alarm"></i></span>
+				</div>
+			</div>
+			<div class="file-table" style="display:;">
+				<div>
+					<table class="file-tab">
+					  <tr class="tr-border">
+					  	<th class="th-1"><input type="checkbox"/></th>
+					    <th class="th-2">名称</th>
+					    <th class="th-3"></th>
+					    <th class="th-4">大小</th>
+					    <th class="th-5">更新时间</th>
+					  </tr>
+					  <tbody>
+					  	<tr class="tr-border">
+						  	<th class="th-1"><input type="checkbox"/></th>
+						    <th class="th-2"><i class="icon-receipt all-icon"></i>test.txt</th>
+						    <th class="th-3"><i class="icon-bin all-icon"></i><i class="icon-download3 all-icon"></i><i class="icon-write-down all-icon deal-method-child"></i></th>
+						    <th class="th-4">12.kb</th>
+						    <th class="th-5">22小时前</th>
+					  	</tr>
+					  	<tr class="tr-border">
+						  	<th class="th-1"><input type="checkbox"/></th>
+						    <th class="th-2"><i class="icon-my-library-books all-icon"></i>文件夹</th>
+						    <th class="th-3"><i class="icon-bin all-icon"></i><i class="icon-download3 all-icon"></i><i class="icon-write-down all-icon deal-method-child"></i></th>
+						    <th class="th-4">12.kb</th>
+						    <th class="th-5">22小时前</th>
+					  	</tr>
+					  </tbody>
+					 </table>
+				</div>
+			</div>
+		</div>
+	</div>  
+</div>  
 
-	      <div class="rmain-main">
-	            <div class="rmain-operation-bar">
-	               <div class="dis-inline bar-title"><span class="js-doctitle">全部文件</span></div>
-	               <div class="search-form-group dis-inline rmain-top-barr posAr mr35">
-	               		<i id="submit-search-icon" class="icon-search-hollow"></i>
-				        <input id="search-input-id" class="search-input" type="text" name="" value="" placeholder="输入“主题关键字”搜索你的文件" />
-	               </div>
-	            </div> <!-- rmain-operation-bar -->
-	            <div class="rmain-show-area">
-	                <div class="area-operate"></div>
-	                <div class="rmain-view-container">
-	                	<div class="view plr30">
-               				<div class="thead">
-                				<div class="thead-td firstEle td-f1">保全状态</div>
-                				<div class="thead-td td-f2">保全号</div>
-                				<div class="thead-td td-f3">保全时间</div>
-                				<div class="thead-td td-f4">操作</div>
-               				</div>
-                			<div id="docListContainer"></div>
-                		</div>
-	                </div><!-- rmain-view-container -->
-	                <div class="bottom-oparate textCenter">
-	                	<div class="dis-inline">
-	                		<div class="js_pagination bar-title"></div>
-	                	</div>
-	                </div>
-	            </div> <!-- rmain-show-area -->
-	        </div>
-	        <!-- more info -->
-			<div id="js_taskinfo_box" class="taskinfo-box"></div>   
-			<!-- end more info -->
-	</div> <!--rmain-->
-</div>    
 
+<div id="deal-method" class="userMenu-content">
+    <ul class="userMenu-content-list">
+		<li class="sign-Link signSelf">重命名</li>
+	</ul>
+</div>
+
+
+
+<div id="deal-method-child" class="userMenu-content">
+    <ul class="userMenu-content-list">
+		<li class="sign-Link signSelf">重命名</li>
+		<li class="sign-Link signSelf">移动</li>
+	</ul>
+</div>
 <!--footer-->
 <div th:replace="system/pages/common/sys-quote-common.html  :: copy-sysbase-footer">此处footer动态复用</div>
+<div th:replace="system/pages/common/sys-quote-common.html  :: copy-syscommon-footer">此处footer动态复用</div>
 <script th:src="@{/static/common/js/jquery.simplePagination.js}" type="text/javascript"></script>
 <script th:src="@{/static/system/js/doctask.js}" type="text/javascript"></script>
 </body>
