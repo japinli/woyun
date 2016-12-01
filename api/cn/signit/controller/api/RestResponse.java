@@ -4,6 +4,11 @@ public class RestResponse {
 
 	private int status;
 	private String desc;
+	private Object data;
+	
+	public RestResponse() {
+		this(-1, "ERROR");
+	}
 	
 	public RestResponse(int status, String desc) {
 		this.status = status;
@@ -25,4 +30,14 @@ public class RestResponse {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+	
+	
 }

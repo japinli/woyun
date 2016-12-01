@@ -32,9 +32,9 @@
 		<table schema="${jdbc_user}" tableName="repo" domainObjectName="Repo" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
 		</table>
-		<table schema="${jdbc_user}" tableName="user_last_login" domainObjectName="UserLastLogin" enableCountByExample="false"
+		<!-- <table schema="${jdbc_user}" tableName="user_last_login" domainObjectName="UserLastLogin" enableCountByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-		</table>
+		</table> -->
 		
 	</context>
 </generatorConfiguration>

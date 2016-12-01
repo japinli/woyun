@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import cn.signit.conf.ConfigProps;
 import cn.signit.cons.GenerateLinkUtils;
 import cn.signit.cons.OriginalSerialCodeMaker;
@@ -35,11 +36,11 @@ import cn.signit.controller.user.UserPageController.LoginForms;
 
 import cn.signit.domain.mysql.User;
 import cn.signit.service.EmailService;
+import cn.signit.service.db.RepoService;
 import cn.signit.service.db.UserLastLoginService;
 import cn.signit.service.db.UserService;
-import cn.signit.service.files.HdfsService;
-import cn.signit.service.git.GitService;
 import cn.signit.tools.utils.MD5Utils;
+import cn.signit.untils.RepoPath;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.http.HttpUtil;
 import cn.signit.untils.message.SessionKeys;
@@ -58,31 +59,24 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
-	
 	@Resource
 	private EmailService emailService;
-	
-	@Resource
-	private HdfsService hdfsService;
-	
 	@Resource
 	private UserLastLoginService lastLoginService;
-	
 	@Resource
-	private GitService gitService;
-
+	private RepoService repoService;
 	
-	protected final static String LOGIN_JSP="/"+ConfigProps.get("welcome.page_path");
-	protected final static String LOGIN_PARAMTER="username";
+	protected final static String LOGIN_JSP= "/" + ConfigProps.get("welcome.page_path");
+	protected final static String LOGIN_PARAMTER = "username";
 	/* 重定向 */
 	protected final static String REDIRECT_LOGIN_URI = "redirect:"+LOGIN_JSP;
 	protected final static String REDIRECT_LOGIN_PASS_URI = "redirect:/html/infoUp.html";
 	protected final static String REDIRECT_LOGIN_NO_PASS_URI = LOGIN_JSP;
 	
-	protected final static String FORWARD_TO_ACTIVATE_URI="";
+	protected final static String FORWARD_TO_ACTIVATE_URI = "";
 	/* 转发 */
 	protected final static String FORWARD_LOGIN_URI = LOGIN_JSP;
-	protected final static String EMAIL_VERIFY_SUCCESS="redirect:/html/emailCheck.html";
+	protected final static String EMAIL_VERIFY_SUCCESS = "redirect:/html/emailCheck.html";
 	
 	/**
 	* 提交用户登录表单
@@ -103,7 +97,7 @@ public class UserController {
 			//设置每个Session的最大有效时间（单位：秒）
 			request.getSession().setAttribute(SessionKeys.LOGIN_USER, user);
 			lastLoginService.updateLastLoginTime(user.getId(), username);
-			LOG.info("用户: "+forms.getUsername()+" 登录");
+			LOG.info("用户: {} 登录", forms.getUsername());
 			return "redirect:"+UrlPath.PAGE_USER_HOME;
 		} else {
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.USER_NAME_OR_PWD_ERROR);
@@ -117,10 +111,33 @@ public class UserController {
 	 */
 	@RequestMapping(value=RestPagePath.USER_LOGOUT,method=RequestMethod.GET)
 	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
-		LOG.info("用户: "+forms.getUsername()+" 退出");
 		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
-		LOG.info("用户: "+forms.getUsername()+" 退出");
+		LOG.info("用户: {} 退出", forms.getUsername());
 		return PageLogicPath.LOGIN.path();
+	}
+	
+	/**
+	 * 检测用户注册信息及用户是否已注册
+	 * @param forms 用户注册表单
+	 * @param model 需要动态填充的数据模型
+	 * @return true - 用户注册信息完整，false - 用户注册信息不完整或已经注册
+	 */
+	private boolean registCheckError(RegisterForms forms, Model model) {
+		// 必填项为空
+		if (forms.requiredHaveNull()) {
+			model.addAttribute(SessionKeys.RESULT_ERROR, SessionResults.INPUT_ERROR);
+			model.addAttribute(forms);
+			return false;
+		}
+
+		User chekcUser = userService.getUser(forms.getUsername());
+		if (chekcUser != null) {
+			model.addAttribute(SessionKeys.RESULT_ERROR, SessionResults.USER_EXISTED_ERROR);
+			model.addAttribute(forms);
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -128,81 +145,91 @@ public class UserController {
 	*@param forms 提交注册数据表单
 	*@param model 需要动态填充的数据模型
 	*@return 提交用户注册表单处理后的forward或redirect的控制器地址
-	*@since 0.0.2
-	*@author Zhanghongdong
 	*/
-	@RequestMapping(value=RestPagePath.REGISTER,method=RequestMethod.POST)
+	@RequestMapping(value=RestPagePath.REGISTER, method=RequestMethod.POST)
 	public String submitRegisterForm(@ModelAttribute RegisterForms forms,Model model,HttpServletRequest request) {
-		String errorLink = registCheckError(forms, model);
-		if(errorLink != null){
-			return errorLink;
+		boolean ok = registCheckError(forms, model);
+		if(ok == false){
+			return RestPagePath.REGISTER_LOC;
 		}
 		return registByEmail(forms, model,request);
-		
 	}
 	
-	private String registByEmail(RegisterForms registerForms,Model model,HttpServletRequest request){
-		User user=new User();
-		String uuid = UUID.randomUUID().toString();
-		Date date = Calendar.getInstance().getTime();
-		user.setEmail(registerForms.getUsername());
-		user.setRegistDate(date);
-		user.setIp(HttpUtil.getRealRemoteIpAddr(request));
-		user.setRandomCode(uuid);
-		user.setOriginalSerialCode(OriginalSerialCodeMaker.secretMake());
+	/**
+	 * 从注册页面获取用户注册信息
+	 * @param forms 提交的用户注册表单
+	 * @param request 注册请求
+	 * @return 用户对象
+	 */
+	private User getUserFromRegisterForms(RegisterForms forms, HttpServletRequest request) {
+		User user = new User();
+		
+		Date now = Calendar.getInstance().getTime();
+		user.setRegistDate(now);
 		user.setActivated(false);
-		user.setPassword(MD5Utils.toMD5(registerForms.getPassword()));
-		user.setRealName(registerForms.getRealName());
-		user.setRootDirName(registerForms.getUsername());  // 使用邮件名创建目录
-		Long id = null;
+		user.setEmail(forms.getUsername());
+		user.setRealName(forms.getRealName());
+		user.setPassword(MD5Utils.toMD5(forms.getPassword()));
+		user.setIp(HttpUtil.getRealRemoteIpAddr(request));
+		
+		// RandomCode & OriginalSerialCode 用户验证用户注册信息
+		user.setRandomCode(UUID.randomUUID().toString());
+		user.setOriginalSerialCode(OriginalSerialCodeMaker.secretMake());
+		
+		return user;
+	}
+	
+	/**
+	 * 发送用户验证邮件
+	 * @param request 用户注册请求
+	 * @param user 用户信息
+	 * @return true - 成功，false - 失败
+	 */
+	private boolean sendVerifyEmail(HttpServletRequest request, User user) {
+		String path = UrlPath.USER_REGIEST_CHECK_ROOT + "/" + user.getId() + "/";
+		String code = GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode());
+		String link = GenerateLinkUtils.generateActivateLink(request, path + code + "/activate");
+		
+		String subject = String.format(ConfigProps.get("mail.msg.activate_subject"), new SimpleDateFormat("yyyy-MM-dd"));
+		String message = String.format(ConfigProps.get("mail.msg.activate_contents"), user.availableUserName(), link, link);
+		return emailService.send(subject,	user.getEmail(), message);
+	}
+	
+	/**
+	 * 利用邮件注册新用户
+	 * @param forms 提交的用户注册表单
+	 * @param model 需要动态填充的数据模型
+	 * @param request
+	 * @return
+	 */
+	private String registByEmail(RegisterForms forms, Model model, HttpServletRequest request){
+		User user = getUserFromRegisterForms(forms, request);
 		userService.addUserAndGetId(user);
-		id=user.getId();
-		if(id!=null){
-			
-			// 发送邮件验证
-			String activateLink=GenerateLinkUtils.generateActivateLink(request, UrlPath.USER_REGIEST_CHECK_ROOT+"/"+id+"/"
-					+GenerateLinkUtils.generateCheckcode(user.getNormalOrigiSerialCode(), user.getRandomCode())
-					+"/activate");
-			String subject=String.format(ConfigProps.get("mail.msg.activate_subject"), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-			String nickname=ConfigProps.get("mail.msg.common_nickname");
-			String message=String.format(ConfigProps.get("mail.msg.activate_contents"), user.availableUserName(),activateLink, activateLink);
-			boolean isSend=emailService.send(subject, user.getEmail(), message);
-			if(isSend){
+		Long id = user.getId();
+		if (id != null) {
+			// 创建默认仓库
+			repoService.createRepository(user, RepoPath.default_repo);
+			boolean isSend = sendVerifyEmail(request, user);
+			if (isSend) {
 				LOG.info("注册邮件:({})发送成功!",user.getEmail());
 				return RestPagePath.REDIRECT.concat(RestPagePath.ACTIVATE_TIP).concat("?").concat(SessionKeys.RESULT_TYPE).concat("=").concat("2");
-			}else{
+			} else {
 				LOG.info("注册邮件:({})发送失败!",user.getEmail());
 				model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.PROCESS_FAILURE);
-				model.addAttribute(registerForms);
+				model.addAttribute(forms);
 				return RestPagePath.REGISTER_LOC;
 			}
-		}else{
+		} else {
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.PROCESS_FAILURE);
-			model.addAttribute(registerForms);
+			model.addAttribute(forms);
 			return RestPagePath.REGISTER_LOC;
 		}
 		
 	}
-	
-	//注册错误检测
-	private String registCheckError(RegisterForms registerForms,Model model){
-		//必填项为空
-		if(registerForms.requiredHaveNull()){
-			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.INPUT_ERROR);
-			model.addAttribute(registerForms);
-			return RestPagePath.REGISTER_LOC;
-		}
-		//检查用户存在
-		User chekcUser=userService.getUser(registerForms.getUsername());
-		if(chekcUser != null){//如果该账户已经存在
-			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.USER_EXISTED_ERROR);
-			model.addAttribute(registerForms);
-			return RestPagePath.REGISTER_LOC;
-		}
-		return null;
-	}
+
 	
 	//重设密码错误检测
+	@SuppressWarnings("unused")
 	private String resetPwdCheckError(ResetPasswordForms forms,Model model){
 		//必填项为空
 		if(forms.requiredHaveNull()){
