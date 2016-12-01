@@ -9,7 +9,6 @@ import java.util.*;
 
 import javax.activation.*;
 
-import cn.signit.sdk.internal.util.codec.Base64;
 import cn.signit.tools.utils.Base64Utils;
 import cn.signit.untils.mail.Mail;
 

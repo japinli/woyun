@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.WebApplicationInitializer;
 
-import cn.signit.server.listenser.SessionFilter;
-
 /**
 *初始化通用WEB容器（相当于web.xml）
 *

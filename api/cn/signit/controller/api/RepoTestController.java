@@ -28,6 +28,7 @@ public class RepoTestController {
 	public RestResponse createRepository(@RequestParam("path") String path) {
 		RestResponse response = new RestResponse();
 		String uuid = UUID.randomUUID().toString();
+		System.out.println(uuid);
 		try {
 			//repoService.createRepository(uuid, path);
 			response.setStatus(RestStatus.SUCCESS.getStatus());

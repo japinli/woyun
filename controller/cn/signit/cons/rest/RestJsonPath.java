@@ -1,7 +1,5 @@
 package cn.signit.cons.rest;
 
-import com.alibaba.druid.VERSION;
-
 /**
 * Rest接口数据（基于JSON数据）资源的URI路径常量类
 * @ClassName RestJsonPath

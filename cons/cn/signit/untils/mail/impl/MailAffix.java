@@ -6,7 +6,6 @@
 package cn.signit.untils.mail.impl;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  *(这里用一句话描述这个类的作用)

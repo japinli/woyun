@@ -2,7 +2,6 @@ package cn.signit.server.conf;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,20 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import cn.signit.conf.ConfigProps;
-import cn.signit.cons.UrlPath;
 import cn.signit.untils.encode.CommonAjaxJsonInterceptor;
 
 /**
@@ -50,6 +43,7 @@ import cn.signit.untils.encode.CommonAjaxJsonInterceptor;
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 public class WebMvcConfig extends WebMvcConfigurationSupport{
 		private final static Logger LOG = LoggerFactory.getLogger(WebMvcConfig.class);
+		@SuppressWarnings("unused")
 		private final static String WELCOME_PAGE="wesign/login.html";
 		
 	    /**

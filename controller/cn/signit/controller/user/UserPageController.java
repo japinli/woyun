@@ -1,7 +1,6 @@
 package cn.signit.controller.user;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import cn.signit.domain.mysql.User;
 import cn.signit.service.db.UserService;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.message.SessionKeys;
-import jodd.madvoc.RootPackages;
 
 
 /**

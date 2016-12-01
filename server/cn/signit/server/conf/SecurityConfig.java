@@ -13,12 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.access.channel.ChannelDecisionManagerImpl;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import cn.signit.conf.ConfigProps;
 import cn.signit.cons.UrlPath;
-import cn.signit.untils.message.SessionKeys;
 
 /**
 *基于注解的Spring Security相关配置
