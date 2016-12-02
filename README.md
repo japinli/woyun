@@ -1,2 +1,62 @@
 WoYun - 蜗云
+============
+
+状态说明
+--------
+
+| status | 说明 |
+|--------|------|
+| -1     | 失败 |
+| 0      | 成功 |
+
+WEB 接口说明
 ------------
+
+### 获取仓库信息
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos`
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data": 
+		[
+			"id": 4,
+			"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+			"repoName": "我的资料库",
+			"userEmail": "japinli@qq.com",
+			"createTime": 1480599651000,
+			"modifyTime": 1480599650000,
+			"state": false
+		]
+}
+```
+
+### 新建仓库
+
+#### 请求
+
+`POST http://woyun.cn/wesign/repos`
+
+#### 参数
+
+```
+{
+	"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+	"repoName": "我的文档"
+}
+```
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
