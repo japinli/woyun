@@ -1,10 +1,11 @@
 package cn.signit.controller.repo;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +28,16 @@ import cn.signit.untils.message.SessionKeys;
 @SessionAttributes({SessionKeys.LOGIN_USER})
 public class RepoController {
 
+	private final static Logger LOG = LoggerFactory.getLogger(RepoController.class);
+	
 	@Resource
 	private RepoService repoService;
 	
 	@RequestMapping(value=UrlPath.REPO_LIST, method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse listRepositories(@ModelAttribute(SessionKeys.LOGIN_USER)User user) throws IOException {
-		RestResponse response = new RestResponse(RestStatus.SUCCESS.getStatus(), RestStatus.SUCCESS.getDesc());
+		LOG.info("用户({})请求获取所有仓库信息", user.getEmail());
+		RestResponse response = new RestResponse(true);
 		response.setData(repoService.getRepositoriesInfo(user));
 		return response;
 	}
@@ -41,6 +45,7 @@ public class RepoController {
 	@RequestMapping(value=UrlPath.REPO_NEW, method=RequestMethod.POST)
 	@ResponseBody
 	public RestResponse createRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
+		LOG.info("用户({})请求新建({})仓库)", user.getEmail(), repo.getRepoName());
 		RestResponse response = new RestResponse();
 		RepoInfo repoInfo = repoService.createRepository(user, repo.getRepoName());
 		if (repo != null) {
@@ -49,6 +54,23 @@ public class RepoController {
 			response.setDesc(RestStatus.SUCCESS.getDesc());
 		}
 		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_RENAME, method=RequestMethod.PUT)
+	@ResponseBody
+	public RestResponse renameRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
+		LOG.info("用户({})请求修改仓库({})名为({})", user.getEmail(), repo.getRepoId(), repo.getRepoName());
+		
+		boolean flag = repoService.renameRepository(repo.getRepoId(), repo.getRepoName());
+		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_DELETE, method=RequestMethod.DELETE)
+	@ResponseBody
+	public RestResponse deleteRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
+		LOG.info("用户({})请求删除({})仓库", user.getEmail(), repo.getRepoName());
+		boolean flag = repoService.deleteRepository(repo.getRepoId());
+		return new RestResponse(flag);
 	}
 	
 }

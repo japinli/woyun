@@ -3,7 +3,6 @@ package cn.signit.service.db;
 import java.io.IOException;
 import java.util.List;
 
-import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.RepoInfo;
 
@@ -48,4 +47,19 @@ public interface RepoService {
 	 * @return true - 成功，false - 失败
 	 */
 	boolean addFile(String parent, String repo, String filename);
+	
+	/**
+	 * 重命名仓库
+	 * @param repoId 仓库ID
+	 * @param repoName 新仓库名
+	 * @return true - 成功, false - 失败
+	 */
+	boolean renameRepository(String repoId, String repoName);
+	
+	/**
+	 * 删除用户仓库
+	 * * @param repoId 仓库ID
+	 * * @return true - 成功, false - 失败
+	 */
+	boolean deleteRepository(String repoId);
 }

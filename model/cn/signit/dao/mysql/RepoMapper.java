@@ -24,4 +24,8 @@ public interface RepoMapper {
     List<Repo> selectByUserEmail(@Param("userEmail") String userEmail);
     
     Repo selectByRepoNameAndUserEmail(@Param("repoName") String repoName, @Param("userEmail") String userEmail);
+    
+    int updateByRepoId(@Param("repoId") String repoId, @Param("repoName") String repoName);
+    
+    int markRepositoryDeleted(Repo record);
 }

@@ -47,6 +47,55 @@ WEB 接口说明
 
 ```
 {
+	"repoName": "我的文档"
+}
+```
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
+### 仓库重命名
+
+#### 请求
+
+`PUT http://woyun.cn/wesign/repos`
+
+#### 参数
+
+```
+{
+	"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+	"repoName": "我的文档"
+}
+```
+
+**备注:** *repoName* 为更新的仓库名称。
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
+### 删除仓库
+
+#### 请求
+
+`DELETE http://woyun.cn/wesign/repos`
+
+#### 参数
+
+```
+{
 	"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
 	"repoName": "我的文档"
 }

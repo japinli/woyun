@@ -3,6 +3,7 @@ package cn.signit.service.db.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -145,6 +146,18 @@ public class RepoServiceImpl implements RepoService {
 		}
 
 		return false;
+	}
+	
+	public boolean renameRepository(String repoId, String repoName) {
+		return Convert.toBoolean(repoDao.updateByRepoId(repoId, repoName));
+	}
+	
+	public boolean deleteRepository(String repoId) {
+		Repo record = new Repo();
+		record.setRepoId(repoId);
+		record.setState(true);
+		record.setDeleteTime(Calendar.getInstance().getTime());
+		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////

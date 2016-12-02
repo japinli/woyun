@@ -2,7 +2,8 @@ package cn.signit.controller.api;
 
 public enum RestStatus {
 	
-	SUCCESS(0, "SUCCESS")
+	SUCCESS(0, "操作成功"),
+	FAILED(-1, "操作失败")
 	;
 	
 	private int status;

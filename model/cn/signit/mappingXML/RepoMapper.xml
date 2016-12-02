@@ -177,6 +177,24 @@
     from repo
     where user_email = #{userEmail, jdbcType=VARCHAR}
   </select>
+  <update id="updateByRepoId" parameterType="cn.signit.domain.mysql.Repo" >
+    update repo
+    set 
+      repo_name = #{repoName,jdbcType=VARCHAR},
+    where repo_id = #{repoId,jdbcType=VARCHAR}
+  </update>
+  <update id="markRepositoryDeleted" parameterType="cn.signit.domain.mysql.Repo" >
+    update repo
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where repo_id = #{repoId,jdbcType=VARCHAR}
+  </update>
   
   <!-- End -->
 </mapper>
