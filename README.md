@@ -109,3 +109,35 @@ WEB 接口说明
 	"desc": "操作成功"
 }
 ```
+
+### 获取目录信息
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repoid}/dir?path=directory`
+
+#### 参数
+
+* repoid - 仓库ID编号
+* path - 仓库下的目录路径
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data":
+		[
+			"type": "dir",
+			"filename": "文档",
+			"size": 10240,
+			"mtime": 1480599650000
+		]
+}
+```
+
+**备注:** 
+
+1. `type` 字段类型分为: `dir` 和 `filename` 两类。
+2. `size` 字段的单位为 *byte* 。
