@@ -1,9 +1,12 @@
 package cn.signit.jgit.test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.errors.AmbiguousObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectDatabase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -31,6 +35,8 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.util.FS;
+
+import com.sun.source.tree.Tree;
 
 import cn.signit.untils.RepoPath;
 
@@ -51,13 +57,26 @@ public class JgitTest {
 			// JgitTest.parseRepositoryConfig(repository);
 			// JgitTest.addFile(repository, "README.md");
 			// JgitTest.addFile(repository, "dir/README.md");
-			JgitTest.parseRepository(repository);
-			JgitTest.treeIterator(repository);
+			// JgitTest.parseRepository(repository);
+			// JgitTest.treeIterator(repository);
 			
+			final ObjectId head = repository.resolve("HEAD");
+			List<String> items = readElementsAt(repository, head.getName(), "src");
+			showItems(items);
+			
+			System.out.println("---------------------------------");
+			items = readDirectory(repository.getWorkTree().getPath() + "/src");
+			showItems(items);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+	}
+	
+	public static void showItems(List<String> items) {
+		for (String item : items) {
+			System.out.println(item);
+		}
 	}
 	
 	public static Repository openRepository(String dir) throws IOException {
@@ -117,6 +136,31 @@ public class JgitTest {
 		}
 	}
 	
+	public static void parseRepositoryPath(Repository repository, String path) throws RevisionSyntaxException, AmbiguousObjectException, IncorrectObjectTypeException, IOException {
+		ObjectId lastCommit = repository.resolve("HEAD");
+		
+		try (RevWalk revWalk = new RevWalk(repository)) {
+			RevCommit commit = revWalk.parseCommit(lastCommit);
+			RevTree revTree = commit.getTree();
+			
+			TreeWalk treeWalk = TreeWalk.forPath(repository, path, revTree);
+			treeWalk.addTree(revTree);
+			treeWalk.setRecursive(false);
+			String workingPath = repository.getWorkTree().getPath();
+			while (treeWalk.next()) {
+				String fullPath = treeWalk.getPathString();
+				String name = treeWalk.getNameString();
+				File file = new File(workingPath, fullPath);
+				long mtime = FS.DETECTED.lastModified(file);
+				boolean isDir = FS.DETECTED.isDirectory(file);
+				long size = FS.DETECTED.length(file);
+				System.out.println("path: " + fullPath + ", name: " + name + ", type: " + (isDir ? "dir" : "file") + 
+						", size: " + size + ", mtime: " + new Date(mtime));
+			}
+			
+		}
+	}
+	
 	public static void parseRepository(Repository repository) {
 		try {
 			ObjectId lastCommit = repository.resolve("HEAD");
@@ -161,19 +205,69 @@ public class JgitTest {
 		
 	}
 	
-	public static void treeIterator(Repository repository) throws IOException {
+	public static RevCommit getRevCommit(Repository repository, String commit) throws IOException {
+		try (RevWalk revWalk = new RevWalk(repository)) {
+			return revWalk.parseCommit(ObjectId.fromString(commit));
+		}
+	}
+	
+	public static ObjectId getRepositoryHead(Repository repository) throws IOException {
+		final ObjectId head = repository.resolve("HEAD");
+		return head;
+	}
+	
+	public static TreeWalk getTreeWalk(Repository repository, RevTree tree, final String path) throws IOException {
+		TreeWalk treeWalk = TreeWalk.forPath(repository, path, tree);
+		if (treeWalk == null) {
+			throw new FileNotFoundException("未找到指定的文件( " + path + ")");
+		}
+		return treeWalk;
+	}
+	
+	public static List<String> readDirectory(String directory) {
+		List<String> items = new ArrayList<String>();
 		
+		File root = new File(directory);
+		File[] files = root.listFiles();
 		
+		for (File file : files) {
+			System.out.println(file.getPath());
+			items.add(file.getName());
+		}
 		
-		/*try (Git git = new Git(repository)) {
-			DirCache dirCache = repository.readDirCache();
-			for (int i = 0; i < dirCache.getEntryCount(); ++i) {
-				DirCacheEntry entry = dirCache.getEntry(i);
-				String path = entry.getPathString();
-				long mtime = entry.getLastModified();
-				
-				System.out.println("path: " + path + ", mtime: " + new Date(mtime));
+		return items;
+	}
+	
+	public static List<String> readElementsAt(Repository repository, String commit, String path) throws IOException {
+		RevCommit revCommit = getRevCommit(repository, commit);
+		RevTree tree = revCommit.getTree();
+		List<String> items = new ArrayList<String>();
+		
+		if (path.isEmpty()) { // 遍历根目录
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(false);
+				System.out.println(path + "包含" + treeWalk.getTreeCount() + "个目录");
+				while (treeWalk.next()) {
+					items.add(treeWalk.getPathString());
+				}
 			}
-		}*/
+		} else { // 遍历指定目录
+			try (TreeWalk treeWalk = getTreeWalk(repository, tree, path)) {
+				
+				if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
+					throw new IllegalStateException("不是目录项");
+				}
+				
+				try (TreeWalk dirWalk = new TreeWalk(repository)) {
+					dirWalk.addTree(treeWalk.getObjectId(0));
+					dirWalk.setRecursive(false);
+					while (dirWalk.next()) {
+						items.add(dirWalk.getPathString());
+					}
+				}
+			}
+		}
+		return items;
 	}
 }

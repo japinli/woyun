@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 
 public interface RepoService {
@@ -62,4 +63,12 @@ public interface RepoService {
 	 * * @return true - 成功, false - 失败
 	 */
 	boolean deleteRepository(String repoId);
+	
+	/**
+	 * 获取指定仓库及路径下的文件信息
+	 * @param repoName 仓库名
+	 * @param path 路径名
+	 * @return 文件信息列表
+	 */
+	List<FileInfo> getDirectory(String repoName, String path) throws IOException;
 }

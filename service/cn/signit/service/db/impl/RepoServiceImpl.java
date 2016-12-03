@@ -1,7 +1,9 @@
 package cn.signit.service.db.impl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +15,7 @@ import javax.annotation.Resource;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -30,6 +33,7 @@ import org.springframework.stereotype.Service;
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.Convert;
@@ -54,8 +58,7 @@ public class RepoServiceImpl implements RepoService {
 	
 	public RepoInfo createRepository(User user, String repo) {
 		String repoId = UUID.randomUUID().toString();
-		String path = RepoPath.repo + user.getEmail() + RepoPath.sep + repoId;
-		
+		String path = RepoPath.getRepositoryPath(user.getEmail(), repoId);
 		try {
 			FileRepositoryBuilder builder = new FileRepositoryBuilder();
 			builder.setGitDir(new File(path, RepoPath.git));
@@ -160,6 +163,54 @@ public class RepoServiceImpl implements RepoService {
 		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
 	}
 	
+	public List<FileInfo> getDirectory(String repoName, String path) throws IOException {
+		
+		Repository repository = getRepository(repoName);
+		RevCommit revCommit = getRevCommit(repository, "");
+		RevTree tree = revCommit.getTree();
+		String working = repository.getWorkTree().getPath();
+		List<FileInfo> infos = new ArrayList<FileInfo>();
+
+		if (path.isEmpty()) {
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(false);
+				
+				while (treeWalk.next()) {
+					String filename = treeWalk.getNameString();
+					String type = treeWalk.isSubtree() ? "dir" : "file";
+					File file = new File(working, treeWalk.getPathString());
+					long size = FS.DETECTED.lastModified(file);
+					long mtime = FS.DETECTED.length(file);
+					
+					infos.add(new FileInfo(type, filename, size, mtime));
+				}
+			}
+		} else {
+			try (TreeWalk treeWalk = getTreeWalk(repository, tree, path)) {
+				
+				if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
+					throw new IllegalStateException(treeWalk.getNameString() + " 不是目录项");
+				}
+				
+				try (TreeWalk dirWalk = new TreeWalk(repository)) {
+					dirWalk.addTree(treeWalk.getObjectId(0));
+					dirWalk.setRecursive(false);
+					while (dirWalk.next()) {
+						String filename = treeWalk.getNameString();
+						String type = treeWalk.isSubtree() ? "dir" : "file";
+						File file = new File(working, treeWalk.getPathString());
+						long size = FS.DETECTED.lastModified(file);
+						long mtime = FS.DETECTED.length(file);
+						
+						infos.add(new FileInfo(type, filename, size, mtime));
+					}
+				}
+			}
+		}
+		return infos;
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////
 	/// 私有函数
 	//////////////////////////////////////////////////////////////////////////////
@@ -171,8 +222,14 @@ public class RepoServiceImpl implements RepoService {
 	 * @return 仓库对象
 	 * @throws IOException
 	 */
+	private static Repository getRepository(String repoName) throws IOException {
+		String path = RepoPath.getRepositoryPath(repoName);
+		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+		return builder.setGitDir(new File(path, RepoPath.git)).readEnvironment().build();
+	}
+	
 	private static Repository getRepository(String parent, String repo) throws IOException {
-		String path = RepoPath.repo + parent + RepoPath.sep + repo;
+		String path = RepoPath.getRepositoryPath(parent, repo);
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		return builder.setGitDir(new File(path, RepoPath.git)).readEnvironment().build();
 	}
@@ -244,4 +301,39 @@ public class RepoServiceImpl implements RepoService {
 		info.setRepoSize(FS.DETECTED.length(library));
 		return info;
 	}
+	
+	/**
+	 * 获取指定提交的信息
+	 * @param repository 仓库对象
+	 * @param commit 提交记录，若 commit 为空，读取最新提交记录
+	 * @return
+	 * @throws IOException
+	 */
+	private static RevCommit getRevCommit(Repository repository, String commit) throws IOException {
+		if (commit.isEmpty()) {
+			final ObjectId head = repository.resolve(RepoPath.HEAD);
+			commit = head.getName();
+		}
+		
+		try (RevWalk revWalk = new RevWalk(repository)) {
+			return revWalk.parseCommit(ObjectId.fromString(commit));
+		}
+	}
+	
+	/**
+	 * 获取指定路径的遍历树
+	 * @param repository 仓库对象
+	 * @param tree
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	private static TreeWalk getTreeWalk(Repository repository, RevTree tree, String path) throws IOException {
+		TreeWalk treeWalk = TreeWalk.forPath(repository, path, tree);
+		if (treeWalk == null) {
+			throw new FileNotFoundException(path + " 未找到");
+		}
+		return treeWalk;
+	}
+	
 }
