@@ -1,5 +1,7 @@
 package cn.signit.entry;
 
+import java.util.Date;
+
 import cn.signit.domain.mysql.Repo;
 
 public class RepoInfo extends Repo {
@@ -24,6 +26,10 @@ public class RepoInfo extends Repo {
 	
 	public Long getModifyTime() {
 		return modifyTime;
+	}
+	
+	public void setModifyTime(Date date) {
+		this.modifyTime = date.getTime();
 	}
 
 	public void setModifyTime(Long modifyTime) {
