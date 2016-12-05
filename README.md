@@ -218,3 +218,36 @@ WEB 接口说明
 	"desc": "操作成功"
 }
 ```
+
+### 复制文件(夹)
+
+#### 请求
+
+`POST http://woyun.cn/wesign/repos/operation`
+
+#### 参数
+
+```
+{
+	"operation": "copy",
+	"srcRepoName": "我的资料库",
+	"srcPath": "文档",
+	"name": "README.md",
+	"dstRepoName": "测试库",
+	"srcPath": "/"
+}
+```
+
+**说明:**
+
+上述请求说明将 *我的资料库* 中 *文档* 目录下的 *README.md* 文件复制到 *测试库* 的根目录下。
+
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```

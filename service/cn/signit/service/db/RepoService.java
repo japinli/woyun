@@ -1,5 +1,6 @@
 package cn.signit.service.db;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -90,4 +91,28 @@ public interface RepoService {
 	 * @throws IOException 
 	 */
 	boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
+	
+	/**
+	 * 移动
+	 * @param srcRepo
+	 * @param dstRepo
+	 * @param srcPath
+	 * @param dstPath
+	 * @param name
+	 * @return
+	 */
+	boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name);
+	
+	/**
+	 * 复制
+	 * @param srcRepo
+	 * @param dstRepo
+	 * @param srcPath
+	 * @param dstPath
+	 * @param name
+	 * @return
+	 * @throws FileNotFoundException 
+	 * @throws IOException 
+	 */
+	boolean copy(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws FileNotFoundException, IOException;
 }

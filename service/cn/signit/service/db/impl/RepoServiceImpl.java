@@ -1,8 +1,11 @@
 package cn.signit.service.db.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +30,6 @@ import org.eclipse.jgit.util.FS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
@@ -226,6 +228,32 @@ public class RepoServiceImpl implements RepoService {
 		return false;
 	}
 	
+	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) {
+		return false;
+	}
+	
+	public boolean copy(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException {
+		/* 
+		 * 同一仓库同一目录下不支持复制 
+		 */
+		if (srcRepo.equals(dstRepo) && srcPath.equals(dstPath)) {
+			LOG.warn("不支持在同仓库同目录下的复制操作");
+			return false;
+		}
+		
+		srcPath = RepoPath.getRepositoryPath(srcRepo, srcPath, name);
+		dstPath = RepoPath.getRepositoryPath(dstRepo, dstPath);
+		
+		boolean flag = copyFileTo(srcPath, dstPath, name);
+		if (!flag) {
+			LOG.warn("文件(夹)复制失败");
+			return false;
+		}
+		
+		Repository repository = getRepository(dstRepo);
+		return gitCommit(repository, ".", String.format(RepoPath.add_file_msg, name));
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////
 	/// 私有函数
 	//////////////////////////////////////////////////////////////////////////////
@@ -373,6 +401,49 @@ public class RepoServiceImpl implements RepoService {
 			e.printStackTrace();
 		}
 		
+		return false;
+	}
+	
+	/**
+	 * 复制文件(夹)在特定目录中
+	 * @param src 源路径
+	 * @param dst 目录路径
+	 * @param name 待复制的文件(夹)
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	public static boolean copyFileTo(String src, String dst, String name) throws IOException {
+		File source = new File(src, name);
+		if (!source.exists()) {
+			LOG.warn("{}/{} 不存在", src, name);
+			return false;
+		}
+
+		if (source.isFile()) {
+			File destination = new File(dst, name);
+			InputStream inputStream = new FileInputStream(source);
+			FileOutputStream outpuSteam = new FileOutputStream(destination);
+			byte[] buffer = new byte[1024 * 1024];
+			int length = 0;
+			while ((length = inputStream.read(buffer)) != -1) {
+				outpuSteam.write(buffer, 0, length);
+			}
+			inputStream.close();
+			outpuSteam.flush();
+			outpuSteam.close();
+		} else {
+			File folder = new File(dst, name);
+			if (!folder.mkdir()) {
+				LOG.warn("创建文件夹({})失败", folder.getPath());;
+				return false;
+			}
+
+			for (File f : source.listFiles()) {
+				copyFileTo(source.getAbsolutePath(), folder.getAbsolutePath(), f.getName());
+			}
+
+			return true;
+		}
 		return false;
 	}
 }

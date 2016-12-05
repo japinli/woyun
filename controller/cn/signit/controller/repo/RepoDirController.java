@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.api.RestResponse;
+import cn.signit.controller.api.RestStatus;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
@@ -80,5 +81,36 @@ public class RepoDirController {
 		boolean flag = repoService.renameDirectory(repoName, oldPath, newPath);
 		
 		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_DIR_OR_FILE_OPERATION, method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse directoryOrFileOperation(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
+			@RequestBody DirOperation dirInfo) throws IOException {
+		
+		LOG.info("用户({})请求将仓库({})下的({} {}) {} 到 ({}) 仓库下的 ({})",
+				user.getEmail(), dirInfo.getSrcRepoId(), dirInfo.getSrcPath(), dirInfo.getName(),
+				dirInfo.getDstRepoId(), dirInfo.getDstPath());
+		
+		String srcRepoName = RepoPath.contact(user.getEmail(), dirInfo.getSrcRepoId());
+		String dstRepoName = RepoPath.contact(user.getEmail(), dirInfo.getDstRepoId());
+		
+		RestResponse response = new RestResponse(false);
+		boolean flag = false;
+		
+		if (dirInfo.getOperation().equals("copy")) {
+			flag = repoService.copy(srcRepoName, dstRepoName, dirInfo.getSrcPath(), dirInfo.getDstPath(), dirInfo.getName());
+		} else if (dirInfo.getOperation().equals("move")) {
+			flag = repoService.move(srcRepoName, dstRepoName, dirInfo.getSrcPath(), dirInfo.getDstPath(), dirInfo.getName());
+		} else {
+			response.setDesc(dirInfo.getOperation() + ": 未知的操作类型");
+		}
+		
+		if (flag) {
+			response.setStatus(RestStatus.SUCCESS.getStatus());
+			response.setDesc(RestStatus.SUCCESS.getDesc());
+		}
+		
+		return response;
 	}
 }

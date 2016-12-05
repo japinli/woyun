@@ -1,12 +1,10 @@
 package cn.signit.controller.api;
 
-import java.util.Map;
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +61,7 @@ public class RepoTestController {
 	
 	@RequestMapping(value="/repo/add/", method=RequestMethod.GET)
 	@ResponseBody
-	public RestResponse addFile(@RequestParam("path") String path, @RequestParam("filename") String filename) {
+	public RestResponse addFile(@RequestParam("path") String path, @RequestParam("filename") String filename) throws IOException {
 		RestResponse response = new RestResponse();
 		
 		repoService.addFile(null, path, filename);
@@ -73,7 +71,7 @@ public class RepoTestController {
 	
 	@RequestMapping(value="/repo/add/", method=RequestMethod.POST)
 	@ResponseBody
-	public RestResponse postTest(@RequestBody DirOperation dir) throws JSONException {
+	public RestResponse postTest(@RequestBody DirOperation dir) {
 		
 		LOG.info(dir.getPath() + " " + dir.getName());
 		RestResponse response = new RestResponse();
