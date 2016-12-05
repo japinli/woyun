@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.api.RestResponse;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.RepoPath;
@@ -50,5 +51,34 @@ public class RepoDirController {
 		RestResponse response = new RestResponse(true);
 		response.setData(infos);
 		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_MAKE_DIR, method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse createDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
+			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) {
+		
+		LOG.info("用户({})请求在仓库({})下新建({})目录", user.getEmail(), repoId, dirInfo.getName());
+		
+		String repoPath = RepoPath.contact(user.getEmail(), repoId);
+		String dirPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
+		boolean flag = repoService.createDirectory(repoPath, dirPath);
+		
+		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_DIR_RENAME, method=RequestMethod.PUT)
+	@ResponseBody
+	public RestResponse renameDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
+			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) throws IOException {
+		
+		LOG.info("用户({})请求在仓库({})下重命名({})目录为({})", user.getEmail(), repoId, dirInfo.getName(), dirInfo.getNewName());
+		
+		String repoName = RepoPath.contact(user.getEmail(), repoId);
+		String oldPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
+		String newPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getNewName());
+		boolean flag = repoService.renameDirectory(repoName, oldPath, newPath);
+		
+		return new RestResponse(flag);
 	}
 }

@@ -1,24 +1,34 @@
 package cn.signit.controller.api;
 
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * GIT 测试
  */
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.signit.entry.DirOperation;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.RepoPath;
 
 @Controller
 public class RepoTestController {
+	
+	private final static Logger LOG = LoggerFactory.getLogger(RepoTestController.class);
 
 	@Resource
 	private RepoService repoService;
@@ -58,6 +68,15 @@ public class RepoTestController {
 		
 		repoService.addFile(null, path, filename);
 		
+		return response;
+	}
+	
+	@RequestMapping(value="/repo/add/", method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse postTest(@RequestBody DirOperation dir) throws JSONException {
+		
+		LOG.info(dir.getPath() + " " + dir.getName());
+		RestResponse response = new RestResponse();
 		return response;
 	}
 }

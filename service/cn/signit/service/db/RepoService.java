@@ -46,8 +46,9 @@ public interface RepoService {
 	 * @param repo 仓库名
 	 * @param filename 文件名
 	 * @return true - 成功，false - 失败
+	 * @throws IOException 
 	 */
-	boolean addFile(String parent, String repo, String filename);
+	boolean addFile(String parent, String repo, String filename) throws IOException;
 	
 	/**
 	 * 重命名仓库
@@ -71,4 +72,22 @@ public interface RepoService {
 	 * @return 文件信息列表
 	 */
 	List<FileInfo> getDirectory(String repoName, String path) throws IOException;
+	
+	/**
+	 * 创建目录
+	 * @param repoName 仓库名
+	 * @param path 在指定仓库下的目录全路径
+	 * @return true - 成功, false - 失败
+	 */
+	boolean createDirectory(String repoName, String path);
+	
+	/**
+	 * 重命名目录
+	 * @param repoName 仓库名
+	 * @param oldPath 待重命名的目录
+	 * @param newPath 重命名后的目录
+	 * @return
+	 * @throws IOException 
+	 */
+	boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
 }

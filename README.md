@@ -26,13 +26,24 @@ WEB 接口说明
 	"desc": "操作成功",
 	"data": 
 		[
-			"id": 4,
-			"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
-			"repoName": "我的资料库",
-			"userEmail": "japinli@qq.com",
-			"createTime": 1480599651000,
-			"modifyTime": 1480599650000,
-			"state": false
+			{
+				"id": 4,
+				"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "我的资料库",
+				"userEmail": "japinli@qq.com",
+				"createTime": 1480599651000,
+				"modifyTime": 1480599650000,
+				"state": false
+			},
+			{
+				"id": 5,
+				"repoId": "ef4586a3-432a-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "测试库",
+				"userEmail": "japinli@qq.com",
+				"createTime": 1480599651000,
+				"modifyTime": 1480599650000,
+				"state": false
+			}
 		]
 }
 ```
@@ -129,10 +140,18 @@ WEB 接口说明
 	"desc": "操作成功",
 	"data":
 		[
-			"type": "dir",
-			"filename": "文档",
-			"size": 10240,
-			"mtime": 1480599650000
+			{
+				"type": "dir",
+				"filename": "文档",
+				"size": 10240,
+				"mtime": 1480599650000
+			},
+			{
+				"type": "file",
+				"filename": "README.md",
+				"size": 456,
+				"mtime": 1480599650000
+			}
 		]
 }
 ```
@@ -141,3 +160,61 @@ WEB 接口说明
 
 1. `type` 字段类型分为: `dir` 和 `file` 两类。
 2. `size` 字段的单位为 *byte* 。
+
+### 新建目录
+
+#### 请求
+
+`POST http://woyun.cn/wesign/repos/{repoid}/dir`
+
+#### 参数
+
+```
+{
+	"path": "我的文档",
+	"name": "文档"	
+}
+```
+
+**说明:**
+
+上述请求说明在 *我的文档* 目录下新建 *文档* 目录。
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
+### 目录重命名
+
+#### 请求
+
+`PUT http://woyun.cn/wesign/repos/{repoid}/dir`
+
+#### 参数
+
+```
+{
+	"path": "我的文档",
+	"name": "文档",
+	"newName": "Documents"
+}
+
+```
+
+**说明:**
+
+上述请求说明将 *我的文档* 目录下的 *文档* 目录重命名为 *Documents* 目录。
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```

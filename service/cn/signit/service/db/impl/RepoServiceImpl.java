@@ -3,7 +3,6 @@ package cn.signit.service.db.impl;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -124,31 +123,17 @@ public class RepoServiceImpl implements RepoService {
 		return false;
 	}
 
-	public boolean addFile(String parent, String repo, String filename) {
-
-		try {
-			Repository repository = getRepository(parent, repo);
-			try (Git git = new Git(repository)) {
-				LOG.info("Repository Directory: {}", repository.getDirectory());
-				File tmp = new File(repository.getDirectory().getParent(), filename);
-				if (!tmp.createNewFile()) {
-					throw new IOException("Cound not create file " + tmp);
-				}
-				git.add().addFilepattern(filename).call();
-				git.commit().setMessage(String.format(RepoPath.add_file_msg, filename)).call();
-			}
-		} catch (NoFilepatternException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO: handle exception
-			e.printStackTrace();
+	public boolean addFile(String parent, String repo, String filename) throws IOException {
+		Repository repository = getRepository(parent, repo);
+		/*
+		 * TODO: 文件实际存储
+		 */
+		File file = new File(repository.getWorkTree().getPath(), filename);
+		if (!file.createNewFile()) {
+			throw new IOException("创建文件(" + file.getPath() + ")失败");
 		}
-
-		return false;
+		
+		return gitCommit(repository, filename, String.format(RepoPath.add_file_msg, filename));
 	}
 	
 	public boolean renameRepository(String repoId, String repoName) {
@@ -209,6 +194,36 @@ public class RepoServiceImpl implements RepoService {
 			}
 		}
 		return infos;
+	}
+	
+	public boolean createDirectory(String repoName, String path) {
+		/*
+		 * 在仓库下创建一个空目录，由于 git 不会追踪空目录，因此可以不用进行 git commit 操作
+		 */
+		String dirPath = RepoPath.getRepositoryPath(repoName, path);
+		File file = new File(dirPath);
+		if (!file.exists() && !file.isDirectory()) {
+			return file.mkdir();
+		}
+		return false;
+	}
+	
+	public boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException {
+		String oldFullPath = RepoPath.getRepositoryPath(repoName, oldPath);
+		String newFullPath = RepoPath.getRepositoryPath(repoName, newPath);
+		
+		File file = new File(oldFullPath);
+		if (file.exists()) {
+			boolean flag = file.renameTo(new File(newFullPath));
+			if (flag == false) {
+				return false;
+			}
+			
+			Repository repository = getRepository(repoName);
+			return gitCommit(repository, ".", "rename");
+		}
+		
+		return false;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////
@@ -336,4 +351,28 @@ public class RepoServiceImpl implements RepoService {
 		return treeWalk;
 	}
 	
+	/**
+	 * 提交修改记录
+	 * @param repository 仓库对象
+	 * @param filePattern 提交时的文件模式
+	 * @param message 提交信息
+	 * @return true - 成功, false - 失败
+	 */
+	private static boolean gitCommit(Repository repository, String filePattern, String message) {
+		try {
+			Git git = new Git(repository);
+			git.add().addFilepattern(filePattern).call();
+			git.commit().setMessage(message).call();
+			git.close();
+			return true;
+		} catch (NoFilepatternException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }
