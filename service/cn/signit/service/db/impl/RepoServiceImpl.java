@@ -228,7 +228,31 @@ public class RepoServiceImpl implements RepoService {
 		return false;
 	}
 	
-	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) {
+	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException {
+		/* 
+		 * 同一仓库同一目录下不支持移动
+		 */
+		if (srcRepo.equals(dstRepo) && srcPath.equals(dstPath)) {
+			LOG.warn("不支持在同仓库同目录下的移动操作");
+			return false;
+		}
+		
+		srcPath = RepoPath.getRepositoryPath(srcRepo, srcPath);
+		dstPath = RepoPath.getRepositoryPath(dstRepo, dstPath);
+		int flag = moveFileTo(srcPath, dstPath, name);
+		
+		if (Convert.toBoolean(flag & 0x01)) {
+			// 拷贝到目的目录成功，提交变更
+			Repository repository = getRepository(dstRepo);
+			gitCommit(repository, ".", String.format(RepoPath.add_file_msg, name));
+			if (Convert.toBoolean(flag & 0x10)) {
+				// 删除源目录信息成功，提交变更
+				repository = getRepository(srcRepo);
+				gitCommit(repository, ".", String.format(RepoPath.del_file_msg, name));
+			}
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -392,6 +416,7 @@ public class RepoServiceImpl implements RepoService {
 			git.add().addFilepattern(filePattern).call();
 			git.commit().setMessage(message).call();
 			git.close();
+			LOG.info("提交成功: {}", message);
 			return true;
 		} catch (NoFilepatternException e) {
 			// TODO Auto-generated catch block
@@ -400,7 +425,7 @@ public class RepoServiceImpl implements RepoService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		LOG.warn("提交失败: {}", message);
 		return false;
 	}
 	
@@ -416,7 +441,7 @@ public class RepoServiceImpl implements RepoService {
 		File source = new File(src, name);
 		if (!source.exists()) {
 			LOG.warn("{}/{} 不存在", src, name);
-			return false;
+			throw new FileNotFoundException(src + "/" + name + "不存在");
 		}
 
 		if (source.isFile()) {
@@ -434,7 +459,7 @@ public class RepoServiceImpl implements RepoService {
 		} else {
 			File folder = new File(dst, name);
 			if (!folder.mkdir()) {
-				LOG.warn("创建文件夹({})失败", folder.getPath());;
+				LOG.warn("创建文件夹({})失败", folder.getPath());
 				return false;
 			}
 
@@ -445,5 +470,45 @@ public class RepoServiceImpl implements RepoService {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * 移动文件或文件夹
+	 * @param src 源目录路径
+	 * @param dst 目的目录路径
+	 * @param name 待移动的文件或文件夹
+	 * @return 0x01 - 文件拷贝成功, 0x11 - 文件(夹)移动成功, 0x00 - 失败 
+	 * @throws IOException
+	 */
+	public static int moveFileTo(String src, String dst, String name) throws IOException {
+		int ret = 0;
+		if (copyFileTo(src, dst, name)) {
+			ret |= 0x01;
+			if (deleteFile(src, name)) {
+				ret |= 0x10;
+			}
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * 删除文件获取目录
+	 * @param parent 父目录路径名
+	 * @param name 待删除的文件或目录名
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	public static boolean deleteFile(String parent, String name) throws IOException {
+		File file = new File(parent, name);
+		if (file.isFile()) {
+			return file.delete();
+		} 
+		
+		for (File f : file.listFiles()) {
+			deleteFile(file.getAbsolutePath(), f.getName());
+		}
+		
+		return file.delete();
 	}
 }

@@ -1,6 +1,5 @@
 package cn.signit.service.db;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -94,25 +93,25 @@ public interface RepoService {
 	
 	/**
 	 * 移动
-	 * @param srcRepo
-	 * @param dstRepo
-	 * @param srcPath
-	 * @param dstPath
-	 * @param name
-	 * @return
+	 * @param srcRepo 源仓库ID
+	 * @param dstRepo 目录仓库ID
+	 * @param srcPath 源仓库下的路径
+	 * @param dstPath 目地仓库下的路径
+	 * @param name 待移动的文件(夹)
+	 * @return true - 成功, false - 失败
+	 * @throws IOException 
 	 */
-	boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name);
+	boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException;
 	
 	/**
 	 * 复制
-	 * @param srcRepo
-	 * @param dstRepo
-	 * @param srcPath
-	 * @param dstPath
-	 * @param name
-	 * @return
-	 * @throws FileNotFoundException 
+	 * @param srcRepo 源仓库ID
+	 * @param dstRepo 目录仓库ID
+	 * @param srcPath 源仓库下的路径
+	 * @param dstPath 目地仓库下的路径
+	 * @param name 待复制的文件(夹)
+	 * @return true - 成功, false - 失败 
 	 * @throws IOException 
 	 */
-	boolean copy(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws FileNotFoundException, IOException;
+	boolean copy(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException;
 }

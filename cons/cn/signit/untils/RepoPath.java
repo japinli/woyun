@@ -45,6 +45,7 @@ public class RepoPath {
 	public static final String create_repo_msg = "新建 \"%s\" 资料库";
 	public static final String exists_repo_msg = "资料库 \"%s\" 已存在";
 	public static final String add_file_msg = "添加 \"%s\" ";
+	public static final String del_file_msg = "删除 \"%s\" ";
 	
 	/**
 	 * 路径拼接

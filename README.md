@@ -230,10 +230,10 @@ WEB 接口说明
 ```
 {
 	"operation": "copy",
-	"srcRepoName": "我的资料库",
+	"srcRepoId": "我的资料库",
 	"srcPath": "文档",
 	"name": "README.md",
-	"dstRepoName": "测试库",
+	"dstRepoId": "测试库",
 	"srcPath": "/"
 }
 ```
@@ -242,6 +242,38 @@ WEB 接口说明
 
 上述请求说明将 *我的资料库* 中 *文档* 目录下的 *README.md* 文件复制到 *测试库* 的根目录下。
 
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
+### 移动文件(夹)
+
+#### 请求
+
+`POST http://woyun.cn/wesign/repos/operation`
+
+#### 参数
+
+```
+{
+	"operation": "move",
+	"srcRepoId": "我的资料库",
+	"srcPath": "文档",
+	"name": "README.md",
+	"dstRepoId": "测试库",
+	"srcPath": "/"
+}
+```
+
+**说明:**
+
+上述请求说明将 *我的资料库* 中 *文档* 目录下的 *README.md* 文件移动到 *测试库* 的根目录下。
 
 #### 响应
 
