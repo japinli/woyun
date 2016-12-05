@@ -139,5 +139,5 @@ WEB 接口说明
 
 **备注:** 
 
-1. `type` 字段类型分为: `dir` 和 `filename` 两类。
+1. `type` 字段类型分为: `dir` 和 `file` 两类。
 2. `size` 字段的单位为 *byte* 。
