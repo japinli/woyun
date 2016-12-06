@@ -3,6 +3,8 @@ package cn.signit.service.db;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
@@ -124,4 +126,14 @@ public interface RepoService {
 	 * @throws IOException
 	 */
 	boolean delete(String repoName, List<DirOperation> dels) throws IOException;
+	
+	/**
+	 * 上传文件
+	 * @param repoName 仓库名
+	 * @param path 
+	 * @param files
+	 * @return
+	 * @throws IOException 
+	 */
+	boolean uploadFiles(String repoName, String path, MultipartFile[] files) throws IOException;
 }

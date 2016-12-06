@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.api.RestResponse;
@@ -119,6 +121,16 @@ public class RepoDirController {
 	public RestResponse deleteFileOrDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestBody List<DirOperation> dels) throws IOException {
 		boolean flag = repoService.delete(RepoPath.contact(user.getEmail(), repoId), dels);
+		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_UPLOAD_FILE, method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse uploadFiles(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
+			@RequestPart(name="file") MultipartFile[] files, String path) throws IOException {
+		
+		String repoName = RepoPath.contact(user.getEmail(), repoId);
+		boolean flag = repoService.uploadFiles(repoName, path, files);
 		return new RestResponse(flag);
 	}
 }

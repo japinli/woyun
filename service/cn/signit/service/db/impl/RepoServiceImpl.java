@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
@@ -30,6 +31,7 @@ import org.eclipse.jgit.util.FS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
@@ -288,6 +290,20 @@ public class RepoServiceImpl implements RepoService {
 		}
 		Repository repository = getRepository(repoName);
 		return gitCommit(repository, ".", String.format(RepoPath.del_file_msg, deleted));
+	}
+	
+	public boolean uploadFiles(String repoName, String path, MultipartFile[] files) throws IOException {
+		
+		String fullRepoName = RepoPath.getRepositoryPath(repoName);
+		String commitMessage = " ";
+		for (MultipartFile file : files) {
+			String filename = file.getOriginalFilename();
+			commitMessage += filename + "; ";
+			filename = RepoPath.contact(path, filename);
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(fullRepoName, filename));
+		}
+		Repository repository = getRepository(repoName);
+		return gitCommit(repository, ".", String.format(RepoPath.add_file_msg, commitMessage));
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////

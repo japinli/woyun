@@ -1,11 +1,16 @@
 package cn.signit.controller.api;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.signit.entry.DirOperation;
 import cn.signit.service.db.RepoService;
@@ -89,6 +96,27 @@ public class RepoTestController {
 	public RestResponse testArray(@RequestBody List<DirOperation> dirs) {
 		for (DirOperation d : dirs) {
 			LOG.info("{}", d.getPath());
+		}
+		return new RestResponse(false);
+	}
+	/**
+	 * 上传文件测试
+	 * @param files 文件对象
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value="/test/upload", method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse testUpload(@RequestPart(name="file") MultipartFile[] files, String path) throws IOException {
+
+		LOG.info("上传路径: {}", path);
+		
+		for (MultipartFile file : files) {
+			String filename = file.getOriginalFilename();
+			long filesize = file.getSize();
+			LOG.info("文件名: {}, 大小: {}", filename, filesize);
+			
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File("/home/japin/woyun-repo", filename));
 		}
 		return new RestResponse(false);
 	}

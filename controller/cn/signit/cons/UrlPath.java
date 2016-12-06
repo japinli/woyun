@@ -125,6 +125,7 @@ public class UrlPath {
 	public final static String REPO_DIR_RENAME = USER_ROOT + "/repos/{repo-id}/dir";
 	public final static String REPO_DIR_OR_FILE_OPERATION = USER_ROOT + "/repos/operation";
 	public final static String REPO_DEL_FILE_OR_DIR = USER_ROOT + "/repos/{repo-id}";
+	public final static String REPO_UPLOAD_FILE = USER_ROOT + "/repos/{repo-id}/file";
 
 	/**
 	 * 解析含有占位符的指定URL路径
