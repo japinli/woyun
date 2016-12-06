@@ -1,9 +1,14 @@
 package cn.signit.controller.repo;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,10 +132,37 @@ public class RepoDirController {
 	@RequestMapping(value=UrlPath.REPO_UPLOAD_FILE, method=RequestMethod.POST)
 	@ResponseBody
 	public RestResponse uploadFiles(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
-			@RequestPart(name="file") MultipartFile[] files, String path) throws IOException {
+			@RequestPart(name="file") MultipartFile[] files, String path, HttpServletResponse response) throws IOException {
 		
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		boolean flag = repoService.uploadFiles(repoName, path, files);
 		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_DOWNLOAD_FILE, method=RequestMethod.GET)
+	public void downloadFiles(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
+			@RequestParam String dir, @RequestParam List<String> name, HttpServletResponse response) throws IOException {
+		
+		String repoName = RepoPath.contact(user.getEmail(), repoId);
+		response.setContentType("multipart/form-data");
+		if (name.size() == 1) {
+			/* 直接下载 */
+			String filename = name.get(0);
+			File file = new File(RepoPath.getRepositoryPath(repoName, dir), filename);
+			response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+			InputStream inputStream = new FileInputStream(file);
+			OutputStream outputStream = response.getOutputStream();
+			int b = 0;
+			byte[] buffer = new byte[1024 * 1024];
+			while (b != -1) {
+				b = inputStream.read(buffer);
+				outputStream.write(buffer, 0, b);
+			}
+			inputStream.close();
+			outputStream.flush();
+			outputStream.close();
+		} else {
+			/* 打包下载 */
+		}
 	}
 }

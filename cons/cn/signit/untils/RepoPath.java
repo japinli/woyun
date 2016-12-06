@@ -13,6 +13,9 @@ public class RepoPath {
 	/** 路径分隔符 */
 	public static final String sep = System.getProperty("file.separator");
 	
+	/** 临时文件夹 */
+	public static final String tmp = System.getProperty("java.io.tmpdir");
+	
 	/** 仓库目录 */
 	public static final String repo = Paths.get(dir, "woyun-repo").toString();
 	

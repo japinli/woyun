@@ -1,6 +1,8 @@
 package cn.signit.controller.api;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -119,5 +122,33 @@ public class RepoTestController {
 			FileUtils.copyInputStreamToFile(file.getInputStream(), new File("/home/japin/woyun-repo", filename));
 		}
 		return new RestResponse(false);
+	}
+	
+	@RequestMapping(value="/test/download", method=RequestMethod.GET)
+	@ResponseBody
+	public void testDownload(HttpServletResponse response, @RequestParam String dir, @RequestParam List<String> dirents) throws IOException {
+		
+		response.setContentType("multipart/form-data");
+		
+		if (dirents.size() == 1) {
+			/* 单个文件下载 */
+			String filename = dirents.get(0);
+			File file = new File(dir, filename);
+			response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+			InputStream inputStream = new FileInputStream(file);
+			OutputStream outputStream = response.getOutputStream();
+			int b = 0;
+			byte[] buffer = new byte[1024 * 1024];
+			while (b != -1) {
+				b = inputStream.read(buffer);
+				outputStream.write(buffer, 0, b);
+			}
+			inputStream.close();
+			outputStream.flush();
+			outputStream.close();
+		} else {
+			/* 多个文件打包下载 */
+			LOG.info(RepoPath.tmp);
+		}
 	}
 }
