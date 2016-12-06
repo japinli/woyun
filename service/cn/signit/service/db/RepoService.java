@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 
@@ -114,4 +115,13 @@ public interface RepoService {
 	 * @throws IOException 
 	 */
 	boolean copy(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException;
+	
+	/**
+	 * 删除文件(夹)
+	 * @param repoName 仓库名
+	 * @param pathname 待删除的文件(夹)在仓库下的路径名
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	boolean delete(String repoName, List<DirOperation> dels) throws IOException;
 }

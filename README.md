@@ -283,3 +283,31 @@ WEB 接口说明
 	"desc": "操作成功"
 }
 ```
+
+### 删除文件(夹)
+
+#### 请求
+
+`DELETE http://woyun.cn/wesign/repos/{repo-id}`
+
+#### 参数
+
+```
+[
+	{
+		"path": "我的文档/README.md"
+	},
+	{
+		"path": "我的文档/INSTALL.md"
+	}
+]
+```
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```

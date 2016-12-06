@@ -1,6 +1,7 @@
 package cn.signit.controller.api;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -76,5 +77,19 @@ public class RepoTestController {
 		LOG.info(dir.getPath() + " " + dir.getName());
 		RestResponse response = new RestResponse();
 		return response;
+	}
+	
+	/**
+	 * 测试数组上传
+	 * @param dirs
+	 * @return
+	 */
+	@RequestMapping(value="/test/array", method=RequestMethod.POST)
+	@ResponseBody
+	public RestResponse testArray(@RequestBody List<DirOperation> dirs) {
+		for (DirOperation d : dirs) {
+			LOG.info("{}", d.getPath());
+		}
+		return new RestResponse(false);
 	}
 }

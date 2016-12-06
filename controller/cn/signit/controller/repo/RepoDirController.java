@@ -113,4 +113,12 @@ public class RepoDirController {
 		
 		return response;
 	}
+	
+	@RequestMapping(value=UrlPath.REPO_DEL_FILE_OR_DIR, method=RequestMethod.DELETE)
+	@ResponseBody
+	public RestResponse deleteFileOrDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
+			@PathVariable("repo-id") String repoId, @RequestBody List<DirOperation> dels) throws IOException {
+		boolean flag = repoService.delete(RepoPath.contact(user.getEmail(), repoId), dels);
+		return new RestResponse(flag);
+	}
 }

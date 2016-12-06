@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
@@ -276,6 +277,17 @@ public class RepoServiceImpl implements RepoService {
 		
 		Repository repository = getRepository(dstRepo);
 		return gitCommit(repository, ".", String.format(RepoPath.add_file_msg, name));
+	}
+	
+	public boolean delete(String repoName, List<DirOperation> dels) throws IOException {
+		String repoPath = RepoPath.getRepositoryPath(repoName);
+		String deleted = " ";
+		for (DirOperation dirOperation : dels) {
+			deleted += dirOperation.getPath() + ";";
+			deleteFile(repoPath, dirOperation.getPath());
+		}
+		Repository repository = getRepository(repoName);
+		return gitCommit(repository, ".", String.format(RepoPath.del_file_msg, deleted));
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////
