@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
+import cn.signit.untils.RepoPath;
 import cn.signit.untils.message.SessionKeys;
 
 @Controller
@@ -71,6 +73,18 @@ public class RepoController {
 		LOG.info("用户({})请求删除({})仓库", user.getEmail(), repo.getRepoName());
 		boolean flag = repoService.deleteRepository(repo.getRepoId());
 		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_GET_HISTORY, method=RequestMethod.GET)
+	@ResponseBody
+	public RestResponse getRepositoryHistory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
+			@PathVariable("repo-id") String repoId) throws IOException {
+		
+		LOG.info("用户({})请求获取仓库({})历史变更记录", user.getEmail(), repoId);
+		String repoName = RepoPath.contact(user.getEmail(), repoId);
+		RestResponse response = new RestResponse(true);
+		response.setData(repoService.getRepositoryHistory(repoName));
+		return response;
 	}
 	
 }

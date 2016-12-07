@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -36,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.CommitHistory;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
@@ -229,6 +232,11 @@ public class RepoServiceImpl implements RepoService {
 		}
 		
 		return false;
+	}
+	
+	public List<CommitHistory> getRepositoryHistory(String repoName) throws IOException {
+		Repository repository = getRepository(repoName);
+		return getCommitInfo(repository);
 	}
 	
 	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException {
@@ -538,5 +546,34 @@ public class RepoServiceImpl implements RepoService {
 		}
 		
 		return file.delete();
+	}
+	
+	/**
+	 * 获取仓库的提交记录
+	 * @param repository 仓库对象
+	 * @return 提交记录列表
+	 * @throws IOException
+	 */
+	public static List<CommitHistory> getCommitInfo(Repository repository) throws IOException {
+		List<CommitHistory> histories = new ArrayList<CommitHistory>();
+		
+		Collection<Ref> allRefs = repository.getAllRefs().values();
+		try (RevWalk walk = new RevWalk(repository)) {
+			for (Ref ref : allRefs) {
+				walk.markStart(walk.parseCommit(ref.getObjectId()));
+			}
+			
+			for (RevCommit commit : walk) {
+				CommitHistory history = new CommitHistory();
+				history.setCommitId(commit.name());
+				history.setCommitter(commit.getCommitterIdent().getName());
+				history.setEmail(commit.getCommitterIdent().getEmailAddress());
+				history.setCommitTime(commit.getCommitTime());
+				history.setMessage(commit.getFullMessage());
+				histories.add(history);
+			}
+		}
+		
+		return histories;
 	}
 }

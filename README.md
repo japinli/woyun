@@ -121,6 +121,38 @@ WEB 接口说明
 }
 ```
 
+### 获取仓库变更记录
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repo-id}/history`
+
+### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data":
+		[
+			{
+				"commitId": "f825b327d3020a1e06cef5f737f899373ddd3039",
+				"committer": "japinli",
+				"email": "japinli@qq.com",
+				"commitTime": 1481080888,
+				"message": "获取仓库记录测试"
+			},
+			{
+				"commitId": "79c5d4e2bfd2db1227e9d3d31271ae4c9bac9a77",
+				"committer": "japinli",
+				"email": "japinli@qq.com",
+				"commitTime": 1480980123,
+				"message": "新建仓库"
+			}
+		]
+}
+```
+
 ### 获取目录信息
 
 #### 请求

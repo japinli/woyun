@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import org.eclipse.jgit.lib.ObjectDatabase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -59,7 +61,7 @@ public class JgitTest {
 			// JgitTest.addFile(repository, "dir/README.md");
 			// JgitTest.parseRepository(repository);
 			// JgitTest.treeIterator(repository);
-			
+			/*
 			final ObjectId head = repository.resolve("HEAD");
 			List<String> items = readElementsAt(repository, head.getName(), "src");
 			showItems(items);
@@ -67,10 +69,30 @@ public class JgitTest {
 			System.out.println("---------------------------------");
 			items = readDirectory(repository.getWorkTree().getPath() + "/src");
 			showItems(items);
+			*/
+			getCommitMessage(repository);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+	}
+	
+	public static void getCommitMessage(Repository repository) throws IOException {
+		Collection<Ref> allRefs = repository.getAllRefs().values();
+		
+		try (RevWalk walk = new RevWalk(repository)) {
+
+			for (Ref ref : allRefs) {
+				walk.markStart(walk.parseCommit(ref.getObjectId()));
+			}
+			
+			for (RevCommit commit : walk) {
+				
+				System.out.println("\ncommit " + commit.name());
+				System.out.println("Author: " + commit.getCommitterIdent().getName());
+				System.out.println("Message: " + commit.getFullMessage());
+			}
+		}
 	}
 	
 	public static void showItems(List<String> items) {

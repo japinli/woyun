@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.CommitHistory;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
@@ -93,6 +94,14 @@ public interface RepoService {
 	 * @throws IOException 
 	 */
 	boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
+	
+	/**
+	 * 获取仓库历史变更记录
+	 * @param repoName 仓库名
+	 * @return 历史变更记录列表
+	 * @throws IOException
+	 */
+	List<CommitHistory> getRepositoryHistory(String repoName) throws IOException;
 	
 	/**
 	 * 移动
