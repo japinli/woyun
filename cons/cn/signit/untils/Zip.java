@@ -5,10 +5,38 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
+	
+	private ZipOutputStream zipOutputStream;
+	private String zipFile;
+	private String zipName;
+	
+	public String getZipFile() {
+		return zipFile;
+	}
+	public Zip(String zipFile) {
+		this.zipName = zipFile + ".zip";
+		this.zipFile = RepoPath.getTemp(this.zipName);
+	}
+	
+	public void init() throws IOException {
+		zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile));
+	}
+	
+	public void update(String filename, byte[] data) throws IOException {
+		zipOutputStream.putNextEntry(new ZipEntry(filename));
+		zipOutputStream.write(data);
+		zipOutputStream.closeEntry();
+	}
+	
+	public String zip() throws IOException {
+		zipOutputStream.close();
+		return zipName;
+	}
 	
 	/**
 	 * 压缩给定的文件到 *zipFileName* 中
@@ -19,9 +47,11 @@ public class Zip {
 	 *            待压缩文件名
 	 * @return true - 成功, false - 失败
 	 */
-	public static boolean zip(String zipFileName, String... filenames) {
+	public static String zip(String zipFileName, String... filenames) {
 		try {
-			ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFileName + ".zip"));
+			zipFileName += ".zip";
+			String tmpFileName = RepoPath.getTemp(zipFileName);
+			ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(tmpFileName));
 
 			for (String name : filenames) {
 				File file = new File(name);
@@ -31,13 +61,36 @@ public class Zip {
 			}
 
 			outputStream.close();
-			return true;
+			return zipFileName;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return false;
+		return null;
+	}
+	
+	public static String zip(String zipFileName, List<String> filenames) {
+		try {
+			zipFileName += ".zip";
+			String tmpFileName = RepoPath.getTemp(zipFileName);
+			ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(tmpFileName));
+			
+			for (String name : filenames) {
+				File file = new File(name);
+				if (file != null) {
+					zip(outputStream, file, file.getName());
+				}
+			}
+
+			outputStream.close();
+			return zipFileName;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**

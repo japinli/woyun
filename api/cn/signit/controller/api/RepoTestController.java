@@ -3,10 +3,11 @@ package cn.signit.controller.api;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +44,9 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.signit.entry.DirOperation;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.RepoPath;
+import cn.signit.untils.Zip;
+import cn.signit.untils.http.HttpUtil;
+import cn.signit.utils.repo.RepoUtils;
 
 @Controller
 public class RepoTestController {
@@ -149,6 +163,111 @@ public class RepoTestController {
 		} else {
 			/* 多个文件打包下载 */
 			LOG.info(RepoPath.tmp);
+		}
+	}
+	
+	@Resource
+	private RepoService RepoService;
+	
+	@RequestMapping(value="/test/view/history", method=RequestMethod.GET)
+	public void viewHistory(@RequestParam String commit, @RequestParam String path) throws IOException {
+		Repository repository = openRepository("/home/japin/woyun-repo/testgit/.git");
+		RevCommit revCommit = RepoUtils.getRevCommit(repository, commit);
+		RevTree tree = revCommit.getTree();
+		
+		if (path.isEmpty()) {
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(true);
+				while (treeWalk.next()) {
+					LOG.info("{}", treeWalk.getPathString());
+				}
+			}
+		} else {
+			try (TreeWalk treeWalk = getTreeWalk(repository, tree, path)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(true);
+				while (treeWalk.next()) {
+					LOG.info("{}", treeWalk.getPathString());
+				}
+			}
+		}
+	}
+	
+	@RequestMapping(value="/test/download/history", method=RequestMethod.GET)
+	public void downloadHistory(HttpServletResponse response, @RequestParam String commit,
+			@RequestParam String path, @RequestParam List<String> names)
+			throws IOException {
+
+		Repository repository = openRepository("/home/japin/woyun-repo/testgit/.git");
+		RevCommit revCommit = RepoUtils.getRevCommit(repository, commit);
+		RevTree tree = revCommit.getTree();
+		
+		// 多文件打包下载
+		if (names.size() > 1) {
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(true);
+				treeWalk.setFilter(PathFilterGroup.createFromStrings(names));
+				
+				Zip zip = new Zip(path);
+				zip.init();
+				while (treeWalk.next()) {
+					ObjectId objectId = treeWalk.getObjectId(0);
+					ObjectLoader loader = repository.open(objectId);
+					zip.update(treeWalk.getPathString(), loader.getBytes());
+				}
+				
+				HttpUtil.sendFile(response, zip.zip(), zip.getZipFile());
+			}
+			return;  // 退出函数
+		} 
+		
+		try (TreeWalk treeWalk = RepoUtils.getTreeWalk(repository, tree, names.get(0))) {
+			if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
+				// 非目录直接下载
+				ObjectId objectId = treeWalk.getObjectId(0);
+				ObjectLoader loader = repository.open(objectId);
+				loader.copyTo(response.getOutputStream());
+				HttpUtil.sendFile(response, treeWalk.getNameString());
+				return; // 退出函数
+			}
+			
+			// 目录打包下载
+			try (TreeWalk dirWalk = new TreeWalk(repository)) {
+				dirWalk.addTree(treeWalk.getObjectId(0));
+				dirWalk.setRecursive(true);
+				
+				Zip zip = new Zip(treeWalk.getNameString());
+				zip.init();
+				while (dirWalk.next()) {
+					ObjectId objectId = dirWalk.getObjectId(0);
+					ObjectLoader loader = repository.open(objectId);
+					zip.update(dirWalk.getPathString(), loader.getBytes());
+				}
+				
+				HttpUtil.sendFile(response, zip.zip(), zip.getZipFile());
+			}
+		}
+	}
+	
+	public static TreeWalk getTreeWalk(Repository repository, RevTree tree, final String path) throws IOException {
+		TreeWalk treeWalk = TreeWalk.forPath(repository, path, tree);
+		if (treeWalk == null) {
+			throw new FileNotFoundException("未找到指定的文件( " + path + ")");
+		}
+		return treeWalk;
+	}
+	
+	public static Repository openRepository(String dir) throws IOException {
+
+		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+		return builder.setGitDir(new File(dir)).readEnvironment().build();
+	}
+	
+	public static RevCommit getRevCommit(Repository repository, String commit) throws IOException {
+		try (RevWalk revWalk = new RevWalk(repository)) {
+			return revWalk.parseCommit(ObjectId.fromString(commit));
 		}
 	}
 }

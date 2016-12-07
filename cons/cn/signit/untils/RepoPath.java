@@ -68,4 +68,13 @@ public class RepoPath {
 	public static String getRepositoryPath(String ... more) {
 		return Paths.get(repo, more).toString();
 	}
+	
+	/**
+	 * 构建临时文件目录
+	 * @param more 多级目录
+	 * @return 完整路径
+	 */
+	public static String getTemp(String ... more) {
+		return Paths.get(tmp, more).toString();
+	}
 }

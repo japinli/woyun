@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.source.tree.Tree;
-
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;

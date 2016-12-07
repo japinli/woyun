@@ -5,7 +5,13 @@
 */
 package cn.signit.untils.http;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *Http工具
@@ -78,5 +84,34 @@ public class HttpUtil {
 	*/
 	public static String getRequestPath(HttpServletRequest request,String path,String queryString){
 		return getRequestBasePath(request)+path+"?"+queryString;
+	}
+	
+	/**
+	 * 发送文件到 WEB 客户端
+	 * @param response
+	 * @param filename 文件名
+	 * @param fullpath 绝对路径
+	 * @throws IOException
+	 */
+	public static void sendFile(HttpServletResponse response, String filename, String fullpath) throws IOException {
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+		InputStream inputStream = new FileInputStream(fullpath);
+		OutputStream outputStream = response.getOutputStream();
+		int b = 0;
+		byte[] buffer = new byte[1024 * 1024];
+		while (b != -1) {
+			b = inputStream.read(buffer);
+			outputStream.write(buffer, 0, b);
+		}
+
+		inputStream.close();
+		outputStream.flush();
+		outputStream.close();
+	}
+	
+	public static void sendFile(HttpServletResponse response, String filename) {
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;filename=" + filename);
 	}
 }

@@ -343,3 +343,27 @@ WEB 接口说明
 	"desc": "操作成功"
 }
 ```
+
+### 文件上传
+
+#### 请求
+
+`POST http://woyun.cn/wesign/repos/{repo-id}/file`
+
+**备注:**
+
+该接口需要依赖前端通过表单提交。
+
+#### 参数
+
+### 文件下载
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repo-id}/file?dir=directory&name=filename1&name=filename2`
+
+#### 参数
+
+ - dir - 指明下载文件的目录
+ - name - 下载的文件名或目录名，该字段可以有多个值
+
