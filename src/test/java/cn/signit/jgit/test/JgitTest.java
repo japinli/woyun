@@ -71,10 +71,18 @@ public class JgitTest {
 			showItems(items);
 			*/
 			getCommitMessage(repository);
+			getCommit(repository, "12015f6095f1df553764be6c56c766ce3ac05a9c");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+	}
+	
+	public static void getCommit(Repository repository, String commit) throws IOException {
+		List<String> files = readElementsAt(repository, commit, "");
+		for (String name : files) {
+			System.out.println(name);
+		}
 	}
 	
 	public static void getCommitMessage(Repository repository) throws IOException {

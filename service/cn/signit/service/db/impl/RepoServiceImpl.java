@@ -21,6 +21,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -34,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.sun.source.tree.Tree;
 
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
@@ -237,6 +240,11 @@ public class RepoServiceImpl implements RepoService {
 	public List<CommitHistory> getRepositoryHistory(String repoName) throws IOException {
 		Repository repository = getRepository(repoName);
 		return getCommitInfo(repository);
+	}
+	
+	public List<FileInfo>  getHistoryByCommit(String repoName, String commit, String path) throws IOException {
+		Repository repository = getRepository(repoName);
+		return readRepositoryElementAt(repository, commit, path);
 	}
 	
 	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException {
@@ -575,5 +583,68 @@ public class RepoServiceImpl implements RepoService {
 		}
 		
 		return histories;
+	}
+	
+	/**
+	 * 读取仓库中的历史记录文件信息
+	 * @param repository 仓库对象
+	 * @param commit 提交记录的 SHA-1 值
+	 * @param path 路径
+	 * @return 文件信息列表
+	 * @throws IOException
+	 */
+	private static List<FileInfo> readRepositoryElementAt(Repository repository, String commit, String path) throws IOException {
+		RevCommit revCommit = getRevCommit(repository, commit);
+		RevTree tree = revCommit.getTree();
+		List<FileInfo> infos = null;
+		
+		if (path.isEmpty()) {
+			try (TreeWalk treeWalk = new TreeWalk(repository)) {
+				treeWalk.addTree(tree);
+				treeWalk.setRecursive(false);
+				infos = getFilesFromTreeWalk(repository, treeWalk);
+			}
+		} else {
+			try (TreeWalk treeWalk = getTreeWalk(repository, tree, path)) {
+				if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
+					throw new IllegalStateException("不是目录项目");
+				}
+				
+				try (TreeWalk dirWalk = new TreeWalk(repository)) {
+					dirWalk.addTree(treeWalk.getObjectId(0));
+					dirWalk.setRecursive(false);
+					infos = getFilesFromTreeWalk(repository, dirWalk);
+				}
+			}
+		}
+		return infos;
+	}
+	
+	/**
+	 * 读取文件信息
+	 * @param repository 仓库对象
+	 * @param tree 遍历树对象
+	 * @return 文件信息列表
+	 * @throws IOException
+	 */
+	private static List<FileInfo> getFilesFromTreeWalk(Repository repository, TreeWalk tree) throws IOException {
+		List<FileInfo> infos = new ArrayList<FileInfo>();
+		
+		while (tree.next()) {
+			boolean isDir = tree.isSubtree();
+			String type = isDir ? "dir" : "file";
+			String filename = tree.getNameString();
+			Long size = null;
+			if (!isDir) {
+				ObjectId objectId = tree.getObjectId(0);
+				ObjectLoader loader = repository.open(objectId);
+				size = loader.getSize();
+			}
+			
+			FileInfo fileInfo = new FileInfo(type, filename, size, null);
+			infos.add(fileInfo);
+		}
+		
+		return infos;
 	}
 }

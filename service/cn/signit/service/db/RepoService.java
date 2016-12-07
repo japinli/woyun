@@ -104,6 +104,16 @@ public interface RepoService {
 	List<CommitHistory> getRepositoryHistory(String repoName) throws IOException;
 	
 	/**
+	 * 通过提交的记录获取目录信息
+	 * @param repoName 仓库名
+	 * @param commit 提交的记录 SHA-1 值
+	 * @param path 路径
+	 * @return 文件信息列表
+	 * @throws IOException
+	 */
+	List<FileInfo>  getHistoryByCommit(String repoName, String commit, String path) throws IOException;
+	
+	/**
 	 * 移动
 	 * @param srcRepo 源仓库ID
 	 * @param dstRepo 目录仓库ID

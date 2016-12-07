@@ -4,10 +4,10 @@ public class FileInfo {
 
 	private String type;
 	private String filename;
-	private long size;
-	private long mtime;
+	private Long size;
+	private Long mtime;
 	
-	public FileInfo(String type, String filename, long size, long mtime) {
+	public FileInfo(String type, String filename, Long size, Long mtime) {
 		this.type = type;
 		this.filename = filename;
 		this.size = size;
