@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,16 +41,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.signit.entry.DirOperation;
 import cn.signit.service.db.RepoService;
-import cn.signit.untils.RepoPath;
 import cn.signit.untils.Zip;
 import cn.signit.untils.http.HttpUtil;
+import cn.signit.utils.repo.RepoPath;
 import cn.signit.utils.repo.RepoUtils;
+import cn.signit.utils.repo.TreeFilterType;
 
 @Controller
 public class RepoTestController {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(RepoTestController.class);
 
+	@Resource
+	private TreeFilterType filterType;
+	
 	@Resource
 	private RepoService repoService;
 	
@@ -166,9 +168,6 @@ public class RepoTestController {
 		}
 	}
 	
-	@Resource
-	private RepoService RepoService;
-	
 	@RequestMapping(value="/test/view/history", method=RequestMethod.GET)
 	public void viewHistory(@RequestParam String commit, @RequestParam String path) throws IOException {
 		Repository repository = openRepository("/home/japin/woyun-repo/testgit/.git");
@@ -247,6 +246,25 @@ public class RepoTestController {
 				}
 				
 				HttpUtil.sendFile(response, zip.zip(), zip.getZipFile());
+			}
+		}
+	}
+	
+	@RequestMapping(value="/test/category", method=RequestMethod.GET)
+	@ResponseBody
+	public void getCategory(@RequestParam String category) throws IOException {
+		
+		Repository repository = openRepository("/home/japin/woyun-repo/testgit/.git");
+		RevCommit revCommit = RepoUtils.getRevCommit(repository, "");
+		RevTree tree = revCommit.getTree();
+		
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(tree);
+			treeWalk.setRecursive(true);
+			treeWalk.setFilter(filterType.getFilter(category));
+			
+			while (treeWalk.next()) {
+				LOG.info("path: {}, name: {}",treeWalk.getPathString(), treeWalk.getNameString());
 			}
 		}
 	}

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import cn.signit.utils.repo.RepoPath;
+
 public class Zip {
 	
 	private ZipOutputStream zipOutputStream;

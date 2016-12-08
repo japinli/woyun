@@ -12,8 +12,6 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 
-import cn.signit.untils.RepoPath;
-
 public class RepoUtils {
 
 	/**
@@ -67,4 +65,5 @@ public class RepoUtils {
 		}
 		return treeWalk;
 	}
+	
 }

@@ -23,8 +23,8 @@ import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
-import cn.signit.untils.RepoPath;
 import cn.signit.untils.message.SessionKeys;
+import cn.signit.utils.repo.RepoPath;
 
 @Controller
 @SessionAttributes({ SessionKeys.LOGIN_USER })
@@ -96,6 +96,14 @@ public class RepoController {
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		response.setData(repoService.getHistoryByCommit(repoName, commitId, path));
 		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_SHOW_BY_CATEGORY, method=RequestMethod.GET)
+	@ResponseBody
+	public RestResponse getByCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestParam String category) 
+			throws IOException {
+		
+		return null;
 	}
 
 }

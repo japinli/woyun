@@ -40,7 +40,7 @@ import org.eclipse.jgit.util.FS;
 
 import com.sun.source.tree.Tree;
 
-import cn.signit.untils.RepoPath;
+import cn.signit.utils.repo.RepoPath;
 
 
 

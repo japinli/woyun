@@ -162,6 +162,12 @@ replica_set_servers=10.144.155.219:27017,10.163.181.240:27017,10.161.196.228:270
 replica_set_name=signit_mongo_cluster
 []
 
+[filter]
+doc=.doc .docx .ppt .pptx .xls .xlsx .pdf .txt .md .xml
+video=.mp4 .swf .mkv .rmvb .avi .wmv .3gp .flv .mov
+image=.png .jpg .jpeg .bmp .tiff .gif .svg .eps .psd .tif .ico
+[]
+
 #########################
 
 ##Working Mode Supported:DEVELOP/TEST/PRE_RELEASE/RELEASE##

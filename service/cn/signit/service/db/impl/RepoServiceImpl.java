@@ -45,7 +45,8 @@ import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.Convert;
-import cn.signit.untils.RepoPath;
+import cn.signit.utils.repo.RepoPath;
+
 
 @Service("repoService")
 public class RepoServiceImpl implements RepoService {

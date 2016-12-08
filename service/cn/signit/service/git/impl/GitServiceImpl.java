@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import cn.signit.service.git.GitService;
-import cn.signit.untils.RepoPath;
+import cn.signit.utils.repo.RepoPath;
 
 @Service("gitService")
 public class GitServiceImpl implements GitService {

@@ -134,6 +134,9 @@ public class UrlPath {
 	
 	/** 查看历史提交文件(夹) */
 	public final static String REPO_VIEW_HISTORY = USER_ROOT + "/repos/{repo-id}/history/view";
+	
+	/** 根据类别获取文件信息 */
+	public final static String REPO_SHOW_BY_CATEGORY = USER_ROOT + "/repos/category"; 
 
 	/**
 	 * 解析含有占位符的指定URL路径

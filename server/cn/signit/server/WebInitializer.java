@@ -11,6 +11,7 @@ import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import cn.signit.server.conf.BaseConfig;
+import cn.signit.server.conf.CategoryFilterConfig;
 import cn.signit.server.conf.DataConfig;
 import cn.signit.server.conf.SecurityConfig;
 import cn.signit.server.conf.ServiceConfig;
@@ -39,9 +40,9 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 			LOG.info("======================>>  配置@Configuration标注的应用上下文，除web应用上下文");
 			return new Class[]{
 					BaseConfig.class, 
+					DataConfig.class,
 					SecurityConfig.class,
 					StandardTimesConfig.class,
-					DataConfig.class,
 					};
 	}
 	
@@ -54,7 +55,8 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		 return new Class[]{ 
 				 ServiceConfig.class,
 				 ThymeleafConfig.class,
-				 WebMvcConfig.class
+				 WebMvcConfig.class,
+				 CategoryFilterConfig.class
 				 };
 	}
 	

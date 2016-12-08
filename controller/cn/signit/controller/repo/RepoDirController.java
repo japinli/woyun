@@ -37,10 +37,10 @@ import cn.signit.domain.mysql.User;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
 import cn.signit.service.db.RepoService;
-import cn.signit.untils.RepoPath;
 import cn.signit.untils.Zip;
 import cn.signit.untils.http.HttpUtil;
 import cn.signit.untils.message.SessionKeys;
+import cn.signit.utils.repo.RepoPath;
 import cn.signit.utils.repo.RepoUtils;
 
 @Controller

@@ -157,12 +157,16 @@ WEB 接口说明
 
 #### 请求
 
-`GET http://woyun.cn/wesign/repos/{repoid}/dir?path=directory`
+`GET http://woyun.cn/wesign/repos/{repo-id}/dir?path=directory`
 
 #### 参数
 
-* repoid - 仓库ID编号
+* repo-id - 仓库ID编号
 * path - 仓库下的目录路径
+
+**备注:**
+
+若是获取仓库下的根目录，则将 *path* 置空。
 
 #### 响应
 
@@ -197,9 +201,11 @@ WEB 接口说明
 
 #### 请求
 
-`POST http://woyun.cn/wesign/repos/{repoid}/dir`
+`POST http://woyun.cn/wesign/repos/{repo-id}/dir`
 
 #### 参数
+
+ - repo-id - 仓库编号
 
 ```
 {
@@ -225,7 +231,7 @@ WEB 接口说明
 
 #### 请求
 
-`PUT http://woyun.cn/wesign/repos/{repoid}/dir`
+`PUT http://woyun.cn/wesign/repos/{repo-id}/dir`
 
 #### 参数
 
@@ -324,6 +330,8 @@ WEB 接口说明
 
 #### 参数
 
+ - repo-id - 仓库id编号
+ 
 ```
 [
 	{
@@ -356,6 +364,7 @@ WEB 接口说明
 
 #### 参数
 
+ - repo-id - 仓库id编号
  - files - 待上传的文件
  - path - 上传路径 (仓库中的路径)
  
@@ -375,7 +384,8 @@ WEB 接口说明
 `GET http://woyun.cn/wesign/repos/{repo-id}/file?path=directory&name=filename1&name=filename2`
 
 #### 参数
- 
+
+ - repo-id - 仓库id编号
  - path - 在仓库中的路径
  - name - 待下载的文件，可包含多个
  
@@ -387,6 +397,7 @@ WEB 接口说明
 
 #### 参数
 
+ - repo-id - 仓库id编号
  - commitId - 提交记录编号 (SHA-1)
  - path - 在仓库中的路径
  - name - 待下载的文件，可包含多个

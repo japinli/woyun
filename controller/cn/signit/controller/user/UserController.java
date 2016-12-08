@@ -40,11 +40,11 @@ import cn.signit.service.db.RepoService;
 import cn.signit.service.db.UserLastLoginService;
 import cn.signit.service.db.UserService;
 import cn.signit.tools.utils.MD5Utils;
-import cn.signit.untils.RepoPath;
 import cn.signit.untils.UnicodeUtil;
 import cn.signit.untils.http.HttpUtil;
 import cn.signit.untils.message.SessionKeys;
 import cn.signit.untils.message.SessionResults;
+import cn.signit.utils.repo.RepoPath;
 /**
  *平台入口，登陆
  * @ClassName: MgrUserController
