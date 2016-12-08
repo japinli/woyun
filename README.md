@@ -356,14 +356,37 @@ WEB 接口说明
 
 #### 参数
 
+ - files - 待上传的文件
+ - path - 上传路径 (仓库中的路径)
+ 
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
 ### 文件下载
 
 #### 请求
 
-`GET http://woyun.cn/wesign/repos/{repo-id}/file?dir=directory&name=filename1&name=filename2`
+`GET http://woyun.cn/wesign/repos/{repo-id}/file?path=directory&name=filename1&name=filename2`
+
+#### 参数
+ 
+ - path - 在仓库中的路径
+ - name - 待下载的文件，可包含多个
+ 
+### 历史文件下载
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repo-id}/history/file?commitId=xxxx&path=xxxxx&name=xxx&name=xxx`
 
 #### 参数
 
- - dir - 指明下载文件的目录
- - name - 下载的文件名或目录名，该字段可以有多个值
-
+ - commitId - 提交记录编号 (SHA-1)
+ - path - 在仓库中的路径
+ - name - 待下载的文件，可包含多个

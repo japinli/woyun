@@ -1,10 +1,7 @@
 package cn.signit.controller.repo;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,7 +185,7 @@ public class RepoDirController {
 	
 	@RequestMapping(value=UrlPath.REPO_DOWNLOAD_HISTORY, method=RequestMethod.GET)
 	public void downloadHistoryFiles(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
-			@RequestParam String commitId, @RequestParam String path, @RequestParam List<String> names, 
+			@RequestParam String commitId, @RequestParam String path, @RequestParam List<String> name, 
 			HttpServletResponse response)
 			throws IOException {
 		
@@ -197,11 +194,11 @@ public class RepoDirController {
 		RevTree tree = revCommit.getTree();
 		
 		// 多文件打包下载
-		if (names.size() > 1) {
+		if (name.size() > 1) {
 			try (TreeWalk treeWalk = new TreeWalk(repository)) {
 				treeWalk.addTree(tree);
 				treeWalk.setRecursive(true);
-				treeWalk.setFilter(PathFilterGroup.createFromStrings(names));
+				treeWalk.setFilter(PathFilterGroup.createFromStrings(name));
 				
 				Zip zip = new Zip(path);
 				zip.init();
@@ -216,7 +213,7 @@ public class RepoDirController {
 			return;  // 退出函数
 		} 
 		
-		try (TreeWalk treeWalk = RepoUtils.getTreeWalk(repository, tree, names.get(0))) {
+		try (TreeWalk treeWalk = RepoUtils.getTreeWalk(repository, tree, name.get(0))) {
 			if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
 				// 非目录直接下载
 				ObjectId objectId = treeWalk.getObjectId(0);
