@@ -1,6 +1,8 @@
 package cn.signit.controller.repo;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.api.RestResponse;
 import cn.signit.controller.api.RestStatus;
+import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
+import cn.signit.entry.FileInfo;
 import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.message.SessionKeys;
@@ -34,6 +38,8 @@ public class RepoController {
 
 	@Resource
 	private RepoService repoService;
+	@Resource
+	private RepoMapper repoDao;
 
 	@RequestMapping(value = UrlPath.REPO_LIST, method = RequestMethod.GET)
 	@ResponseBody
@@ -100,10 +106,62 @@ public class RepoController {
 	
 	@RequestMapping(value=UrlPath.REPO_SHOW_BY_CATEGORY, method=RequestMethod.GET)
 	@ResponseBody
-	public RestResponse getByCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestParam String category) 
+	public RestResponse getByCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable String category) 
 			throws IOException {
 		
-		return null;
+		List<Repo> repos = repoDao.selectByUserEmail(user.getEmail());
+		List<RepoCategoryInfo> categoryInfos = new ArrayList<RepoCategoryInfo>();
+		
+		for (Repo repo : repos) {
+			List<FileInfo> infos = new ArrayList<FileInfo>();
+			infos = repoService.getFileByCategory(user.getEmail(), repo.getRepoId(), category);
+			categoryInfos.add(new RepoCategoryInfo(repo.getRepoId(), repo.getRepoName(), infos));
+		}
+		RestResponse response = new RestResponse(true);
+		response.setData(categoryInfos);
+		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_SHOW_REPO_ID_CATEGORY, method=RequestMethod.GET)
+	@ResponseBody
+	public RestResponse getByRepoCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
+			@PathVariable("repo-id") String repoId, @PathVariable String category) 
+			throws IOException {
+		
+		RestResponse response = new RestResponse(true);
+		response.setData(repoService.getFileByCategory(user.getEmail(), repoId, category));
+		return response;
+	}
+	
+	public static class RepoCategoryInfo {
+		private String repoId;
+		private String repoName;
+		List<FileInfo> fileInfo;
+		
+		public RepoCategoryInfo(String repoId, String repoName, List<FileInfo> infos) {
+			this.repoId = repoId;
+			this.repoName = repoName;
+			this.fileInfo = infos;
+		}
+		
+		public String getRepoId() {
+			return repoId;
+		}
+		public void setRepoId(String repoId) {
+			this.repoId = repoId;
+		}
+		public String getRepoName() {
+			return repoName;
+		}
+		public void setRepoName(String repoName) {
+			this.repoName = repoName;
+		}
+		public List<FileInfo> getFileInfo() {
+			return fileInfo;
+		}
+		public void setFileInfo(List<FileInfo> fileInfo) {
+			this.fileInfo = fileInfo;
+		}
 	}
 
 }

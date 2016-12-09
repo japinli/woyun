@@ -114,6 +114,16 @@ public interface RepoService {
 	List<FileInfo>  getHistoryByCommit(String repoName, String commit, String path) throws IOException;
 	
 	/**
+	 * 获取仓库下特定类别的文件信息
+	 * @param user 用户对象
+	 * @param repoId 仓库ID
+	 * @param category 分类 (video, image, doc)
+	 * @return 文件信息列表
+	 * @throws IOException
+	 */
+	public List<FileInfo> getFileByCategory(String user, String repoId, String category) throws IOException;
+	
+	/**
 	 * 移动
 	 * @param srcRepo 源仓库ID
 	 * @param dstRepo 目录仓库ID

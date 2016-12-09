@@ -30,6 +30,7 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.FS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,8 @@ import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.Convert;
 import cn.signit.utils.repo.RepoPath;
+import cn.signit.utils.repo.RepoUtils;
+import cn.signit.utils.repo.TreeFilterType;
 
 
 @Service("repoService")
@@ -55,6 +58,8 @@ public class RepoServiceImpl implements RepoService {
 	
 	@Resource
 	private RepoMapper repoDao;
+	@Resource
+	private TreeFilterType filterType;
 	
 	public boolean isRepositoryExists(String userEmail, String repoName) {
 		Repo repo = repoDao.selectByRepoNameAndUserEmail(repoName, userEmail);
@@ -244,6 +249,29 @@ public class RepoServiceImpl implements RepoService {
 	public List<FileInfo>  getHistoryByCommit(String repoName, String commit, String path) throws IOException {
 		Repository repository = getRepository(repoName);
 		return readRepositoryElementAt(repository, commit, path);
+	}
+	
+	public List<FileInfo> getFileByCategory(String user, String repoId, String category) throws IOException {
+		Repository repository = RepoUtils.getRepository(user, repoId);
+		RevCommit revCommit = RepoUtils.getRevCommit(repository, "");
+		RevTree tree = revCommit.getTree();
+		TreeFilter filter = filterType.getFilter(category);
+		String working = repository.getWorkTree().getAbsolutePath();
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(tree);
+			treeWalk.setRecursive(true);
+			treeWalk.setFilter(filter);
+			List<FileInfo> infos = new ArrayList<FileInfo>();
+			while (treeWalk.next()) {
+				String name = treeWalk.getNameString();
+				String type = treeWalk.isSubtree() ? "dir" : "file";
+				File file = new File(working, treeWalk.getPathString());
+				long size =  FS.DETECTED.length(file);
+				long mtime = FS.DETECTED.lastModified(file);
+				infos.add(new FileInfo(type, name, size, mtime));
+			}
+			return infos;
+		}
 	}
 	
 	public boolean move(String srcRepo, String dstRepo, String srcPath, String dstPath, String name) throws IOException {

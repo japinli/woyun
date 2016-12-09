@@ -401,3 +401,63 @@ WEB 接口说明
  - commitId - 提交记录编号 (SHA-1)
  - path - 在仓库中的路径
  - name - 待下载的文件，可包含多个
+
+### 分类获取文件信息
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/category?category=doc`
+
+#### 参数
+
+ - category - 类别: `doc`, `video`, `image` 以及 `others`
+ 
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data":
+		[
+			{
+				"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "我的资料库",
+				"fileInfo":
+					[
+						{
+							"type": "file",
+							"filename": "README.md",
+							"size": 113,
+							"mtime": 1481198034
+						},
+						{
+							"type": "file",
+							"filename": "NOTE.txt",
+							"size": 514,
+							"mtime": 1481198073
+						}
+					]
+			},
+			{
+				"repoId": "ef4586a3-432a-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "测试库",
+				"fileInfo":
+					[
+						{
+							"type": "file",
+							"filename": "测试.doc",
+							"size": 20480,
+							"mtime": 1481197918
+						},
+						{
+							"type": "file",
+							"filename": "入门手册.pdf",
+							"size": 31450,
+							"mtime": 1481807218
+						}
+					]
+			}
+		]
+}
+```
