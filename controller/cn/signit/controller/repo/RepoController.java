@@ -40,6 +40,15 @@ public class RepoController {
 	private RepoService repoService;
 	@Resource
 	private RepoMapper repoDao;
+	
+	@RequestMapping(value=UrlPath.REPO_CHECK, method=RequestMethod.GET)
+	@ResponseBody
+	public RestResponse checkRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestParam String repoName) {
+		boolean flag = repoService.isRepositoryExists(user.getEmail(), repoName);
+		RestResponse response = new RestResponse(true);
+		response.setData(flag);
+		return response;
+	}
 
 	@RequestMapping(value = UrlPath.REPO_LIST, method = RequestMethod.GET)
 	@ResponseBody

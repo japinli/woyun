@@ -48,6 +48,33 @@ WEB 接口说明
 }
 ```
 
+### 检测仓库是否存在
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/check?repoName=Documents`
+
+#### 参数
+
+- repoName - 待检测的用户仓库名
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data": true
+}
+```
+
+**备注:**
+
+| data | 说明           |
+|------|----------------|
+| true | 该仓库已经存在 |
+| false| 该仓库不存在   |
+
 ### 新建仓库
 
 #### 请求

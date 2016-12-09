@@ -116,6 +116,8 @@ public class UrlPath {
 	public final static String HANDLE_LOGIN = USER_ROOT + "/login";// 用户登录逻辑处理
 	
 	// ====================用户仓库相关路径==============================
+	/** 检测用户待创建的仓库是否已经存在 */
+	public final static String REPO_CHECK = USER_ROOT + "/repos/check";
 	public final static String REPO_LIST = USER_ROOT + "/repos";
 	public final static String REPO_NEW = USER_ROOT + "/repos";
 	public final static String REPO_RENAME = USER_ROOT + "/repos";

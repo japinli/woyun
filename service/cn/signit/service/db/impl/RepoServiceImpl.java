@@ -72,6 +72,12 @@ public class RepoServiceImpl implements RepoService {
 	
 	public RepoInfo createRepository(User user, String repo) {
 		String repoId = UUID.randomUUID().toString();
+		Repo record = new Repo(repoId, repo, user.getEmail());
+		if (!Convert.toBoolean(repoDao.insert(record))) {
+			LOG.warn("用户 {} 已存在 {} 仓库", user.getEmail(), repo);
+			return null;
+		}
+		
 		String path = RepoPath.getRepositoryPath(user.getEmail(), repoId);
 		try {
 			FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -88,16 +94,11 @@ public class RepoServiceImpl implements RepoService {
 
 			LOG.info("用户 {} 创建仓库 {} 成功", user.getEmail(), repo);
 			
-			// 更新数据库
-			Repo record = new Repo(repoId, repo, user.getEmail());
-			if (Convert.toBoolean(repoDao.insert(record))) {
-				LOG.info("用户 {} 更新仓库({})信息成功", user.getEmail(), repo);
-				RepoInfo info = new RepoInfo(record);
-				File library = new File(repository.getWorkTree().toString(), record.getRepoName());
-				info.setModifyTime(FS.DETECTED.lastModified(library));
-				info.setRepoSize(FS.DETECTED.length(library));
-				return info;
-			}
+			RepoInfo info = new RepoInfo(record);
+			File library = new File(repository.getWorkTree().toString());
+			info.setModifyTime(FS.DETECTED.lastModified(library));
+			info.setRepoSize(FS.DETECTED.length(library));
+			return info;
 			
 		} catch (GitAPIException e) {
 			// TODO Auto-generated catch block
