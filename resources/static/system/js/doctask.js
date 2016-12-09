@@ -1,9 +1,6 @@
-/*****
- * author: duyanmei
- * last edit time: 2016-5
- * *****/
-$(document).ready(function() {
 
+var layer_newrepose = null;
+$(document).ready(function() {
 	$(".deal-method-child").jBox("Tooltip", {
 		trigger: 'click',
 		closeOnClick: "body",
@@ -37,7 +34,30 @@ $(document).ready(function() {
 		pointer: 'right:8',
 		outside: 'x' // Horizontal Tooltips need to change their outside position
 	});
-	
+	$("#newRepos").unbind().bind('click',function(){
+		console.log("click");
+		layer_newrepose = layer.open({
+			  type: 1,
+			  title:'新建资料库',
+			  skin: 'layui-layer-rim', //加上边框
+			  area: ['400px', '240px'], //宽高
+			  content: 
+				  '<div class="layui-form">'
+				  +'<div class="layui-form-item" style="margin-top:30px;">'
+				    +'<label class="layui-form-label">资料库：</label>'
+				   + '<div class="layui-input-inline">'
+				     +'<input type="text" name="name"  autocomplete="off" class="layui-input " id="id-newrepose"/>'
+				    +'</div>'
+				  +'</div>'
+				  +'<div class="layui-form-item">'
+				    +'<div class="layui-input-block">'
+				      +'<button class="layui-btn" onclick="fnewRepose()">确认创建</button>'
+				      +'<button type="reset" class="layui-btn layui-btn-primary">重置</button>'
+				    +'</div>'
+				 + '</div>'
+				  +'</div>'
+			});
+	});
 	fgetInit();
 	docsView.addDocUperView();
 });
@@ -46,14 +66,52 @@ function fgetInit(){
 	$.ajax({
 		url:'/wesign/repos',
 		async:true,
-		type:'get',
+		type:'GET',
 		contentType:'application/x-www-form-urlencoded',
 		success:function(data){
 			console.log(data);
+			var status = data.status;
+			var Data = data.data;
+			var html = "";
+			if(status == 0){
+				for(var file in Data){
+					html += '<tr class="tr-border">'
+						  	+'<th class="th-1"><input type="checkbox"/></th>'
+						    +'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i>' +Data[file].repoName+ '</th>'
+						    +'<th class="th-3"><i class="icon-bin all-icon"></i><i class="icon-write-down all-icon deal-method"></i></th>'
+						    +'<th class="th-4">--</th>'
+						    +'<th class="th-5">'+ moment(Data[file].modifyTime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+						    +'</tr>'
+				}
+				$("#repo-table").html(html);
+			}
+			var Data = moment(data.data[0].modifyTime);
 		}
 	});
 }
-
+//新建仓库
+function fnewRepose(){
+	var name = $("#id-newrepose").val();
+	console.log(name);
+	$.ajax({
+		url:'/wesign/repos',
+		async:true,
+		type:'POST',
+		dataType:'json',
+		contentType:'application/json',
+		data: JSON.stringify({"repoName": name}),
+		success:function(data,e){
+			console.log(data,e);
+			var status = data.status;
+			var Data = data.data;
+			var html = "";
+			if(status == 0){	
+				layer.close(layer_newrepose);
+				fgetInit();
+			}
+		}
+	});
+}
 
 var docsView = {
 	views: [],
