@@ -186,7 +186,7 @@
   <update id="updateByRepoId" parameterType="cn.signit.domain.mysql.Repo" >
     update repo
     set 
-      repo_name = #{repoName,jdbcType=VARCHAR},
+      repo_name = #{repoName,jdbcType=VARCHAR}
     where repo_id = #{repoId,jdbcType=VARCHAR}
   </update>
   <update id="markRepositoryDeleted" parameterType="cn.signit.domain.mysql.Repo" >
