@@ -68,7 +68,7 @@ public class RepoServiceImpl implements RepoService {
 			return -1;
 		}
 		
-		return repo.getState() ? 0 : 1;
+		return repo.getState() ? 1 : 0;
 	}
 	
 	public RepoInfo createRepository(User user, String repo) {
