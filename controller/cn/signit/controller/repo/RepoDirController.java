@@ -79,9 +79,8 @@ public class RepoDirController {
 
 		String repoPath = RepoPath.contact(user.getEmail(), repoId);
 		String dirPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
-		boolean flag = repoService.createDirectory(repoPath, dirPath);
-
-		return new RestResponse(flag);
+		RestStatus status = repoService.createDirectory(repoPath, dirPath);
+		return new RestResponse(status);
 	}
 
 	@RequestMapping(value = UrlPath.REPO_DIR_RENAME, method = RequestMethod.PUT)
@@ -94,9 +93,9 @@ public class RepoDirController {
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		String oldPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		String newPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getNewName());
-		boolean flag = repoService.renameDirectory(repoName, oldPath, newPath);
+		RestStatus status = repoService.renameDirectory(repoName, oldPath, newPath);
 
-		return new RestResponse(flag);
+		return new RestResponse(status);
 	}
 
 	@RequestMapping(value = UrlPath.REPO_DIR_OR_FILE_OPERATION, method = RequestMethod.POST)

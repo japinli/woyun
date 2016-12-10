@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.signit.controller.api.RestStatus;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.CommitHistory;
 import cn.signit.entry.DirOperation;
@@ -91,9 +92,9 @@ public interface RepoService {
 	 * 创建目录
 	 * @param repoName 仓库名
 	 * @param path 在指定仓库下的目录全路径
-	 * @return true - 成功, false - 失败
+	 * @return 
 	 */
-	boolean createDirectory(String repoName, String path);
+	RestStatus createDirectory(String repoName, String path);
 	
 	/**
 	 * 重命名目录
@@ -103,7 +104,7 @@ public interface RepoService {
 	 * @return
 	 * @throws IOException 
 	 */
-	boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
+	RestStatus renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
 	
 	/**
 	 * 获取仓库历史变更记录
