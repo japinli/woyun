@@ -356,3 +356,31 @@ function resetrenameRepose(){
 function fnewresetrepose(){
 	$("#id-newrepose").val("");
 }
+$("#id-trash").unbind().bind('click',function(){
+	$("#newRepos").addClass('hidden');
+	$.ajax({
+		url:'/wesign/repos/deleted',
+		async:false,
+		type:'GET',
+		dataType:'json',
+		contentType:'application/json',
+		success:function(data){
+			var status = data.status;
+			var Data = data.data;
+			var html = "";
+			if(status == 0){
+				console.log(data);
+				for(var file in Data){
+					html += '<tr class="tr-border">'
+						  	+'<th class="th-1"><input type="checkbox"/></th>'
+						    +'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span id="'+Data[file].repoId+'" title="'+Data[file].repoName+'">' +Data[file].repoName+ '<span></th>'
+						    +'<th class="th-3"><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-bin all-icon" onclick="fdelete(this)"></i></th>'
+						    +'<th class="th-4">--</th>'
+						    +'<th class="th-5">'+ moment(Data[file].modifyTime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+						    +'</tr>'
+				}
+				$("#repo-table").html(html);
+			}
+		}
+	});
+});

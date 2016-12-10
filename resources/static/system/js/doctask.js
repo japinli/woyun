@@ -8,6 +8,7 @@ $(document).ready(function() {
 	});
 	$("#id-myrepose").unbind().bind('click',function(){
 		fgetInit();
+		$("#newRepos").removeClass('hidden');
 	});
 	$("#newRepos").unbind().bind('click',function(){
 		console.log("click");
@@ -286,11 +287,14 @@ function frenameRepose(){
 			var html = "";
 			if(status == 0){
 				console.log(data);
+				layer.close(layer_newrepose,{
+					anim:6
+				});
 				layer.msg('重命名成功', {
 					  icon: 1,
 					  time: 2000, //2秒关闭（如果不配置，默认是3秒）
 					  anim:5
-					});
+					});	
 				fgetInit();
 			}
 		}
