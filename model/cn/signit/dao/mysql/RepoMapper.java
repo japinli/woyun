@@ -23,9 +23,13 @@ public interface RepoMapper {
     
     List<Repo> selectByUserEmail(@Param("userEmail") String userEmail);
     
+    List<Repo> selectByUserEmailAndState(@Param("userEmail") String userEmail, @Param("state") Boolean state);
+    
     Repo selectByRepoNameAndUserEmail(@Param("repoName") String repoName, @Param("userEmail") String userEmail);
     
     int updateByRepoId(@Param("repoId") String repoId, @Param("repoName") String repoName);
     
     int markRepositoryDeleted(Repo record);
+    
+    int deleteByRepoId(@Param("repoId") String repoId);
 }

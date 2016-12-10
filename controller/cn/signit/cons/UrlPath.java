@@ -116,10 +116,21 @@ public class UrlPath {
 	public final static String HANDLE_LOGIN = USER_ROOT + "/login";// 用户登录逻辑处理
 	
 	// ====================用户仓库相关路径==============================
+	/** 检测用户待创建的仓库是否已经存在 */
+	public final static String REPO_CHECK = USER_ROOT + "/repos/check";
+	/** 获取用户的仓库信息 */
 	public final static String REPO_LIST = USER_ROOT + "/repos";
+	/** 新建用户仓库 */
 	public final static String REPO_NEW = USER_ROOT + "/repos";
+	/** 重命名用户仓库 */
 	public final static String REPO_RENAME = USER_ROOT + "/repos";
+	/** 标记用户仓库为删除状态 */
 	public final static String REPO_DELETE = USER_ROOT + "/repos";
+	/** 获取已删除的仓库 */
+	public final static String REPO_LIST_DELETED = USER_ROOT + "/repos/deleted";
+	/** 永久删除用户仓库 */
+	public final static String REPO_PERMANENT_DELETE = USER_ROOT + "/repos/permanent";
+	
 	public final static String REPO_LIST_DIRS = USER_ROOT + "/repos/{repo-id}/dir";
 	public final static String REPO_MAKE_DIR = USER_ROOT + "/repos/{repo-id}/dir";
 	public final static String REPO_DIR_RENAME = USER_ROOT + "/repos/{repo-id}/dir";

@@ -171,6 +171,12 @@
     from repo
     where repo_name = #{repoName,jdbcType=VARCHAR} and user_email = #{userEmail, jdbcType=VARCHAR}
   </select>
+  <select id="selectByUserEmailAndState" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from repo
+    where user_email = #{userEmail, jdbcType=VARCHAR} and state = #{state,jdbcType=BIT}
+  </select>
   <select id="selectByUserEmail" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
@@ -195,6 +201,10 @@
     </set>
     where repo_id = #{repoId,jdbcType=VARCHAR}
   </update>
+  <delete id="deleteByRepoId" parameterType="java.lang.Long" >
+    delete from repo
+    where repo_id = #{repoId,jdbcType=VARCHAR}
+  </delete>
   
   <!-- End -->
 </mapper>

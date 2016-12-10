@@ -48,6 +48,33 @@ WEB 接口说明
 }
 ```
 
+### 检测仓库是否存在
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/check?repoName=Documents`
+
+#### 参数
+
+- repoName - 待检测的用户仓库名
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data": true
+}
+```
+
+**备注:**
+
+| data | 说明           |
+|------|----------------|
+| true | 该仓库已经存在 |
+| false| 该仓库不存在   |
+
 ### 新建仓库
 
 #### 请求
@@ -111,6 +138,61 @@ WEB 接口说明
 	"repoName": "我的文档"
 }
 ```
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```
+
+### 获取已删除的仓库
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/deleted`
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功",
+	"data": 
+		[
+			{
+				"id": 4,
+				"repoId": "df0786aa-a21f-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "我的资料库",
+				"userEmail": "japinli@qq.com",
+				"createTime": 1480599651000,
+				"modifyTime": 1480599650000,
+				"state": false
+			},
+			{
+				"id": 5,
+				"repoId": "ef4586a3-432a-4c6b-b7f3-96cd2596d8e3",
+				"repoName": "测试库",
+				"userEmail": "japinli@qq.com",
+				"createTime": 1480599651000,
+				"modifyTime": 1480599650000,
+				"state": false
+			}
+		]
+}
+```
+
+### 永久删除目录
+
+#### 请求
+
+`DELETE http://woyun.cn/wesign/repos/permanent?repoId=xxxxxxx&repoId=xxxxx`
+
+#### 参数
+
+- repoId - 待删除的仓库ID，不唯一
 
 #### 响应
 
