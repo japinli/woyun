@@ -1,5 +1,5 @@
 .bodyFile{
-	padding:20px 20px;
+	margin:20px 20px;
 }
 .myCook{
 	height:50px;
@@ -10,11 +10,11 @@
 }
 .cook-left{
 	display:inline-block;
-	margin-left:50px;
+	margin-left:40px;
 }
 .cook-right{
 	display:inline-block;
-	margin-left:30px;
+	margin-left:20px;
 	line-height:50px;
 }
 .addBtn{
@@ -27,6 +27,7 @@
 	padding-bottom:2px;
 	color:#8B8B7A;
 	cursor:pointer;
+	padding:5px;
 }
 .iconFont{
 	margin-left:5px;
@@ -43,6 +44,9 @@
 	font-weight:900;
 	margin-top:15px;
 	margin-bottom:10px;
+}
+.repose tr{
+	background:#f0f3f5;
 }
 /* 吃的是草 */
 .lookFile{
@@ -109,7 +113,7 @@
 	float:none;
 }
 .first-table{
-	padding: 30px 0px;
+	margin: 40px 0px;
 }
 .file-table{
 	padding:0px 30px;
@@ -142,11 +146,19 @@
 .file-tab .th-5{
 	width:30%;
 }
-.file-tab tr .th-1,.th-2,.th-3,.th-4,.th-5{
+.file-tab tr .th-2,.th3,.th-4,.th5{
+	text-align:left;	
+}
+#repo-table  .th-3,
+#repo-table  .th-4{
 	text-align:center;	
 }
-.th-4{
-	text-align:right;	
+.repose .th-3,
+.repose .th-4{
+	text-align:center;	
+}
+.th-1{
+	padding-left:30px;
 }
 tr:hover{
 	background:#f0f3f5;
@@ -158,7 +170,7 @@ tr:hover{
 	padding:5px;
 	display:inline-block;
 	color:#8B8B7A;
-	margin-left:5px;
+	margin-right:5px;
 }
 .all-icon:hover{
 	color:#eb8205;
@@ -169,7 +181,59 @@ tr:hover{
 .div-input{
 	display:inline-block;
 }
+.th-2{
+	cursor:pointer;
+}
+#id-repose-content{
+	position:absolute;
+	right:0;
+	bottom:0;
+	top:50px;
+	left:0;
+	overflow-y:auto;
+	margin-bottom:70px;
+	margin-left:25px;
+	margin-right:25px;
+}
+/* 设置滚动条的样式 google */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius:999px;
+	-moz-border-radius:999px;
+    -webkit-border-radius:999px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background: rgba(137,137,137,0.5);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    border-radius:999px;
+	-moz-border-radius:999px;
+    -webkit-border-radius:999px;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background:rgba(183,183,41,0.5);
+}
+
+/* 滚动条 IE */
+div {
+    scrollbar-base-color:rgba(137,137,137,0.5);
+}
 ./*new repose */
 .newPose{
 	margin-top:30px;
+}
+#doc-id-bar  .active{
+	background:#DEDEDE;
+}
+.lbar-block{
+	margin-top:25px;
+}
+.class-pagation{
+	position:absolute;
+	bottom:25px;
 }

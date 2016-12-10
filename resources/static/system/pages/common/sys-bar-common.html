@@ -64,34 +64,19 @@
 	 <div th:fragment="copy-headerbar" th:remove="tag">
 		 <div class="left-nav">
 			 <a th:href="@{'/wesign/index.html'}"><div class="logo">蜗云</div></a>
-			 <ul id="id-first-nav" class="first-nav-list">
-			 	<!-- <li title="我的中心"><a th:href="@{'/wesign/'+${session.loginRole}+'/index.html'}">我的中心</a></li>
-			 	<li title="我的保全"><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/index.html'}">我的保全</a></li>
-		        <li title="我的账户"><a th:href="@{'/wesign/'+${session.loginRole}+'/my-info.html'}">我的账户</a></li>  -->
-		        <!-- <li title="我的中心"><a th:href="@{'/wesign/index.html'}">我的中心</a></li>
-			 	<li title="我的保全"><a th:href="@{'/wesign/documents/index.html'}">我的保全</a></li> -->
-		        <!-- <li title="我的账户"><a th:href="@{'/wesign/my-info.html'}">我的账户</a></li> -->
-			 </ul>
 		</div>	<!-- left-nav -->
 		<div class="right-nav">
 			<div class="dis-inline">
-			 	<span id="user-menu" class="mlr10 posR posR-top3 user-msg-tooltip">
-				 	  <i class="icon-user-hollow fs24"></i>
-				      <span id="user-header-name" style="">设置</span>
+			 	<span id="user-menu" class="mlr10 posR posR-top3 user-msg-tooltips">
+				 	  <i class="icon-user-solid fs24"></i>
+				      <span id="user-header-name" style="">用户</span>
 				      <i class="icon-keyboard-arrow-down"></i>
-				      <div id="userMenu-msg-mod" class="msg-mod hidden">
+				      <div id="userMenu-msg-mod" class="msg-mod">
 			 			<div class="userMenu-content" id="id-userMenu-content">
 			 				<ul class="userMenu-content-list">
-			 					<!-- <li><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-self.html'}" title="跳转到自己签页面">自己签</a></li>
-			 					<li><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-workflow.html'}" title="跳转到我与他人签页面">我与他人签</a></li>
-			 					<li><a th:href="@{'/wesign/'+${session.loginRole}+'/documents/sign-workflow.html'}" title="跳转到我与他人签的页面">他人签</a></li> -->
-				 				<!-- <li><a th:href="@{'/wesign/'+${session.loginRole}+'/person-auth.html'}" title="实名认证">实名认证</a></li>
-				 				<li class="diver-css"><a th:href="@{'/wesign/'+${session.loginRole}+'/certificates/details.html'}" title="我的证书">我的证书</a></li>
-				 				<li class="diver-css"><a href="#" th:href="@{'/wesign/'+${session.loginRole}+'/logout.html'}" class="js_header_logout" title="退出登陆"><i title="退出登陆" class="icon-switch"></i>退出登陆</a></li> -->
-				 				<!-- <li><a th:href="@{'/wesign/person-auth.html'}" title="实名认证">实名认证</a></li> -->
 				 				<li><a th:href="@{'/wesign/my-info.html'}" title="我的账户">我的账户</a></li>
 				 				<li class="diver-css">
-				 					<a href="#" th:href="@{'/wesign/logout.html'}" class="js_header_logout" title="退出登陆">
+				 					<a  th:href="@{'/wesign/logout.html'}" class="js_header_logout" title="退出登陆">
 				 					<i title="退出登陆" class="icon-switch"></i>退出登陆</a>
 				 				</li>
 				 			</ul>
@@ -99,7 +84,7 @@
 			 		</div>
 				</span>
 			 </div>
-			 <div th:replace="this :: copy-common-data"></div>
+			
 		</div>  <!-- right-nav -->
 	</div>
 	 <!-- ------------------------------------------- -->

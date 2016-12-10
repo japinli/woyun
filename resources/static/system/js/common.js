@@ -12,7 +12,7 @@ $(document).ready(function(){
    $('#id-first-nav').setBarCss("active");
    $(".lbar-link").setBarCss("active");
 
-   $(".user-msg-tooltip").jBox("Tooltip",{
+   $(".user-msg-tooltips").jBox("Tooltip",{
 	  	width:'auto',
 	  	height:'auto',
 	  	closeOnMouseleave:true,
