@@ -61,13 +61,13 @@ public class RepoServiceImpl implements RepoService {
 	@Resource
 	private TreeFilterType filterType;
 	
-	public boolean isRepositoryExists(String userEmail, String repoName) {
+	public int isRepositoryExists(String userEmail, String repoName) {
 		Repo repo = repoDao.selectByRepoNameAndUserEmail(repoName, userEmail);
 		if (repo == null) {
-			return false;
+			return -1;
 		}
 		
-		return true;
+		return repo.getState() ? 0 : 1;
 	}
 	
 	public RepoInfo createRepository(User user, String repo) {

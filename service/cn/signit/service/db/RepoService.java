@@ -17,9 +17,9 @@ public interface RepoService {
 	 * 查询用户是否存在相同的仓库
 	 * @param userEmail 用户邮件地址
 	 * @param repo 仓库名
-	 * @return true - 仓库已存在，false - 仓库不存在
+	 * @return -1 - 仓库不存在， 0 - 仓库存在， 1 - 仓库移至回收站
 	 */
-	boolean isRepositoryExists(String userEmail, String repo);
+	int isRepositoryExists(String userEmail, String repo);
 
 	/**
 	 * 新建仓库
