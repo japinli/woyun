@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.signit.controller.api.RestStatus;
 import cn.signit.dao.mysql.RepoMapper;
 import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
@@ -61,13 +62,13 @@ public class RepoServiceImpl implements RepoService {
 	@Resource
 	private TreeFilterType filterType;
 	
-	public boolean isRepositoryExists(String userEmail, String repoName) {
+	public int isRepositoryExists(String userEmail, String repoName) {
 		Repo repo = repoDao.selectByRepoNameAndUserEmail(repoName, userEmail);
 		if (repo == null) {
-			return false;
+			return -1;
 		}
 		
-		return true;
+		return repo.getState() ? 0 : 1;
 	}
 	
 	public RepoInfo createRepository(User user, String repo) {
@@ -220,34 +221,41 @@ public class RepoServiceImpl implements RepoService {
 		return infos;
 	}
 	
-	public boolean createDirectory(String repoName, String path) {
+	public RestStatus createDirectory(String repoName, String path) {
 		/*
 		 * 在仓库下创建一个空目录，由于 git 不会追踪空目录，因此可以不用进行 git commit 操作
 		 */
 		String dirPath = RepoPath.getRepositoryPath(repoName, path);
 		File file = new File(dirPath);
-		if (!file.exists() && !file.isDirectory()) {
-			return file.mkdir();
+		if (file.exists() && file.isFile()) {
+			return RestStatus.FILE_EXISTS;
 		}
-		return false;
+		if (file.exists() && file.isDirectory()) {
+			return RestStatus.DIR_EXISTS;
+		}
+		return file.mkdir() ? RestStatus.SUCCESS : RestStatus.FAILED;
 	}
 	
-	public boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException {
+	public RestStatus renameDirectory(String repoName, String oldPath, String newPath) throws IOException {
 		String oldFullPath = RepoPath.getRepositoryPath(repoName, oldPath);
 		String newFullPath = RepoPath.getRepositoryPath(repoName, newPath);
 		
-		File file = new File(oldFullPath);
-		if (file.exists()) {
-			boolean flag = file.renameTo(new File(newFullPath));
-			if (flag == false) {
-				return false;
-			}
-			
-			Repository repository = getRepository(repoName);
-			return gitCommit(repository, ".", "rename");
+		// 检测新建的文件夹是否存在
+		File nfile = new File(newFullPath);
+		if (nfile.exists() && nfile.isFile()) {
+			return RestStatus.FILE_EXISTS;
+		}
+		if (nfile.exists() && nfile.isDirectory()) {
+			return RestStatus.DIR_EXISTS;
 		}
 		
-		return false;
+		File file = new File(oldFullPath);
+		boolean flag = file.renameTo(new File(newFullPath));
+		if (flag == false) {
+				return RestStatus.RENAME_FAILED;
+		}
+		Repository repository = RepoUtils.getRepository(repoName);
+		return gitCommit(repository, ".", "rename") ? RestStatus.SUCCESS : RestStatus.FAILED;
 	}
 	
 	public List<CommitHistory> getRepositoryHistory(String repoName) throws IOException {

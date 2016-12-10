@@ -16,6 +16,14 @@ public class RestResponse {
 		}
 	}
 	
+	public RestResponse(RestStatus status) {
+		this(status.getStatus(), status.getDesc());
+	}
+	
+	public RestResponse(int status) {
+		this(status, RestStatus.getName(status));
+	}
+	
 	public RestResponse() {
 		this(RestStatus.FAILED.getStatus(), RestStatus.FAILED.getDesc());
 	}

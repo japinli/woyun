@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.signit.controller.api.RestStatus;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.CommitHistory;
 import cn.signit.entry.DirOperation;
@@ -17,9 +18,9 @@ public interface RepoService {
 	 * 查询用户是否存在相同的仓库
 	 * @param userEmail 用户邮件地址
 	 * @param repo 仓库名
-	 * @return true - 仓库已存在，false - 仓库不存在
+	 * @return -1 - 仓库不存在， 0 - 仓库存在， 1 - 仓库移至回收站
 	 */
-	boolean isRepositoryExists(String userEmail, String repo);
+	int isRepositoryExists(String userEmail, String repo);
 
 	/**
 	 * 新建仓库
@@ -91,9 +92,9 @@ public interface RepoService {
 	 * 创建目录
 	 * @param repoName 仓库名
 	 * @param path 在指定仓库下的目录全路径
-	 * @return true - 成功, false - 失败
+	 * @return 
 	 */
-	boolean createDirectory(String repoName, String path);
+	RestStatus createDirectory(String repoName, String path);
 	
 	/**
 	 * 重命名目录
@@ -103,7 +104,7 @@ public interface RepoService {
 	 * @return
 	 * @throws IOException 
 	 */
-	boolean renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
+	RestStatus renameDirectory(String repoName, String oldPath, String newPath) throws IOException;
 	
 	/**
 	 * 获取仓库历史变更记录

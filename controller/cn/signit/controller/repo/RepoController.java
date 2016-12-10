@@ -44,9 +44,9 @@ public class RepoController {
 	@RequestMapping(value=UrlPath.REPO_CHECK, method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse checkRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestParam String repoName) {
-		boolean flag = repoService.isRepositoryExists(user.getEmail(), repoName);
+		int state = repoService.isRepositoryExists(user.getEmail(), repoName);
 		RestResponse response = new RestResponse(true);
-		response.setData(flag);
+		response.setData(new Integer(state));
 		return response;
 	}
 
