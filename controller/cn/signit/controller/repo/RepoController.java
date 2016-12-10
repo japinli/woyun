@@ -90,7 +90,7 @@ public class RepoController {
 		return new RestResponse(flag);
 	}
 	
-	@RequestMapping(value=UrlPath.REPO_LIST_DELETED,method=RequestMethod.DELETE)
+	@RequestMapping(value=UrlPath.REPO_LIST_DELETED,method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse getDeletedRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user) throws IOException {
 		RestResponse response = new RestResponse(true);
