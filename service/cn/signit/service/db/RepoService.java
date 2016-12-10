@@ -32,9 +32,10 @@ public interface RepoService {
 	/**
 	 * 获取用户所有仓库信息
 	 * @param user 用户对象
+	 * @param deleted 仓库删除标志
 	 * @return
 	 */
-	List<RepoInfo> getRepositoriesInfo(User user) throws IOException;
+	List<RepoInfo> getRepositoriesInfo(User user, boolean deleted) throws IOException;
 	
 	/**
 	 * 查看仓库下的文件信息
@@ -68,6 +69,15 @@ public interface RepoService {
 	 * * @return true - 成功, false - 失败
 	 */
 	boolean deleteRepository(String repoId);
+	
+	/**
+	 * 永久删除仓库
+	 * @param user 用户邮件
+	 * @param repoId 用户仓库ID
+	 * @return true - 成功, false - 失败
+	 * @throws IOException 
+	 */
+	boolean permanentDeleteRepository(String user, String repoId) throws IOException;
 	
 	/**
 	 * 获取指定仓库及路径下的文件信息

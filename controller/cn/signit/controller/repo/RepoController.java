@@ -55,7 +55,7 @@ public class RepoController {
 	public RestResponse listRepositories(@ModelAttribute(SessionKeys.LOGIN_USER) User user) throws IOException {
 		LOG.info("用户({})请求获取所有仓库信息", user.getEmail());
 		RestResponse response = new RestResponse(true);
-		response.setData(repoService.getRepositoriesInfo(user));
+		response.setData(repoService.getRepositoriesInfo(user, false));
 		return response;
 	}
 
@@ -88,6 +88,24 @@ public class RepoController {
 		LOG.info("用户({})请求删除({})仓库", user.getEmail(), repo.getRepoName());
 		boolean flag = repoService.deleteRepository(repo.getRepoId());
 		return new RestResponse(flag);
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_LIST_DELETED,method=RequestMethod.DELETE)
+	@ResponseBody
+	public RestResponse getDeletedRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user) throws IOException {
+		RestResponse response = new RestResponse(true);
+		response.setData(repoService.getRepositoriesInfo(user, true));
+		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_PERMANENT_DELETE,method=RequestMethod.DELETE)
+	@ResponseBody
+	public RestResponse permanentDeleteRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
+			@RequestParam List<String> repoId) throws IOException {
+		for (String id : repoId) {
+			repoService.permanentDeleteRepository(user.getEmail(), id);
+		}
+		return new RestResponse(true);
 	}
 
 	@RequestMapping(value = UrlPath.REPO_GET_HISTORY, method = RequestMethod.GET)

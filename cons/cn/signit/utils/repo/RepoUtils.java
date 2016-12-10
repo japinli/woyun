@@ -66,4 +66,24 @@ public class RepoUtils {
 		return treeWalk;
 	}
 	
+	/**
+	 * 删除文件获取目录
+	 * @param parent 父目录路径名
+	 * @param name 待删除的文件或目录名
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	public static boolean deleteFile(String filename) throws IOException {
+		File file = new File(filename);
+		if (file.isFile()) {
+			return file.delete();
+		} 
+		
+		for (File f : file.listFiles()) {
+			deleteFile(f.getAbsolutePath());
+		}
+		
+		return file.delete();
+	}
+	
 }

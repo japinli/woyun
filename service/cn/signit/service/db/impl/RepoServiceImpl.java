@@ -111,8 +111,8 @@ public class RepoServiceImpl implements RepoService {
 		return null;
 	}
 	
-	public List<RepoInfo> getRepositoriesInfo(User user) throws IOException {
-		List<Repo> repositories = repoDao.selectByUserEmail(user.getEmail());
+	public List<RepoInfo> getRepositoriesInfo(User user, boolean deleted) throws IOException {
+		List<Repo> repositories = repoDao.selectByUserEmailAndState(user.getEmail(), deleted);
 		
 		List<RepoInfo> repoInfos = new ArrayList<RepoInfo>();
 		for (Repo repo : repositories) {
@@ -162,6 +162,14 @@ public class RepoServiceImpl implements RepoService {
 		record.setState(true);
 		record.setDeleteTime(Calendar.getInstance().getTime());
 		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
+	}
+	
+	public boolean permanentDeleteRepository(String user, String repoId) throws IOException {
+		if (!Convert.toBoolean(repoDao.deleteByRepoId(repoId))) {
+			return false;
+		}
+		String path = RepoPath.getRepositoryPath(user, repoId);
+		return RepoUtils.deleteFile(path);
 	}
 	
 	public List<FileInfo> getDirectory(String repoName, String path) throws IOException {
