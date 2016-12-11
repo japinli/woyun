@@ -69,6 +69,10 @@ public class RepoPath {
 		return Paths.get(repo, more).toString();
 	}
 	
+	public static String getWorkDirectory(String repoName, String ...more) {
+		return Paths.get(contact(repo, repoName, data), more).toString();
+	}
+	
 	/**
 	 * 构建临时文件目录
 	 * @param more 多级目录
