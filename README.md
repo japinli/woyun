@@ -544,3 +544,22 @@ WEB 接口说明
 		]
 }
 ```
+
+### 还原已删除的仓库
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repo-id}/restore`
+
+#### 参数
+
+- repo-id - 仓库id编号
+
+### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```

@@ -165,6 +165,14 @@ public class RepoServiceImpl implements RepoService {
 		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
 	}
 	
+	public boolean restoreRepository(String repoId) {
+		Repo record = new Repo();
+		record.setRepoId(repoId);
+		record.setState(false);
+		record.setDeleteTime(Calendar.getInstance().getTime());
+		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
+	}
+	
 	public boolean permanentDeleteRepository(String user, String repoId) throws IOException {
 		if (!Convert.toBoolean(repoDao.deleteByRepoId(repoId))) {
 			return false;
@@ -174,12 +182,13 @@ public class RepoServiceImpl implements RepoService {
 	}
 	
 	public List<FileInfo> getDirectory(String repoName, String path) throws IOException {
-		
+		List<FileInfo> infos = new ArrayList<FileInfo>();
+		// 获取仓库及仓库下的目录全路径
 		Repository repository = getRepository(repoName);
 		RevCommit revCommit = getRevCommit(repository, "");
 		RevTree tree = revCommit.getTree();
 		String working = repository.getWorkTree().getPath();
-		List<FileInfo> infos = new ArrayList<FileInfo>();
+		
 
 		if (path.isEmpty()) {
 			try (TreeWalk treeWalk = new TreeWalk(repository)) {
@@ -209,8 +218,11 @@ public class RepoServiceImpl implements RepoService {
 					dirWalk.setRecursive(false);
 					while (dirWalk.next()) {
 						String filename = dirWalk.getNameString();
-						String type = dirWalk.isSubtree() ? "dir" : "file";
 						File file = new File(working, RepoPath.contact(parentPath, filename));
+						if (!file.exists()) { // 文件系统不存在，即已从git管理中删除
+							continue;
+						}
+						String type = dirWalk.isSubtree() ? "dir" : "file";
 						long size = FS.DETECTED.length(file);
 						long mtime = FS.DETECTED.lastModified(file);
 						
@@ -223,9 +235,8 @@ public class RepoServiceImpl implements RepoService {
 	}
 	
 	public RestStatus createDirectory(String repoName, String path) {
-		/*
-		 * 在仓库下创建一个空目录，由于 git 不会追踪空目录，因此可以不用进行 git commit 操作
-		 */
+		// 在仓库下创建一个空目录，由于 git 不会追踪空目录，
+		// 因此可以不用进行 git commit 操作
 		String dirPath = RepoPath.getRepositoryPath(repoName, path);
 		File file = new File(dirPath);
 		if (file.exists() && file.isFile()) {
