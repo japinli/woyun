@@ -96,13 +96,18 @@ public class RepoUtils {
 	/**
 	 * 获取指定路径的文件(夹)信息
 	 * @param path 路径名
-	 * @return
+	 * @return 文件信息
 	 */
 	public static FileInfo getFileInfo(String path) {
 		File file = new File(path);
 		return getFileInfo(file);
 	}
 	
+	/**
+	 * 获取文件(夹)信息
+	 * @param file 文件对象
+	 * @return 文件信息
+	 */
 	public static FileInfo getFileInfo(File file) {
 		// 忽略 git 管理目录
 		if (file.getName().equals(".git")) {
@@ -116,6 +121,11 @@ public class RepoUtils {
 		return new FileInfo(type, filename, size, mtime);
 	}
 	
+	/**
+	 * 获取目录文件信息
+	 * @param path 目录路径
+	 * @return 文件信息列表
+	 */
 	public static List<FileInfo> getDirectoryInfo(String path) {
 		File file = new File(path);
 		if (!file.isDirectory()) {
