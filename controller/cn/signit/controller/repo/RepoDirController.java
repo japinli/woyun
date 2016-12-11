@@ -61,9 +61,6 @@ public class RepoDirController {
 
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		List<FileInfo> infos = repoService.getDirectory(repoName, path);
-		if (infos == null || infos.isEmpty()) {
-			return new RestResponse(false);
-		}
 
 		RestResponse response = new RestResponse(true);
 		response.setData(infos);
