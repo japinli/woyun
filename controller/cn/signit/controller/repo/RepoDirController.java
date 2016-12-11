@@ -96,8 +96,12 @@ public class RepoDirController {
 		String oldPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		String newPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getNewName());
 		RestStatus status = repoService.renameDirectory(repoName, oldPath, newPath);
-
-		return new RestResponse(status);
+		
+		RestResponse response = new RestResponse(status);
+		if (status.getStatus() == RestStatus.SUCCESS.getStatus()) {
+			response.setData(RepoUtils.getFileInfo(RepoPath.getRepositoryPath(repoName, newPath)));
+		}
+		return response;
 	}
 
 	@RequestMapping(value = UrlPath.REPO_DIR_OR_FILE_OPERATION, method = RequestMethod.POST)
