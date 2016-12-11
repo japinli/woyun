@@ -135,16 +135,16 @@
 	width:10%;
 }
 .file-tab .th-2{
-	width:30%;
+	width:20%;
 }
 .file-tab .th-3{
-	width:15%;
-}
-.file-tab .th-4{
 	width:25%;
 }
+.file-tab .th-4{
+	width:15%;
+}
 .file-tab .th-5{
-	width:30%;
+	width:20%;
 }
 .file-tab tr .th-2,.th3,.th-4,.th5{
 	text-align:left;	
