@@ -307,6 +307,13 @@ WEB 接口说明
 {
 	"status": 0,
 	"desc": "操作成功"
+	"data":
+		{
+			"type": "dir",
+			"filename": "文档",
+			"size": 10240,
+			"mtime": 1480599650000
+		}
 }
 ```
 
