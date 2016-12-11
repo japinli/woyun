@@ -54,6 +54,9 @@ function fgetinRepose(_this){
 					  time: 2000, //2秒关闭（如果不配置，默认是3秒）
 					  anim:5
 					});
+				var file_html = '<a href="javascript:;" id="'+id+'" style="text-decoration:underline;" title="'+name+'" onclick="fgetinRepose(this)">'+name+'</a>';
+				$("#newRepos").addClass('hidden');
+				$("#id-globle").html(file_html);
 			}
 		}
 	});
