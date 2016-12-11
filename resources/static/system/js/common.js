@@ -384,4 +384,75 @@ $("#id-trash").unbind().bind('click',function(){
 		}
 	});
 });
-
+//分类获取文件信息id-mymovei
+$("#id-myword").unbind().bind('click',function(){
+	$("#newRepos").addClass('hidden');
+	$.ajax({
+		url:'/wesign/repos/category?category=doc',
+		async:false,
+		type:'GET',
+		dataType:'json',
+		contentType:'application/json',
+		success:function(data){
+			var status = data.status;
+			var Data = data.data;
+			var html = "";
+			if(status == 0){
+				console.log(data);
+				Data.forEach(function(e){
+					if(e.type == "file"){
+						html += '<tr class="tr-border">'
+							+'<th class="th-1"><input type="checkbox"/></th>'
+						    +'<th class="th-2"><span title="'+e.filename+'">' +e.filename+ '<span></th>'
+						    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
+						    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
+						    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
+						    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
+						    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
+						    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
+						    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
+						    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+						    +'</tr>'
+					}
+				});
+				$("#repo-table").html(html);
+			}
+		}
+	});
+});
+//分类获取文件信息id-mymovei
+$("#id-mymovei").unbind().bind('click',function(){
+	$("#newRepos").addClass('hidden');
+	$.ajax({
+		url:'/wesign/repos/category?category=video',
+		async:false,
+		type:'GET',
+		dataType:'json',
+		contentType:'application/json',
+		success:function(data){
+			var status = data.status;
+			var Data = data.data;
+			var html = "";
+			if(status == 0){
+				console.log(data);
+				Data.forEach(function(e){
+					if(e.type == "file"){
+						html += '<tr class="tr-border">'
+							+'<th class="th-1"><input type="checkbox"/></th>'
+						    +'<th class="th-2"><span title="'+e.filename+'">' +e.filename+ '<span></th>'
+						    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
+						    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
+						    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
+						    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
+						    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
+						    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
+						    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
+						    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+						    +'</tr>'
+					}
+				});
+				$("#repo-table").html(html);
+			}
+		}
+	});
+});

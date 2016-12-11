@@ -233,50 +233,33 @@ function fnewNextfolder(){
 			var html = "";
 			if(status == 0 && Data){
 				console.log(data);
-				Data.forEach(function(e){
-					if(e.type == "file"){
-						html += '<tr class="tr-border">'
-							+'<th class="th-1"><input type="checkbox"/></th>'
-						    +'<th class="th-2"><span title="'+e.filename+'">' +e.filename+ '<span></th>'
-						    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
-						    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
-						    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
-						    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
-						    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
-						    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
-						    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
-						    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
-						    +'</tr>'
-					}else{
-						html += '<tr class="tr-border">'
-							  	+'<th class="th-1"><input type="checkbox"/></th>'
-							    +'<th class="th-2"><span style="color:#00868B;" title="'+e.filename+'" onclick="fshowDir(this)">' +e.filename+ '<span></th>'
-							    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
-							    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
-							    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
-							    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
-							    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
-							    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
-							    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
-							    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
-							    +'</tr>'
-					}
-				});
-				$("#repo-table").html(html);
-				layer.close({
-					anim:6
-				});
+				html += '<tr class="tr-border">'
+				  	+'<th class="th-1"><input type="checkbox"/></th>'
+				    +'<th class="th-2"><span style="color:#00868B;" title="'+Data.filename+'" onclick="fshowDir(this)">' +Data.filename+ '<span></th>'
+				    +'<th class="th-3"><i  title="'+Data.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
+				    +'<i  title="'+Data.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
+				    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
+				    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
+				    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
+				    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
+				    +'<th class="th-4">'+uploadFileSizeConvertTip(Data.size)+'</th>'
+				    +'<th class="th-5">'+ moment(Data.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+				    +'</tr>'
+			}
+				$("#repo-table").children(':last').after(html);
+				layer.closeAll(); 
 				layer.msg('文件夹创建成功', {
 					  icon: 1,
 					  time: 1000, //2秒关闭（如果不配置，默认是3秒）
 					  anim:1
 					});
 			}
-		}
-	});
-}
+		});
+	}
+var renamefoder = null;
 //目录重命名
 function fwriteNext(_this){
+	renamefoder = _this;
 	layer.open({
 		  type: 1,
 		  title:'重命名文件夹',
@@ -292,7 +275,7 @@ function fwriteNext(_this){
 			  +'</div>'
 			  +'<div class="layui-form-item">'
 			    +'<div class="layui-input-block">'
-			      +'<button class="layui-btn" onclick="frenameNextfolder()">确认创建</button>'
+			      +'<button class="layui-btn" onclick="frenameNextfolder()">确认更改</button>'
 			      +'<button type="reset" class="layui-btn layui-btn-primary" onclick="fnewresetrepose()">重置</button>'
 			    +'</div>'
 			 + '</div>'
@@ -302,6 +285,7 @@ function fwriteNext(_this){
 //目录重命名执行
 function frenameNextfolder(){
 	var id= $("#id-globle a:first").attr('id');
+	var oldname = $(renamefoder).parent().parent().children(':eq(1)').text();
 	var name = $("#id-renamefloder").val();
 	var path = $("#id-globle").children('a:gt(0)').text();
 	if(path == "" || path == null){
@@ -314,7 +298,7 @@ function frenameNextfolder(){
 		async:true,
 		type:'PUT',
 		contentType:'application/json',
-		data: JSON.stringify({"path": path,"name":name}),
+		data: JSON.stringify({"path": path,"name":oldname,"newName":name}),
 		success:function(data){
 			console.log(data);
 			var status = data.status;
@@ -322,51 +306,44 @@ function frenameNextfolder(){
 			var html = "";
 			if(status == 0 && Data){
 				console.log(data);
-				Data.forEach(function(e){
-					if(e.type == "file"){
-						html += '<tr class="tr-border">'
-							+'<th class="th-1"><input type="checkbox"/></th>'
-						    +'<th class="th-2"><span title="'+e.filename+'">' +e.filename+ '<span></th>'
-						    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
-						    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
-						    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
-						    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
-						    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
-						    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
-						    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
-						    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
-						    +'</tr>'
-					}else{
 						html += '<tr class="tr-border">'
 							  	+'<th class="th-1"><input type="checkbox"/></th>'
-							    +'<th class="th-2"><span style="color:#00868B;" title="'+e.filename+'" onclick="fshowDir(this)">' +e.filename+ '<span></th>'
-							    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
-							    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
+							    +'<th class="th-2"><span style="color:#00868B;" title="'+Data.filename+'" onclick="fshowDir(this)">' +Data.filename+ '<span></th>'
+							    +'<th class="th-3"><i  title="'+Data.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
+							    +'<i  title="'+Data.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
 							    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
 							    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
 							    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
 							    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
-							    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
-							    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
+							    +'<th class="th-4">'+uploadFileSizeConvertTip(Data.size)+'</th>'
+							    +'<th class="th-5">'+ moment(Data.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
 							    +'</tr>'
-					}
-				});
-				$("#repo-table").html(html);
-				layer.close({
-					anim:6
-				});
-				layer.msg('文件夹创建成功', {
+				}
+				$(renamefoder).parent().parent().replaceWith(html);
+				layer.closeAll(); 
+				layer.msg('重命名文件夹成功', {
 					  icon: 1,
 					  time: 1000, //2秒关闭（如果不配置，默认是3秒）
 					  anim:1
 					});
 			}
-		}
-	});
+		});
+	$(renamefoder).parent().parent().children(':eq(1)').attr('title',name);
+	renamefoder = null;
 }
 
-
-
+//上传文件
+$("#id-uploadify").unbind().bind('click',function(){
+	var id= $("#id-globle a:first").attr('id');
+	var path = $("#id-globle").children('a:gt(0)').text();
+	if(path == "" || path == null){
+		path = "/";
+	}
+});
+//执行上传
+function fuploadify(_this){
+	
+}
 
 
 

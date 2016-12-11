@@ -82,7 +82,7 @@ public class RepoDirController {
 		if (status.getStatus() == 0) {
 			response.setData(RepoUtils.getFileInfo(RepoPath.getRepositoryPath(repoPath, dirPath)));
 		}
-		return new RestResponse(status);
+		return response;
 	}
 
 	@RequestMapping(value = UrlPath.REPO_DIR_RENAME, method = RequestMethod.PUT)

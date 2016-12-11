@@ -21,7 +21,6 @@ function removeSubdirectory(_this) {
 function fwriteNextDelete(_this) {
     var repoId = getRepositoryId();
     var fullpath = getParentPath(_this) + '/' + getTitle(_this);
-
     $.ajax({
 	url: '/wesign/repos/' + repoId,
 	async: true,
@@ -30,7 +29,15 @@ function fwriteNextDelete(_this) {
 	dataType: 'json',
 	contentType: 'application/json',
 	success: function(data) {
-	    console.log(data);	    
+	    console.log(data);	   
+	    if(data.status == 0){
+	    	$(_this).parent().parent().remove();
+	    	layer.msg('删除成功', {
+				  icon: 1,
+				  time: 1000, //2秒关闭（如果不配置，默认是3秒）
+				  anim:1
+				});
+	    }
 	}
     });
 }
