@@ -3,7 +3,12 @@ package cn.signit.utils.repo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -11,6 +16,8 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
+
+import cn.signit.entry.FileInfo;
 
 public class RepoUtils {
 
@@ -84,6 +91,68 @@ public class RepoUtils {
 		}
 		
 		return file.delete();
+	}
+	
+	/**
+	 * 获取指定路径的文件(夹)信息
+	 * @param path 路径名
+	 * @return
+	 */
+	public static FileInfo getFileInfo(String path) {
+		File file = new File(path);
+		return getFileInfo(file);
+	}
+	
+	public static FileInfo getFileInfo(File file) {
+		// 忽略 git 管理目录
+		if (file.getName().equals(".git")) {
+			return null;
+		}
+		
+		String type = file.isDirectory() ? "dir" : "file";
+		String filename = file.getName();
+		long size = filename.length();
+		long mtime = file.lastModified(); 
+		return new FileInfo(type, filename, size, mtime);
+	}
+	
+	public static List<FileInfo> getDirectoryInfo(String path) {
+		File file = new File(path);
+		if (!file.isDirectory()) {
+			return null;
+		}
+		List<FileInfo> infos = new ArrayList<FileInfo>();
+		
+		for (File f : file.listFiles()) {
+			FileInfo fileInfo = getFileInfo(f);
+			if (fileInfo != null) {
+				infos.add(fileInfo);
+			}
+		}
+		
+		return infos;
+	}
+	
+	public static boolean gitCommit(String repoName, String pattern, String message) throws IOException {
+		Repository repository = getRepository(repoName);
+		return gitCommit(repository, pattern, message);
+	}
+	
+	private static boolean gitCommit(Repository repository, String filePattern, String message) {
+		try {
+			Git git = new Git(repository);
+			git.add().addFilepattern(filePattern).call();
+			git.commit().setMessage(message).call();
+			git.close();
+			return true;
+		} catch (NoFilepatternException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }

@@ -100,8 +100,9 @@ public interface RepoService {
 	 * @param repoName 仓库名
 	 * @param path 在指定仓库下的目录全路径
 	 * @return 
+	 * @throws IOException 
 	 */
-	RestStatus createDirectory(String repoName, String path);
+	RestStatus createDirectory(String repoName, String path) throws IOException;
 	
 	/**
 	 * 重命名目录

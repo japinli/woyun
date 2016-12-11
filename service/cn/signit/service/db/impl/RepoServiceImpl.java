@@ -234,7 +234,7 @@ public class RepoServiceImpl implements RepoService {
 		return infos;
 	}
 	
-	public RestStatus createDirectory(String repoName, String path) {
+	public RestStatus createDirectory(String repoName, String path) throws IOException {
 		// 在仓库下创建一个空目录，由于 git 不会追踪空目录，
 		// 因此可以不用进行 git commit 操作
 		String dirPath = RepoPath.getRepositoryPath(repoName, path);
@@ -245,7 +245,11 @@ public class RepoServiceImpl implements RepoService {
 		if (file.exists() && file.isDirectory()) {
 			return RestStatus.DIR_EXISTS;
 		}
-		return file.mkdir() ? RestStatus.SUCCESS : RestStatus.FAILED;
+		if (!file.mkdir()) {
+			return RestStatus.FAILED;
+		}
+		boolean flag = RepoUtils.gitCommit(repoName, path, String.format(RepoPath.add_file_msg, path));
+		return flag ? RestStatus.SUCCESS : RestStatus.FAILED;
 	}
 	
 	public RestStatus renameDirectory(String repoName, String oldPath, String newPath) throws IOException {

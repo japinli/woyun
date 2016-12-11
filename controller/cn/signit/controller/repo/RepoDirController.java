@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.signit.cons.UrlPath;
 import cn.signit.controller.api.RestResponse;
 import cn.signit.controller.api.RestStatus;
+import cn.signit.domain.mysql.Repo;
 import cn.signit.domain.mysql.User;
 import cn.signit.entry.DirOperation;
 import cn.signit.entry.FileInfo;
@@ -60,7 +61,7 @@ public class RepoDirController {
 		LOG.info("用户({})请求获取仓库({})下({})的内容", user.getEmail(), repoId, path);
 
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
-		List<FileInfo> infos = repoService.getDirectory(repoName, path);
+		List<FileInfo> infos = RepoUtils.getDirectoryInfo(RepoPath.getRepositoryPath(repoName, path));
 
 		RestResponse response = new RestResponse(true);
 		response.setData(infos);
@@ -70,13 +71,17 @@ public class RepoDirController {
 	@RequestMapping(value = UrlPath.REPO_MAKE_DIR, method = RequestMethod.POST)
 	@ResponseBody
 	public RestResponse createDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
-			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) {
+			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) throws IOException {
 
 		LOG.info("用户({})请求在仓库({})下新建({})目录", user.getEmail(), repoId, dirInfo.getName());
 
 		String repoPath = RepoPath.contact(user.getEmail(), repoId);
 		String dirPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		RestStatus status = repoService.createDirectory(repoPath, dirPath);
+		RestResponse response = new RestResponse(status);
+		if (status.getStatus() == 0) {
+			response.setData(RepoUtils.getFileInfo(RepoPath.getRepositoryPath(repoPath, dirPath)));
+		}
 		return new RestResponse(status);
 	}
 
