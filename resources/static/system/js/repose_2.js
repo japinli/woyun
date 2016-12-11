@@ -161,7 +161,6 @@ function fshowLoadDir(_this){
 						    +'</tr>'
 					}else{
 						html += '<tr class="tr-border">'
-							html += '<tr class="tr-border">'
 							  	+'<th class="th-1"><input type="checkbox"/></th>'
 							    +'<th class="th-2"><span style="color:#00868B;" title="'+e.filename+'" onclick="fshowDir(this)">' +e.filename+ '<span></th>'
 							    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
@@ -187,6 +186,7 @@ function fshowLoadDir(_this){
 		}
 	});
 }
+//新建目录
 
 
 
