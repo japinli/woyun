@@ -66,10 +66,17 @@ public interface RepoService {
 	
 	/**
 	 * 删除用户仓库
-	 * * @param repoId 仓库ID
-	 * * @return true - 成功, false - 失败
+	 * @param repoId 仓库ID
+	 * @return true - 成功, false - 失败
 	 */
 	boolean deleteRepository(String repoId);
+	
+	/**
+	 * 还原用户仓库
+	 * @param repoId 仓库ID
+	 * @return true - 成功, false - 失败
+	 */
+	boolean restoreRepository(String repoId);
 	
 	/**
 	 * 永久删除仓库

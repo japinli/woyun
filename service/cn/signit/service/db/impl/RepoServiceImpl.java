@@ -165,6 +165,14 @@ public class RepoServiceImpl implements RepoService {
 		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
 	}
 	
+	public boolean restoreRepository(String repoId) {
+		Repo record = new Repo();
+		record.setRepoId(repoId);
+		record.setState(false);
+		record.setDeleteTime(Calendar.getInstance().getTime());
+		return Convert.toBoolean(repoDao.markRepositoryDeleted(record));
+	}
+	
 	public boolean permanentDeleteRepository(String user, String repoId) throws IOException {
 		if (!Convert.toBoolean(repoDao.deleteByRepoId(repoId))) {
 			return false;
