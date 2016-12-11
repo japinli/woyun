@@ -197,7 +197,8 @@ public class RepoServiceImpl implements RepoService {
 				}
 			}
 		} else {
-			try (TreeWalk treeWalk = getTreeWalk(repository, tree, path)) {
+			String parentPath = path.substring(1);
+			try (TreeWalk treeWalk = getTreeWalk(repository, tree, parentPath)) {
 				
 				if ((treeWalk.getFileMode(0).getBits() & FileMode.TYPE_TREE) == 0) {
 					throw new IllegalStateException(treeWalk.getNameString() + " 不是目录项");
@@ -207,11 +208,11 @@ public class RepoServiceImpl implements RepoService {
 					dirWalk.addTree(treeWalk.getObjectId(0));
 					dirWalk.setRecursive(false);
 					while (dirWalk.next()) {
-						String filename = treeWalk.getNameString();
-						String type = treeWalk.isSubtree() ? "dir" : "file";
-						File file = new File(working, treeWalk.getPathString());
-						long size = FS.DETECTED.lastModified(file);
-						long mtime = FS.DETECTED.length(file);
+						String filename = dirWalk.getNameString();
+						String type = dirWalk.isSubtree() ? "dir" : "file";
+						File file = new File(working, RepoPath.contact(parentPath, filename));
+						long size = FS.DETECTED.length(file);
+						long mtime = FS.DETECTED.lastModified(file);
 						
 						infos.add(new FileInfo(type, filename, size, mtime));
 					}
