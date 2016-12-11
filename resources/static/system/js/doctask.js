@@ -5,6 +5,9 @@ $(document).ready(function() {
 	$("#doc-id-bar li").click(function(){
 			$(this).siblings().removeClass('active');
 			$(this).addClass('active');
+			var text = $(this).find('span').text();
+			$("#id-globle").text(text);
+			//$("#id-globle").text() = $(this).find('span').text();
 	});
 	$("#id-myrepose").unbind().bind('click',function(){
 		fgetInit();
@@ -51,7 +54,7 @@ function fgetInit(){
 				for(var file in Data){
 					html += '<tr class="tr-border">'
 						  	+'<th class="th-1"><input type="checkbox"/></th>'
-						    +'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span id="'+Data[file].repoId+'" title="'+Data[file].repoName+'">' +Data[file].repoName+ '<span></th>'
+						    +'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" onclick="fgetinRepose(this)">' +Data[file].repoName+ '<span></th>'
 						    +'<th class="th-3"><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-bin all-icon" onclick="fdelete(this)"></i><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-write-down all-icon deal-method" onclick="fwrite(this)"></i></th>'
 						    +'<th class="th-4">--</th>'
 						    +'<th class="th-5">'+ moment(Data[file].modifyTime).format("YYYY-MM-DD HH:mm:ss") +'</th>'

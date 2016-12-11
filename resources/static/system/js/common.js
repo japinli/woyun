@@ -374,7 +374,7 @@ $("#id-trash").unbind().bind('click',function(){
 					html += '<tr class="tr-border">'
 						  	+'<th class="th-1"><input type="checkbox"/></th>'
 						    +'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span id="'+Data[file].repoId+'" title="'+Data[file].repoName+'">' +Data[file].repoName+ '<span></th>'
-						    +'<th class="th-3"><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-bin all-icon" onclick="fdelete(this)"></i></th>'
+						    +'<th class="th-3"><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-bin all-icon" onclick="fdeleteForever(this)"></i></th>'
 						    +'<th class="th-4">--</th>'
 						    +'<th class="th-5">'+ moment(Data[file].modifyTime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
 						    +'</tr>'
@@ -384,3 +384,4 @@ $("#id-trash").unbind().bind('click',function(){
 		}
 	});
 });
+
