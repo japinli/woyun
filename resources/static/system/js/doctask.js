@@ -12,6 +12,8 @@ $(document).ready(function() {
 	$("#id-myrepose").unbind().bind('click',function(){
 		fgetInit();
 		$("#newRepos").removeClass('hidden');
+		$(".lookFile").addClass("hidden");
+		$("#id-repose-content").css('top','50px');
 	});
 	$("#newRepos").unbind().bind('click',function(){
 		console.log("click");
@@ -50,7 +52,7 @@ function fgetInit(){
 			var status = data.status;
 			var Data = data.data;
 			var html = "";
-			if(status == 0){
+			if(status == 0 && Data){
 				for(var file in Data){
 					html += '<tr class="tr-border">'
 						  	+'<th class="th-1"><input type="checkbox"/></th>'
@@ -61,6 +63,13 @@ function fgetInit(){
 						    +'</tr>'
 				}
 				$("#repo-table").html(html);
+			}else{
+				$("#repo-table").html("");
+				layer.msg('还没有内容哦！', {
+					  icon: 0,
+					  time: 2000, //2秒关闭（如果不配置，默认是3秒）
+					  anim:5
+					});
 			}
 		}
 	});
@@ -235,6 +244,8 @@ function fdelete(_this){
 			}
 		}
 	});
+	$(".lookFile").addClass("hidden");
+	$("#id-repose-content").css('top','50px');
 }
 //重命名仓库
 function fwrite(_this){

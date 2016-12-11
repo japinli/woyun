@@ -351,9 +351,9 @@ div {
 }
 
 /** 左菜单 */
-.logo{
+.logo-1{
     background:url('../../common/images/cloude-9.png') center center no-repeat; 
-    width:200px;
+    width:180px;
     height:50px;
     margin:0 72px 0px 45px;
     font-weight:400;
