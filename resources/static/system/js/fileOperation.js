@@ -87,6 +87,6 @@ function getFileHistory(_this) {
         contentType: 'application/json',
         success: function(data) {
             console.log(data);
-        }        
+        }
     });
 }

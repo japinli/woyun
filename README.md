@@ -472,7 +472,7 @@ WEB 接口说明
 
 #### 请求
 
-`GET http://woyun.cn/wesign/repos/category?category=doc`
+`GET http://woyun.cn/wesign/repos/{category}`
 
 #### 参数
 
