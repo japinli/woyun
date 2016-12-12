@@ -230,6 +230,7 @@ function fnewNextfolder(){
 			console.log(data);
 			var status = data.status;
 			var Data = data.data;
+			var desc = data.desc;
 			var html = "";
 			if(status == 0 && Data){
 				console.log(data);
@@ -245,6 +246,13 @@ function fnewNextfolder(){
 				    +'<th class="th-4">'+uploadFileSizeConvertTip(Data.size)+'</th>'
 				    +'<th class="th-5">'+ moment(Data.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
 				    +'</tr>'
+			}else{
+				layer.msg(desc, {
+					  icon: 0,
+					  time: 1000, //2秒关闭（如果不配置，默认是3秒）
+					  anim:1
+					});
+				return;
 			}
 				$("#repo-table").children(':last').after(html);
 				layer.closeAll(); 
@@ -295,7 +303,7 @@ function frenameNextfolder(){
 	console.log(id+" "+name+" "+path);
 	$.ajax({
 		url:'/wesign/repos/'+id+'/dir',
-		async:true,
+		async:false,
 		type:'PUT',
 		contentType:'application/json',
 		data: JSON.stringify({"path": path,"name":oldname,"newName":name}),
@@ -303,6 +311,7 @@ function frenameNextfolder(){
 			console.log(data);
 			var status = data.status;
 			var Data = data.data;
+			var desc = data.desc;
 			var html = "";
 			if(status == 0 && Data){
 				console.log(data);
@@ -318,6 +327,13 @@ function frenameNextfolder(){
 							    +'<th class="th-4">'+uploadFileSizeConvertTip(Data.size)+'</th>'
 							    +'<th class="th-5">'+ moment(Data.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
 							    +'</tr>'
+				}else{
+					layer.msg(desc, {
+						  icon: 0,
+						  time: 1000, //2秒关闭（如果不配置，默认是3秒）
+						  anim:1
+						});
+					return;
 				}
 				$(renamefoder).parent().parent().replaceWith(html);
 				layer.closeAll(); 
