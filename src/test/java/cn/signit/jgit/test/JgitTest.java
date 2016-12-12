@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.attributes.Attribute;
 import org.eclipse.jgit.attributes.Attributes;
 import org.eclipse.jgit.dircache.DirCache;
@@ -72,10 +73,20 @@ public class JgitTest {
 			*/
 			getCommitMessage(repository);
 			getCommit(repository, "12015f6095f1df553764be6c56c766ce3ac05a9c");
+			getFileHistory(repository, "src/empty");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+	}
+	
+	public static void getFileHistory(Repository repository, String path) throws NoHeadException, GitAPIException, IOException {
+		try (Git git = new Git(repository)) {
+			Iterable<RevCommit> commits = git.log().addPath(path).all().call();
+			for (RevCommit commit : commits) {
+				System.out.println("LogCommit: " + commit);
+			}
+		}
 	}
 	
 	public static void getCommit(Repository repository, String commit) throws IOException {

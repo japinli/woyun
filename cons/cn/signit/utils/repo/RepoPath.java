@@ -64,6 +64,7 @@ public class RepoPath {
 	 * 获取仓库路径
 	 * @param more 多级目录
 	 * @return 仓库的完整路径
+	 * @note 该函数将补全系统路径
 	 */
 	public static String getRepositoryPath(String ... more) {
 		return Paths.get(repo, more).toString();

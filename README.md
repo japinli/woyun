@@ -204,37 +204,6 @@ WEB 接口说明
 }
 ```
 
-### 获取仓库变更记录
-
-#### 请求
-
-`GET http://woyun.cn/wesign/repos/{repo-id}/history`
-
-### 响应
-
-```
-{
-	"status": 0,
-	"desc": "操作成功",
-	"data":
-		[
-			{
-				"commitId": "f825b327d3020a1e06cef5f737f899373ddd3039",
-				"committer": "japinli",
-				"email": "japinli@qq.com",
-				"commitTime": 1481080888,
-				"message": "获取仓库记录测试"
-			},
-			{
-				"commitId": "79c5d4e2bfd2db1227e9d3d31271ae4c9bac9a77",
-				"committer": "japinli",
-				"email": "japinli@qq.com",
-				"commitTime": 1480980123,
-				"message": "新建仓库"
-			}
-		]
-}
-```
 
 ### 获取目录信息
 
@@ -556,6 +525,40 @@ WEB 接口说明
 					]
 			}
 		]
+}
+```
+
+### 获取历史记录
+
+该接口用户获取文件、文件夹及仓库的历史记录。用户获取仓库的历史记录时，`path`置为空即可。
+
+#### 请求
+
+`GET http://woyun.cn/wesign/repos/{repo-id}/history?path=faf`
+
+### 响应
+
+```
+{
+    "status": 0,
+    "desc": "操作成功",
+    "data": 
+        [
+            {
+                "message": "修改 Test.java\n",
+                "user": "japinli",
+                "email": "japinli@qq.com",
+                "commit": "cc731f71d1ed4e362c9d1347805e14ef5f1f508c",
+                "mtime": 1481547363
+            },
+            {
+                "message": "增加 Test.java\n",
+                "user": "japinli",
+                "email": "japinli@qq.com",
+                "commit": "2449f8efcb8d5ad31e950808f9dce35a0da79f06",
+                "mtime": 1481534276
+            }
+        ]
 }
 ```
 

@@ -118,7 +118,7 @@ public class RepoController {
 		return new RestResponse(true);
 	}
 
-	@RequestMapping(value = UrlPath.REPO_GET_HISTORY, method = RequestMethod.GET)
+/*	@RequestMapping(value = UrlPath.REPO_GET_HISTORY, method = RequestMethod.GET)
 	@ResponseBody
 	public RestResponse getRepositoryHistory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId) throws IOException {
@@ -128,7 +128,7 @@ public class RepoController {
 		RestResponse response = new RestResponse(true);
 		response.setData(repoService.getRepositoryHistory(repoName));
 		return response;
-	}
+	}*/
 
 	@RequestMapping(value = UrlPath.REPO_VIEW_HISTORY, method = RequestMethod.GET)
 	@ResponseBody

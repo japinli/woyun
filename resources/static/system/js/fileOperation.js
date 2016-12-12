@@ -31,7 +31,7 @@ function setDownloadLink(_this, url) {
  */
 function fwriteNextDelete(_this) {
     var repoId = getRepositoryId();
-    var fullpath = getParentPath(_this) + '/' + getTitle(_this);
+    var fullpath = pathContact(getCurrentPath(), getName(_this));
     $.ajax({
         url: '/wesign/repos/' + repoId,
         async: true,
@@ -53,14 +53,40 @@ function fwriteNextDelete(_this) {
     });
 }
 
-/*
+function doDownload(url) {
+    $('#down').attr('href', url);
+    document.getElementById('down').click();
+}
+
+/**
  * 下载文件或目录
  */
 function fwriteNextDown(_this) {
     var repoId = getGlobalRepoId();
     var path = getCurrentPath();
-    var downlink = gfALLDATA('baseHref') + '/wesign/repos/' + repoId + '/file?path=' + path + '&name=' + getName(_this);
-    console.log(_this);
-    $("#down").attr('href', downlink);
-    document.getElementById("down").click();
+    var url = gfALLDATA('baseHref') + '/wesign/repos/' + repoId + '/file?path=' + path + '&name=' + getName(_this);
+    doDownload(url);
+}
+
+
+function getFileHistory(_this) {
+    var path = getCurrentPath();
+    var name = getName(_this);
+    var repoId = getGlobalRepoId();
+    
+    if (typeof name == 'undefined') {
+        // 获取仓库的变更记录
+        path = "";
+        name = "";
+    }
+
+    var fullpath = pathContact(path, name);
+    $.ajax({
+        url: '/wesign/repos/' + repoId + '/history?path=' + fullpath,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function(data) {
+            console.log(data);
+        }        
+    });
 }

@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -244,5 +246,24 @@ public class RepoDirController {
 				HttpUtil.sendFile(response, zip.zip(), zip.getZipFile());
 			}
 		}
+	}
+	
+	/**
+	 * 获取历史记录控制器
+	 * @param user
+	 * @param repoId
+	 * @param path
+	 * @return
+	 * @throws NoHeadException
+	 * @throws GitAPIException
+	 * @throws IOException
+	 */
+	@RequestMapping(value=UrlPath.REPO_GET_HISTORY, method=RequestMethod.GET)
+	@ResponseBody
+	public RestResponse getHistory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
+			@RequestParam(value="path", required=false) String path) throws NoHeadException, GitAPIException, IOException {
+		RestResponse response = new RestResponse(true);
+		response.setData(RepoUtils.getFileHistory(user.getEmail(), repoId, path));
+		return response;
 	}
 }

@@ -96,7 +96,7 @@ function formatFileItemInfo(type, path, name, size, mtime) {
     html += '			<a id="down" style="visibility: hidden;">down</a></i>';
     html += '		<i title="{0}" name="{1}" class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'.format('复制', name);
     html += '		<i title="{0}" name="{1}" class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'.format('移动', name);
-    html += '		<i title="{0}" name="{1}" class="icon-history all-icon" onclick="fhistoryNext(this)"></i>'.format('历史记录', name);
+    html += '		<i title="{0}" name="{1}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>'.format('历史记录', name);
     html += '	</th>';
 
     // 目录不显示大小
