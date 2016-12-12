@@ -150,6 +150,7 @@ public class RepoTestController {
 			/* 单个文件下载 */
 			String filename = dirents.get(0);
 			File file = new File(dir, filename);
+			response.reset();
 			response.setHeader("Content-Disposition", "attachment;filename=" + filename);
 			InputStream inputStream = new FileInputStream(file);
 			OutputStream outputStream = response.getOutputStream();
