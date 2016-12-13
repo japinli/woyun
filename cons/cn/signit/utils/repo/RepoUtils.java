@@ -125,7 +125,7 @@ public class RepoUtils {
 		
 		String type = file.isDirectory() ? "dir" : "file";
 		String filename = file.getName();
-		long size = filename.length();
+		long size = file.length();
 		long mtime = file.lastModified(); 
 		return new FileInfo(type, filename, size, mtime);
 	}

@@ -86,6 +86,9 @@ public class UserController {
 	*/
 	@RequestMapping(value=UrlPath.PAGE_USER_LOGIN,method=RequestMethod.POST)
 	public String submitLoginForm(@ModelAttribute LoginForms forms,Model model,HttpServletRequest request) {
+		
+		LOG.info("用户 {} 请求登录", forms.getUsername());
+		
 		String username=forms.getUsername();
 		User user=userService.getUser(username);
 		if(user==null){
@@ -97,7 +100,6 @@ public class UserController {
 			//设置每个Session的最大有效时间（单位：秒）
 			request.getSession().setAttribute(SessionKeys.LOGIN_USER, user);
 			lastLoginService.updateLastLoginTime(user.getId(), username);
-			LOG.info("用户 {} 请求登录", forms.getUsername());
 			return "redirect:"+UrlPath.PAGE_USER_HOME;
 		} else {
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.USER_NAME_OR_PWD_ERROR);

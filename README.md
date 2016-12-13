@@ -170,7 +170,8 @@ WEB 接口说明
 				"userEmail": "japinli@qq.com",
 				"createTime": 1480599651000,
 				"modifyTime": 1480599650000,
-				"state": false
+				"state": false,
+                "leftDays": 20
 			},
 			{
 				"id": 5,
@@ -179,7 +180,8 @@ WEB 接口说明
 				"userEmail": "japinli@qq.com",
 				"createTime": 1480599651000,
 				"modifyTime": 1480599650000,
-				"state": false
+				"state": false,
+                "leftDays": 19
 			}
 		]
 }

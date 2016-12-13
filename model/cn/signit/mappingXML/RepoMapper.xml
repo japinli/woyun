@@ -9,6 +9,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="BIT" />
     <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+    <result column="left_days" property="leftDays" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, repo_id, repo_name, user_email, create_time, state, delete_time
@@ -171,12 +172,26 @@
     from repo
     where repo_name = #{repoName,jdbcType=VARCHAR} and user_email = #{userEmail, jdbcType=VARCHAR}
   </select>
-  <select id="selectByUserEmailAndState" resultMap="BaseResultMap" >
+  <!-- <select id="selectByUserEmailAndState" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from repo
     where user_email = #{userEmail, jdbcType=VARCHAR} and state = #{state,jdbcType=BIT}
+  </select> -->
+  <select id="selectByUserEmailAndState" resultMap="BaseResultMap" >
+    select 
+    <choose>
+        <when test="state != 1">
+            <include refid="Base_Column_List" />
+        </when>
+        <otherwise>
+            *, 30 - (TO_DAYS(NOW()) - TO_DAYS(delete_time)) as left_days
+        </otherwise>
+    </choose>
+    from repo
+    where user_email = #{userEmail, jdbcType=VARCHAR} and state = #{state,jdbcType=BIT}
   </select>
+  
   <select id="selectByUserEmail" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />

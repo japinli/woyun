@@ -22,6 +22,7 @@ public class RepoInfo extends Repo {
 		this.setCreateTime(repo.getCreateTime());
 		this.setState(repo.getState());
 		this.setDeleteTime(repo.getDeleteTime());
+		this.setLeftDays(repo.getLeftDays());
 	}
 	
 	public Long getModifyTime() {

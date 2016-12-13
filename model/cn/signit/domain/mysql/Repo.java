@@ -17,6 +17,8 @@ public class Repo {
     private Boolean state;
 
     private Date deleteTime;
+    
+    private Long leftDays;
 
     public Long getId() {
         return id;
@@ -73,6 +75,13 @@ public class Repo {
     public void setDeleteTime(Date deleteTime) {
         this.deleteTime = deleteTime;
     }
+    
+    public Long getLeftDays() {
+		return leftDays;
+	}
+	public void setLeftDays(Long leftDays) {
+		this.leftDays = leftDays;
+	}
     
     /**
      * 仓库构造函数

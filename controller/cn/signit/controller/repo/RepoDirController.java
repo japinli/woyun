@@ -60,7 +60,7 @@ public class RepoDirController {
 	public RestResponse listRepositoryDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestParam("path") String path) throws IOException {
 
-		LOG.info("用户 {} 请求获取仓库 {} 下 {} 的文件信息", user.getEmail(), repoId, path);
+		LOG.info("用户 {} 请求获取 {} 仓库下 {} 的文件信息", user.getEmail(), repoId, path);
 
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		List<FileInfo> infos = RepoUtils.getDirectoryInfo(RepoPath.getRepositoryPath(repoName, path));
