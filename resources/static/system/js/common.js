@@ -1,3 +1,17 @@
+/*
+ * 字符串格式化
+ * 使用:
+ * 'Hello, {0}! My name is {1}'.format('Lily', 'Bob');
+ */
+if (!String.prototype.format) {
+    String.prototype.format = function() {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined' ? args[number] : match;
+        });
+    };
+}
+
 $(document).ready(function(){
     // 登录后相关设置
     globalUserInfo();
@@ -385,41 +399,74 @@ $("#id-trash").unbind().bind('click',function(){
     });
 });
 
-//分类获取文件信息id-mymovei
+/**
+ * 发送请求获取分类文件信息
+ */
+function fetchFileByCategory(category) {
+    var categoryFiles = [];
+    $.ajax({
+        url: '/wesign/repos/' + category,
+        async: false,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function(data) {
+            if (data.status == 0 && data.data) {
+                categoryFiles = data.data;
+            }
+            // TODO: 错误处理
+        }
+    });
+
+    return categoryFiles;
+}
+
+function formatCategoryFileInfo(repoId, file) {
+    var HTML = '';
+    
+    if (file && file instanceof Array) {
+        console.log(repoId);
+        file.forEach(function(f) {
+            var name = f.filename;
+            var path = (typeof f.path == 'undefined') ? '' : f.path;
+            var size = uploadFileSizeConvertTip(f.size);
+            var time = moment(f.mtime).format("YYYY-MM-DD HH:mm:ss");
+            var html = '';
+            html += '<tr class="tr-border">';
+            html += '	<th class="th-1"><input type="checkbox" /></th>';
+            html += '	<th class="th-2"><span title="{0}" repoid="{1}" path="{2}" name="{0}">{0}</span></th>';
+            html += '	<th class="th-3">';
+            html += '		<i title="{3}" repoid="{1}" path="{2}" name="{0}" class="icon-bin all-icon" onclick="deleteFile(this)"></i>';
+            html += '		<i>';
+            html += '			<a title="{4}" repoid="{1}" path="{2}" name="{0}" class="icon-download3 all-icon" onclick="downloadFile(this)">';
+            html += '			<a id="down" style="visibility: hidden;>"</a>';
+            html += '		</i>';
+            html += '		<i title="{5}" repoid="{1}" path="{2}" name="{0}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
+            html += '	</th>';
+            html += '	<th class="th-4">{6}</th>';
+            html += '	<th class="th-5">{7}</th>';
+            HTML += html.format(name, repoId, path, '删除', '下载', '历史记录', size, time);
+        });
+    }
+    return HTML;
+}
+
+function formatCategoryFiles(categoryFiles) {
+    var html = '';
+    categoryFiles.forEach(function(files) {
+        var repoId = files.repoId;
+        var repoName = files.repoName;        
+        var fileInfos = files.fileInfo;
+        html += formatCategoryFileInfo(repoId, fileInfos);
+    });
+    return html;
+}
+
+//分类获取文件信息id-myword
 $("#id-myword").unbind().bind('click',function(){
     $("#newRepos").addClass('hidden');
-    $.ajax({
-	url:'/wesign/repos/doc',
-	async:false,
-	type:'GET',
-	dataType:'json',
-	contentType:'application/json',
-	success:function(data){
-	    var status = data.status;
-	    var Data = data.data;
-	    var html = "";
-	    if(status == 0){
-		console.log(data);
-		Data.forEach(function(e){
-		    if(e.type == "file"){
-			html += '<tr class="tr-border">'
-			    +'<th class="th-1"><input type="checkbox"/></th>'
-			    +'<th class="th-2"><span title="'+e.filename+'">' +e.filename+ '<span></th>'
-			    +'<th class="th-3"><i  title="'+e.filename+'" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'
-			    +'<i  title="'+e.filename+'" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'
-			    +'<i class="icon-download3 all-icon" onclick="fwriteNextDown(this)"></i>'
-			    +'<i class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'
-			    +'<i class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'
-			    +'<i class="icon-history all-icon" onclick="fhistoryNext(this)"></i></th>'
-			    +'<th class="th-4">'+uploadFileSizeConvertTip(e.size)+'</th>'
-			    +'<th class="th-5">'+ moment(e.mtime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
-			    +'</tr>';
-		    }
-		});
-		$("#repo-table").html(html);
-	    }
-	}
-    });
+    var categoryFiles = fetchFileByCategory('doc');
+    var html = formatCategoryFiles(categoryFiles);
+    $("#repo-table").html(html);
 });
 //分类获取文件信息id-mymovei
 $("#id-mymovei").unbind().bind('click',function(){

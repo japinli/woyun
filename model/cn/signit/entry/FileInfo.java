@@ -2,6 +2,7 @@ package cn.signit.entry;
 
 public class FileInfo {
 
+	private String path;
 	private String type;
 	private String filename;
 	private Long size;
@@ -13,7 +14,17 @@ public class FileInfo {
 		this.size = size;
 		this.mtime = mtime;
 	}
+	public FileInfo(String path, String type, String filename, Long size, Long mtime) {
+		this(type, filename, size, mtime);
+		this.path = path;
+	}
 	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public String getType() {
 		return type;
 	}

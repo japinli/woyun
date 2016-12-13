@@ -26,10 +26,40 @@ function setDownloadLink(_this, url) {
 
 }
 
-/*
+/**
+ * 显示目录下的文件及文件夹信息
+ */
+function showDirectory(_this) {
+    var path = getPath(_this);
+    var title = getTitle(_this);
+    var name = getName(_this);
+    var fullpath = pathContact(path, name);
+    var repoId = getByKey(_this, 'repoid');
+    
+    // 添加到 仓库-目录 导航
+    if (path.length <= 0 && name.length <= 0) {
+        initRepoNavigation(_this);
+        // 首次进入仓库时，还未设置全局的仓库ID
+        repoId = getId(_this);
+    } else {
+        addToNavigation(_this, path, name);
+    }
+    
+    var files = fetchDirectory(repoId, fullpath);
+    if (files) {
+        html = parseFileInfo(repoId, files, fullpath);
+        $("#repo-table").html(html);
+        $("#newRepos").addClass('hidden');
+    }
+    $(".lookFile").removeClass('hidden');
+    $("#id-repose-content").css('top','120px');
+}
+
+
+/**
  * 删除文件或目录
  */
-function fwriteNextDelete(_this) {
+function deleteFile(_this) {
     var repoId = getRepositoryId();
     var fullpath = pathContact(getCurrentPath(), getName(_this));
     $.ajax({
@@ -61,10 +91,11 @@ function doDownload(url) {
 /**
  * 下载文件或目录
  */
-function fwriteNextDown(_this) {
-    var repoId = getGlobalRepoId();
-    var path = getCurrentPath();
-    var url = gfALLDATA('baseHref') + '/wesign/repos/' + repoId + '/file?path=' + path + '&name=' + getName(_this);
+function downloadFile(_this) {
+    var repoId = getRepoId(_this);
+    var path = getPath(_this);
+    var name = getName(_this);
+    var url = gfALLDATA('baseHref') + '/wesign/repos/' + repoId + '/file?path=' + path + '&name=' + name;
     doDownload(url);
 }
 

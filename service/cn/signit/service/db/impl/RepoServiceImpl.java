@@ -301,7 +301,8 @@ public class RepoServiceImpl implements RepoService {
 				File file = new File(working, treeWalk.getPathString());
 				long size =  FS.DETECTED.length(file);
 				long mtime = FS.DETECTED.lastModified(file);
-				infos.add(new FileInfo(type, name, size, mtime));
+				String path = treeWalk.getPathString().replace(name, "");
+				infos.add(new FileInfo(path, type, name, size, mtime));
 			}
 			return infos;
 		}

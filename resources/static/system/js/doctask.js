@@ -58,7 +58,7 @@ function fgetInit(){
                     html += '	<th class="th-1"><input type="checkbox"/></th>';
                     html += '	<th class="th-2">';
                     html += '		<i class="icon-ownsign-hollow all-icon"></i>';
-                    html += '		<span id="' + d.repoId + '" path="" name ="" title="' + d.repoName + '" onclick="showDirectory(this)">' + d.repoName + '<span>';
+                    html += '		<span id="' + d.repoId +'" repoid="' + d.repoId + '" path="" name ="" title="' + d.repoName + '" onclick="showDirectory(this)">' + d.repoName + '<span>';
                     html += '	</th>';
                     html += '	<th class="th-3">';
                     html += '		<i id="' + d.repoId+'" title="' + d.repoName + '" class="icon-bin all-icon" onclick="fdelete(this)"></i>';

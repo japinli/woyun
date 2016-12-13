@@ -94,8 +94,9 @@ public class HttpUtil {
 	 * @throws IOException
 	 */
 	public static void sendFile(HttpServletResponse response, String filename, String fullpath) throws IOException {
+		String encodingName = new String(filename.getBytes(), "ISO-8859-1");
 		response.setContentType("multipart/form-data");
-		response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+		response.setHeader("Content-Disposition", "attachment;filename=" + encodingName);
 		InputStream inputStream = new FileInputStream(fullpath);
 		OutputStream outputStream = response.getOutputStream();
 		int b = 0;

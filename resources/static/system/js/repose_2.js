@@ -1,18 +1,4 @@
 /*
- * 字符串格式化
- * 使用:
- * 'Hello, {0}! My name is {1}'.format('Lily', 'Bob');
- */
-if (!String.prototype.format) {
-    String.prototype.format = function() {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) {
-            return typeof args[number] != 'undefined' ? args[number] : match;
-        });
-    };
-}
-
-/*
  * 格式化时间
  */
 function formatTime(tt) {
@@ -24,6 +10,10 @@ function formatTime(tt) {
  */
 function getByKey(_this, key) {
     return $(_this).attr(key);
+}
+
+function getId(_this) {
+    return getByKey(_this, 'id');
 }
 
 function getPath(_this) {
@@ -42,16 +32,24 @@ function getGlobalRepoId() {
     return $("#id-globle a:first").attr("id");
 }
 
+function getRepoId(_this) {
+    return getByKey(_this, "repoid");
+}
+
 /**
  * 构造路径
  */
 function pathContact(first, last) {
+    if ('undefined' == typeof first) {
+        first = "";
+    }
+    if ('undefined' == typeof last) {
+        last = "";
+    }
+    
     if (first.length <= 0) {
         return last;
-    }
-    if (typeof last == 'undefined' || last.length <= 0) {
-        return first;
-    }
+    }    
     return first + '/' + last;
 }
 
@@ -59,10 +57,6 @@ function getCurrentPath() {
     var path = $("#id-globle a:last").attr("path");
     var name = $("#id-globle a:last").attr("name");
     return pathContact(path, name);
-}
-
-function getRepoId(_this) {
-    return getByKey(_this, "id");
 }
 
 /**
@@ -79,37 +73,32 @@ function addToNavigation(_this, path, name) {
 /**
  * 格式化文件信息
  */
-function formatFileItemInfo(type, path, name, size, mtime) {
-    html  = '<tr class="tr-border">';
+function formatFileItemInfo(type, repoId, path, name, size, mtime) {
+    var html = '';
+    html += '<tr class="tr-border">';
     html += '	<th class="th-1"><input type="checkbox" /></th>';
-
     if ('file' == type) {
-        html += '	<th class="th-2"><span title="{0}" name="{0}" path="{1}">{0}<span></th>'.format(name, path);
+        html += '<th class="th-2"><span title="{0}" repoid="{1}" path="{2}" name="{0}">{0}</span></th>';
+        size = uploadFileSizeConvertTip(size);
     } else {
-        html += '	<th class="th-2"><span title="{0}" name="{0}" path="{1}" style="color:#00868B;" onclick="showDirectory(this)">{0}</span></th>'.format(name, path);
+        html += '<th class="th-2"><span title="{0}" repoid="{1}" path="{2}" name="{0}" style="color:#00868B;" onclick="showDirectory(this)">{0}</span></th>';
+        size = '--';
     }
-    
     html += '	<th class="th-3">';
-    html += '		<i title="{0}" name="{1}" class="icon-bin all-icon" onclick="fwriteNextDelete(this)"></i>'.format('删除', name);
-    html += '		<i title="{0}" name="{1}" class="icon-write-down all-icon deal-method" onclick="fwriteNext(this)"></i>'.format('重命名', name);
-    html += '		<i><a title="{0}" name="{1}" class="icon-download3 all-icon" onclick="fwriteNextDown(this)" id="downlink"></a>'.format('下载', name);
-    html += '			<a id="down" style="visibility: hidden;">down</a></i>';
-    html += '		<i title="{0}" name="{1}" class="icon-copy all-icon" onclick="fcopyNext(this)"></i>'.format('复制', name);
-    html += '		<i title="{0}" name="{1}" class="icon-remove all-icon" onclick="fmoveNext(this)"></i>'.format('移动', name);
-    html += '		<i title="{0}" name="{1}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>'.format('历史记录', name);
+    html += '		<i title="{3}" repoid="{1}" path="{2}" name="{0}" class="icon-bin all-icon" onclick="deleteFile(this)"></i>';
+    html += '		<i title="{4}" repoid="{1}" path="{2}" name="{0}" class="icon-write-down all-icon" onclick="fwriteNext(this)"></i>';
+    html += '		<i>';
+    html += '			<a title="{5}" repoid="{1}" path="{2}" name="{0}" class="icon-download3 all-icon" onclick="downloadFile(this)"></a>';
+    html += '			<a id="down" style="visibility: hidden;"></a>';
+    html += '		</i>';
+    html += '		<i title="{6}" repoid="{1}" path="{2}" name="{0}" class="icon-copy all-icon" onclick="fcopyNext(this)"></i>';
+    html += '		<i title="{7}" repoid="{1}" path="{2}" name="{0}" class="icon-remove all-icon" onclick="fmoveNext(this)"></i>';
+    html += '		<i title="{8}" repoid="{1}" path="{2}" name="{0}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
     html += '	</th>';
-
-    // 目录不显示大小
-    if ('file' == type) {
-        html += '	<th class="th-4">{0}</th>'.format(uploadFileSizeConvertTip(size));
-    } else {
-        html += '	<th class="th-4">--</th>';
-    }
-    
-    html += '	<th class="th-5">{0}</th>'.format(formatTime(mtime));
+    html += '	<th class="th-4">{9}</th>';
+    html += '	<th class="th-5">{10}</th>';
     html += '</tr>';
-
-    return html;
+    return html.format(name, repoId, path, '删除', '重命名', '下载', '复制', '移动', '历史记录', size, formatTime(mtime));
 }
 
 /**
@@ -142,10 +131,10 @@ function fetchDirectory(repoId, path) {
  * @param files 文件信息数组
  * @param path 文件所在路径
  */
-function parseFileInfo(files, path) {
+function parseFileInfo(repoId, files, path) {
     html = "";
     files.forEach(function(f) {
-        html += formatFileItemInfo(f.type, path, f.filename, f.size, f.mtime);
+        html += formatFileItemInfo(f.type, repoId, path, f.filename, f.size, f.mtime);
     });
     return html;
 }
@@ -158,35 +147,6 @@ function initRepoNavigation(_this) {
     var repoName = getTitle(_this);
     var nav = '<a href="javascript:;" id="{0}" path="" name="" style="text-decoration:underline;" title="{1}" onclick="showDirectory(this)">{1}</a>'.format(repoId, repoName);
     $("#id-globle").html(nav);
-}
-
-/*
- * 显示目录下的文件及文件夹信息
- */
-function showDirectory(_this) {
-    var path = getPath(_this);
-    var title = getTitle(_this);
-    var name = getName(_this);
-    var fullpath = pathContact(path, name);
-    var repoId = getGlobalRepoId();
-    
-    // 添加到 仓库-目录 导航
-    if (path.length <= 0 && name.length <= 0) {
-        initRepoNavigation(_this);
-        // 首次进入仓库时，还未设置全局的仓库ID
-        repoId = getRepoId(_this);
-    } else {
-        addToNavigation(_this, path, name);
-    }
-    
-    var files = fetchDirectory(repoId, fullpath);
-    if (files) {
-        html = parseFileInfo(files, fullpath);
-        $("#repo-table").html(html);
-        $("#newRepos").addClass('hidden');
-    }
-    $(".lookFile").removeClass('hidden');
-    $("#id-repose-content").css('top','120px');
 }
 
 /**
