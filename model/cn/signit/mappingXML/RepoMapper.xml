@@ -201,7 +201,7 @@
     </set>
     where repo_id = #{repoId,jdbcType=VARCHAR}
   </update>
-  <delete id="deleteByRepoId" parameterType="java.lang.Long" >
+  <delete id="deleteByRepoId" parameterType="java.lang.String" >
     delete from repo
     where repo_id = #{repoId,jdbcType=VARCHAR}
   </delete>

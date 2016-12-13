@@ -370,8 +370,36 @@ function resetrenameRepose(){
 function fnewresetrepose(){
     $("#id-newrepose").val("");
 }
+
+function formatTrashRepository(repos) {
+    var HTML = '';
+    repos.forEach(function(r) {
+        var repoid = r.repoId;
+        var name = r.repoName;
+        var size = uploadFileSizeConvertTip(r.repoSize);
+        var deleteTime = moment(r.deleteTime).format("YYYY-MM-DD HH:mm:ss");
+
+        var html = '';
+        html += '<tr class-"tr-border">';
+        html += '	<th class="th-1"><input type="checkbox" /></th>';
+        html += '	<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span repoid="{0}" title="{1}">{1}</span></th>';
+        html += '	<th class="th-3">';
+        html += '		<i repoid="{0}" title="{2}" class="icon-bin all-icon" onclick="permanentDelete(this)"></i>';
+        html += '		<i repoid="{0}" title="{3}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
+        html += '	<th class="th-4">{4}</th>';
+        html += '	<th class="th-5">{5}</th>';
+        html += '</th>';
+
+        HTML += html.format(repoid, name, '永久删除', '还原', size, deleteTime);
+    });
+    return HTML;
+}
+
 $("#id-trash").unbind().bind('click',function(){
     $("#newRepos").addClass('hidden');
+    // TODO: 修改表头为
+    // 名称 | 操作 | 删除时间 |
+    var html = '';
     $.ajax({
 	url:'/wesign/repos/deleted',
 	async:false,
@@ -380,23 +408,14 @@ $("#id-trash").unbind().bind('click',function(){
 	contentType:'application/json',
 	success:function(data){
 	    var status = data.status;
-	    var Data = data.data;
-	    var html = "";
-	    if(status == 0){
-		console.log(data);
-		for(var file in Data){
-		    html += '<tr class="tr-border">'
-			+'<th class="th-1"><input type="checkbox"/></th>'
-			+'<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span id="'+Data[file].repoId+'" title="'+Data[file].repoName+'">' +Data[file].repoName+ '<span></th>'
-			+'<th class="th-3"><i id="'+Data[file].repoId+'" title="'+Data[file].repoName+'" class="icon-bin all-icon" onclick="fdeleteForever(this)"></i></th>'
-			+'<th class="th-4">--</th>'
-			+'<th class="th-5">'+ moment(Data[file].modifyTime).format("YYYY-MM-DD HH:mm:ss") +'</th>'
-			+'</tr>';
-		}
-		$("#repo-table").html(html);
+	    var dd = data.data;
+
+	    if(status == 0 && dd){
+		html = formatTrashRepository(dd);	
 	    }
 	}
     });
+    $("#repo-table").html(html);
 });
 
 /**

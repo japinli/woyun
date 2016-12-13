@@ -29,8 +29,9 @@ function getTitle(_this) {
 }
 
 function getGlobalRepoId() {
-    return $("#id-globle a:first").attr("id");
+    return $("#id-globle a:first").attr("repoid");
 }
+
 
 function getRepoId(_this) {
     return getByKey(_this, "repoid");
@@ -62,12 +63,21 @@ function getCurrentPath() {
 /**
  * 添加到导航
  */
-function addToNavigation(_this, path, name) {
-    // 移除自身及后续节点
-    $(_this).nextAll().remove();
-    $(_this).remove();
-    var nav = '<a path="{0}" name="{1}" href="javascript:;" onclick="showDirectory(this)"><span style="padding:5px;">/</span>{1}</a>'.format(path, name);
-    $("#id-globle").children("a:last").after(nav);
+function addToNavigation(_this, repoid, path, name) {
+    var nav = '';
+    if (path.length <= 0 && name.length <= 0) {
+        // 进入资料库的根路径
+        // 两种情况进入这里： 1. 导航的资料库名； 2. 资料库列表进入资料库。
+        nav = '<a href="javascript:;" repoid="{0}" path="{1}" name="{2}" title="{3}" style="text-decoration:underline;" title"{2}" onclick="showDirectory(this)">{3}</a>';
+        $("#id-globle").html(nav.format(repoid, path, name, getByKey(_this, 'title')));
+    } else {
+        // 移除自身及后续节点
+        // 有两种情况可能进入到这里： 1. 导航目录； 2. 文件列表进入目录。
+        $(_this).nextAll().remove();
+        $(_this).remove();
+        nav = '<a href="javascript:;" repoid="{0}" path="{1}" name="{2}" onclick="showDirectory(this)"><span style="padding:5px;">/</span>{2}</a>';
+        $("#id-globle").children("a:last").after(nav.format(repoid, path, name));
+    }
 }
 
 /**
@@ -281,5 +291,24 @@ function frenameNextfolder(){
                 });
             }
 	}
+    });
+}
+
+function permanentDelete(_this) {
+    var ids = new Array(getByKey(_this, 'repoid'));
+    batchPermanentDelete(_this, ids);
+}
+
+function batchPermanentDelete(_this, repoid) {
+    var param = 'repoId=' + repoid.join('&repoId=');
+    $.ajax({
+        url: '/wesign/repos/permanent?' + param,
+        type: 'DELETE',
+        async: true,
+        contentType: 'application/json',
+        success: function(data) {
+            console.log(data);
+        }
+        
     });
 }

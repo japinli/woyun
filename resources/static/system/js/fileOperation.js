@@ -28,26 +28,20 @@ function setDownloadLink(_this, url) {
 
 /**
  * 显示目录下的文件及文件夹信息
+ * repoid - 仓库ID
+ * path - 参考下的路径
+ * name - 待显示的目录名
  */
 function showDirectory(_this) {
-    var path = getPath(_this);
-    var title = getTitle(_this);
-    var name = getName(_this);
+    var path = getByKey(_this, 'path');
+    var name = getByKey(_this, 'name');
+    var repoid = getByKey(_this, 'repoid');
     var fullpath = pathContact(path, name);
-    var repoId = getByKey(_this, 'repoid');
+    addToNavigation(_this, repoid, path, name);
     
-    // 添加到 仓库-目录 导航
-    if (path.length <= 0 && name.length <= 0) {
-        initRepoNavigation(_this);
-        // 首次进入仓库时，还未设置全局的仓库ID
-        repoId = getId(_this);
-    } else {
-        addToNavigation(_this, path, name);
-    }
-    
-    var files = fetchDirectory(repoId, fullpath);
+    var files = fetchDirectory(repoid, fullpath);
     if (files) {
-        html = parseFileInfo(repoId, files, fullpath);
+        html = parseFileInfo(repoid, files, fullpath);
         $("#repo-table").html(html);
         $("#newRepos").addClass('hidden');
     }

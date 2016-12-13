@@ -146,7 +146,7 @@ public class RepoController {
 	public RestResponse getByCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable String category) 
 			throws IOException {
 		
-		List<Repo> repos = repoDao.selectByUserEmail(user.getEmail());
+		List<Repo> repos = repoDao.selectByUserEmailAndState(user.getEmail(), false);
 		List<RepoCategoryInfo> categoryInfos = new ArrayList<RepoCategoryInfo>();
 		
 		for (Repo repo : repos) {
