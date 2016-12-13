@@ -3,15 +3,7 @@
  */
 
 function getRepositoryId() {
-    return $("#id-globle a:first").attr("id");
-}
-
-function getParentPath(_this) {
-    var path = $("#id-globle").children("a:gt(0)").text();
-    if (path.length <= 0) {
-        return "/";
-    }
-    return path;
+    return $("#id-globle a:first").attr("repoid");
 }
 
 function getTitle(_this) {
@@ -22,8 +14,13 @@ function removeSubdirectory(_this) {
     return $(_this).nextAll().remove();
 }
 
-function setDownloadLink(_this, url) {
-
+function updateDirectory(repoid, path) {
+    var files = fetchDirectory(repoid, path);
+    if (files) {
+        var html = parseFileInfo(repoid, files, path);
+        $("#repo-table").html(html);
+        $("#newRepos").addClass("hidden");
+    }
 }
 
 /**
@@ -54,7 +51,7 @@ function showDirectory(_this) {
  * 删除文件或目录
  */
 function deleteFile(_this) {
-    var repoId = getRepositoryId();
+    var repoId = getRepoId(_this);
     var fullpath = pathContact(getCurrentPath(), getName(_this));
     $.ajax({
         url: '/wesign/repos/' + repoId,
@@ -82,15 +79,20 @@ function doDownload(url) {
     document.getElementById('down').click();
 }
 
+function batchDownloadFiles(_this, names) {
+    var path = getPath(_this);
+    var repoid = getRepoId(_this);
+    var param = "path=" + path + '&name=' + names.join('&name=');
+    var url = gfALLDATA('basehref') + '/wesign/repos/' + repoid + '/file?' + param;
+    doDownload(url);
+}
+
 /**
  * 下载文件或目录
  */
 function downloadFile(_this) {
-    var repoId = getRepoId(_this);
-    var path = getPath(_this);
-    var name = getName(_this);
-    var url = gfALLDATA('baseHref') + '/wesign/repos/' + repoId + '/file?path=' + path + '&name=' + name;
-    doDownload(url);
+    var names = new Array(getByKey(_this, name));
+    batchDownloadFiles(_this, names);
 }
 
 

@@ -162,7 +162,7 @@ function initRepoNavigation(_this) {
 /**
  * 新建目录弹出窗体
  */
-$("#id-newfilder").unbind().bind('click',function(){
+$("#popup-new-folder").unbind().bind('click',function(){
     layer.open({
 	type: 1,
 	title:'创建文件夹',
@@ -173,7 +173,7 @@ $("#id-newfilder").unbind().bind('click',function(){
 	    +'<div class="layui-form-item" style="margin-top:30px;">'
 	    +'<label class="layui-form-label">文件夹名：</label>'
 	    + '<div class="layui-input-inline">'
-	    +'<input type="text" name="name"  autocomplete="off" class="layui-input " id="id-newfloder"/>'
+	    +'<input type="text" name="name"  autocomplete="off" class="layui-input" id="new-folder" />'
 	    +'</div>'
 	    +'</div>'
 	    +'<div class="layui-form-item">'
@@ -193,13 +193,13 @@ $("#id-newfilder").unbind().bind('click',function(){
 function fnewNextfolder() {
     var repoId = getGlobalRepoId();
     var path = getCurrentPath();
-    var name = $("#id-newfloder").val();
-    console.log(repoId + ":" + path + ":" + "name");
-    
+    var name = $("#new-folder").val();
+    console.log(repoId + ":" + path + ":" + name);
+
     $.ajax({
         url:'/wesign/repos/' + repoId + '/dir',
         type:'POST',
-        async:true,
+        async: false,
         contentType:'application/json',
         data: JSON.stringify({"path": path, "name": name}),
         success:function(data){
@@ -207,16 +207,13 @@ function fnewNextfolder() {
             var status = data.status;
             var dir = data.data;
             if(status == 0 && dir){
-                html = formatFileItemInfo(dir.type, path, dir.filename, dir.size, dir.mtime);
-                $("#repo-table").html(html);
-                layer.close({
-                    anim:6
-                });
+                updateDirectory(repoId, path);
                 layer.msg('文件夹创建成功', {
                     icon: 1,
                     time: 1000, //2秒关闭（如果不配置，默认是3秒）
                     anim:1
                 });
+                layer.closeAll();
             }
         }
     });
@@ -273,8 +270,9 @@ function frenameNextfolder(){
 	    var status = data.status;
 	    var dd = data.data;
 	    if(status == 0 && dd){
-                html = formatFileItemInfo(dd.type, path, dd.filename, dd.size, dd.mtime);
-		$("#repo-table").html(html);
+                
+                updateDirectory(repoid, path);
+
 		layer.close({
 		    anim:6
 		});
