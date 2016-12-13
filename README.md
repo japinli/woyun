@@ -566,7 +566,7 @@ WEB 接口说明
 
 #### 请求
 
-`GET http://woyun.cn/wesign/repos/{repo-id}/restore`
+`PUT http://woyun.cn/wesign/repos/{repo-id}/restore`
 
 #### 参数
 

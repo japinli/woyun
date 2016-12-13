@@ -385,7 +385,7 @@ function formatTrashRepository(repos) {
         html += '	<th class="th-2"><i class="icon-ownsign-hollow all-icon"></i><span repoid="{0}" title="{1}">{1}</span></th>';
         html += '	<th class="th-3">';
         html += '		<i repoid="{0}" title="{2}" class="icon-bin all-icon" onclick="permanentDelete(this)"></i>';
-        html += '		<i repoid="{0}" title="{3}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
+        html += '		<i repoid="{0}" title="{3}" class="icon-history all-icon" onclick="restoreRepository(this)"></i>';
         html += '	<th class="th-4">{4}</th>';
         html += '	<th class="th-5">{5}</th>';
         html += '</th>';

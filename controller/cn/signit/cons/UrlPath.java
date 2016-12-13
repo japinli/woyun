@@ -132,7 +132,7 @@ public class UrlPath {
 	public final static String REPO_PERMANENT_DELETE = USER_ROOT + "/repos/permanent";
 	
 	/** 还原已删除的仓库 */
-	public final static String REPO_RESTORE = USER_ROOT + "repos/{repo-id}/restore";
+	public final static String REPO_RESTORE = USER_ROOT + "/repos/{repo-id}/restore";
 	
 	public final static String REPO_LIST_DIRS = USER_ROOT + "/repos/{repo-id}/dir";
 	public final static String REPO_MAKE_DIR = USER_ROOT + "/repos/{repo-id}/dir";

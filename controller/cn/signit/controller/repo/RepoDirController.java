@@ -60,7 +60,7 @@ public class RepoDirController {
 	public RestResponse listRepositoryDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestParam("path") String path) throws IOException {
 
-		LOG.info("用户({})请求获取仓库({})下({})的内容", user.getEmail(), repoId, path);
+		LOG.info("用户 {} 请求获取仓库 {} 下 {} 的文件信息", user.getEmail(), repoId, path);
 
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		List<FileInfo> infos = RepoUtils.getDirectoryInfo(RepoPath.getRepositoryPath(repoName, path));
@@ -75,10 +75,11 @@ public class RepoDirController {
 	public RestResponse createDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) throws IOException {
 
-		LOG.info("用户({})请求在仓库({})下新建({})目录", user.getEmail(), repoId, dirInfo.getName());
-
 		String repoPath = RepoPath.contact(user.getEmail(), repoId);
 		String dirPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
+		
+		LOG.info("用户 { )请求在 {} 仓库下新建 {} 目录", user.getEmail(), repoId, dirInfo.getName());
+		
 		RestStatus status = repoService.createDirectory(repoPath, dirPath);
 		RestResponse response = new RestResponse(status);
 		if (status.getStatus() == 0) {
@@ -92,11 +93,12 @@ public class RepoDirController {
 	public RestResponse renameDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestBody DirOperation dirInfo) throws IOException {
 
-		LOG.info("用户({})请求在仓库({})下重命名({})目录为({})", user.getEmail(), repoId, dirInfo.getName(), dirInfo.getNewName());
-
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		String oldPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		String newPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getNewName());
+		
+		LOG.info("用户 { )请求在 {} 仓库下重命名 {} 目录为 {}", user.getEmail(), repoId, oldPath, newPath);
+		
 		RestStatus status = repoService.renameDirectory(repoName, oldPath, newPath);
 		
 		RestResponse response = new RestResponse(status);
@@ -111,12 +113,12 @@ public class RepoDirController {
 	public RestResponse directoryOrFileOperation(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@RequestBody DirOperation dirInfo) throws IOException {
 
-		LOG.info("用户({})请求将仓库({})下的({} {}) {} 到 ({}) 仓库下的 ({})", user.getEmail(), dirInfo.getSrcRepoId(),
-				dirInfo.getSrcPath(), dirInfo.getName(), dirInfo.getDstRepoId(), dirInfo.getDstPath());
-
 		String srcRepoName = RepoPath.contact(user.getEmail(), dirInfo.getSrcRepoId());
 		String dstRepoName = RepoPath.contact(user.getEmail(), dirInfo.getDstRepoId());
-
+		
+		LOG.info("用户 {} 请求将 {} 仓库的 {}/{} {} 到 {} 仓库 {} 目录", user.getEmail(), dirInfo.getSrcRepoId(),
+				dirInfo.getSrcPath(), dirInfo.getName(), dirInfo.getOperation(), dirInfo.getDstRepoId(), dirInfo.getDstPath());
+		
 		RestResponse response = new RestResponse(false);
 		boolean flag = false;
 
@@ -142,6 +144,9 @@ public class RepoDirController {
 	@ResponseBody
 	public RestResponse deleteFileOrDirectory(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestBody List<DirOperation> dels) throws IOException {
+		
+		LOG.info("用户 {} 请求删除 {}", user.getEmail(), dels);
+		
 		boolean flag = repoService.delete(RepoPath.contact(user.getEmail(), repoId), dels);
 		return new RestResponse(flag);
 	}
@@ -152,6 +157,8 @@ public class RepoDirController {
 			@PathVariable("repo-id") String repoId, @RequestPart(name = "file") MultipartFile[] files, String path,
 			HttpServletResponse response) throws IOException {
 
+		LOG.info("用户 {} 请求上传文件到 {} 仓库的 {} 目录", user.getEmail(), repoId, path);
+		
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		boolean flag = repoService.uploadFiles(repoName, path, files);
 		return new RestResponse(flag);
@@ -162,6 +169,8 @@ public class RepoDirController {
 			@RequestParam String path, @RequestParam List<String> name, HttpServletResponse response)
 			throws IOException {
 
+		LOG.info("用户 {} 请求下载 {} 仓库 {} 目录下的 {}", user.getEmail(), repoId, path, name);
+		
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		String filename = null; /** 待下载的文件名 */
 		String fullpath = null; /** 待下载的文件绝对路径 */
@@ -195,6 +204,8 @@ public class RepoDirController {
 			@RequestParam String commitId, @RequestParam String path, @RequestParam List<String> name, 
 			HttpServletResponse response)
 			throws IOException {
+		
+		LOG.info("用户 {} 请求下载 {} 仓库 {}/{} 文件", user.getEmail(), repoId, path, name);
 		
 		Repository repository = RepoUtils.getRepository(user.getEmail(), repoId);
 		RevCommit revCommit = RepoUtils.getRevCommit(repository, commitId);
@@ -262,6 +273,9 @@ public class RepoDirController {
 	@ResponseBody
 	public RestResponse getHistory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable("repo-id") String repoId,
 			@RequestParam(value="path", required=false) String path) throws NoHeadException, GitAPIException, IOException {
+		
+		LOG.info("用户 {} 请求获取 {} 仓库 {} 的历史记录", user.getEmail(), repoId, path);
+		
 		RestResponse response = new RestResponse(true);
 		response.setData(RepoUtils.getFileHistory(user.getEmail(), repoId, path));
 		return response;

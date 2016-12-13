@@ -44,6 +44,7 @@ public class RepoController {
 	@RequestMapping(value=UrlPath.REPO_CHECK, method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse checkRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestParam String repoName) {
+		LOG.info("用户 {} 请求检测 {} 仓库是否存在", user.getEmail(), repoName);
 		int state = repoService.isRepositoryExists(user.getEmail(), repoName);
 		RestResponse response = new RestResponse(true);
 		response.setData(new Integer(state));
@@ -53,7 +54,7 @@ public class RepoController {
 	@RequestMapping(value = UrlPath.REPO_LIST, method = RequestMethod.GET)
 	@ResponseBody
 	public RestResponse listRepositories(@ModelAttribute(SessionKeys.LOGIN_USER) User user) throws IOException {
-		LOG.info("用户({})请求获取所有仓库信息", user.getEmail());
+		LOG.info("用户 {} 请求获取所有仓库信息", user.getEmail());
 		RestResponse response = new RestResponse(true);
 		response.setData(repoService.getRepositoriesInfo(user, false));
 		return response;
@@ -62,7 +63,7 @@ public class RepoController {
 	@RequestMapping(value = UrlPath.REPO_NEW, method = RequestMethod.POST)
 	@ResponseBody
 	public RestResponse createRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
-		LOG.info("用户({})请求新建({})仓库)", user.getEmail(), repo.getRepoName());
+		LOG.info("用户 {} 请求新建 {} 仓库)", user.getEmail(), repo.getRepoName());
 		RestResponse response = new RestResponse();
 		RepoInfo repoInfo = repoService.createRepository(user, repo.getRepoName());
 		if (repo != null) {
@@ -76,7 +77,7 @@ public class RepoController {
 	@RequestMapping(value = UrlPath.REPO_RENAME, method = RequestMethod.PUT)
 	@ResponseBody
 	public RestResponse renameRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
-		LOG.info("用户({})请求修改仓库({})名为({})", user.getEmail(), repo.getRepoId(), repo.getRepoName());
+		LOG.info("用户 {} 请求重命名仓库 {} 为 {}", user.getEmail(), repo.getRepoId(), repo.getRepoName());
 
 		boolean flag = repoService.renameRepository(repo.getRepoId(), repo.getRepoName());
 		return new RestResponse(flag);
@@ -85,7 +86,7 @@ public class RepoController {
 	@RequestMapping(value = UrlPath.REPO_DELETE, method = RequestMethod.DELETE)
 	@ResponseBody
 	public RestResponse deleteRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @RequestBody Repo repo) {
-		LOG.info("用户({})请求删除({})仓库", user.getEmail(), repo.getRepoId());
+		LOG.info("用户 {} 请求将 {} 仓库移至回收站", user.getEmail(), repo.getRepoId());
 		boolean flag = repoService.deleteRepository(repo.getRepoId());
 		return new RestResponse(flag);
 	}
@@ -94,7 +95,7 @@ public class RepoController {
 	@ResponseBody
 	public RestResponse restoreRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId) {
-		LOG.info("用户({})请求还原({})仓库", user.getEmail(), repoId);
+		LOG.info("用户 {} 请求从回收站中还原 {} 仓库", user.getEmail(), repoId);
 		boolean flag = repoService.restoreRepository(repoId);
 		return new RestResponse(flag);
 	}
@@ -102,6 +103,7 @@ public class RepoController {
 	@RequestMapping(value=UrlPath.REPO_LIST_DELETED,method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse getDeletedRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user) throws IOException {
+		LOG.info("用户 {} 请求获取所有已删除的仓库", user.getEmail());
 		RestResponse response = new RestResponse(true);
 		response.setData(repoService.getRepositoriesInfo(user, true));
 		return response;
@@ -112,7 +114,7 @@ public class RepoController {
 	public RestResponse permanentDeleteRepository(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@RequestParam List<String> repoId) throws IOException {
 		for (String id : repoId) {
-			LOG.info("用户({})请求永久删除({})仓库", user.getEmail(), id);
+			LOG.info("用户 {} 请求永久删除 {} 仓库", user.getEmail(), id);
 			repoService.permanentDeleteRepository(user.getEmail(), id);
 		}
 		return new RestResponse(true);
@@ -135,6 +137,7 @@ public class RepoController {
 	public RestResponse viewHistoryByCommitId(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
 			@PathVariable("repo-id") String repoId, @RequestParam String commitId, @RequestParam String path)
 			throws IOException {
+		LOG.info("用户 {} 请求获取 {} 仓库 {} 变更信息", user.getEmail(), repoId, path);
 		RestResponse response = new RestResponse(true);
 		String repoName = RepoPath.contact(user.getEmail(), repoId);
 		response.setData(repoService.getHistoryByCommit(repoName, commitId, path));
@@ -146,6 +149,7 @@ public class RepoController {
 	public RestResponse getByCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, @PathVariable String category) 
 			throws IOException {
 		
+		LOG.info("用户 {} 请求获取 {} 分类信息", user.getEmail(), category);
 		List<Repo> repos = repoDao.selectByUserEmailAndState(user.getEmail(), false);
 		List<RepoCategoryInfo> categoryInfos = new ArrayList<RepoCategoryInfo>();
 		
@@ -159,16 +163,16 @@ public class RepoController {
 		return response;
 	}
 	
-	@RequestMapping(value=UrlPath.REPO_SHOW_REPO_ID_CATEGORY, method=RequestMethod.GET)
+	/*@RequestMapping(value=UrlPath.REPO_SHOW_REPO_ID_CATEGORY, method=RequestMethod.GET)
 	@ResponseBody
 	public RestResponse getByRepoCategory(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
 			@PathVariable("repo-id") String repoId, @PathVariable String category) 
 			throws IOException {
-		
+		LOG.info("用户 {} 请求获取 {} 仓库的 {} 分类信息", user.getEmail(), repoId, category);
 		RestResponse response = new RestResponse(true);
 		response.setData(repoService.getFileByCategory(user.getEmail(), repoId, category));
 		return response;
-	}
+	}*/
 	
 	public static class RepoCategoryInfo {
 		private String repoId;

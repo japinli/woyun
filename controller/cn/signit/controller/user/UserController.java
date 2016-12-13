@@ -97,7 +97,7 @@ public class UserController {
 			//设置每个Session的最大有效时间（单位：秒）
 			request.getSession().setAttribute(SessionKeys.LOGIN_USER, user);
 			lastLoginService.updateLastLoginTime(user.getId(), username);
-			LOG.info("用户: {} 登录", forms.getUsername());
+			LOG.info("用户 {} 请求登录", forms.getUsername());
 			return "redirect:"+UrlPath.PAGE_USER_HOME;
 		} else {
 			model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.USER_NAME_OR_PWD_ERROR);
@@ -112,7 +112,7 @@ public class UserController {
 	@RequestMapping(value=RestPagePath.USER_LOGOUT,method=RequestMethod.GET)
 	public String userLogout(@ModelAttribute LoginForms forms, HttpServletRequest request) {
 		request.getSession().removeAttribute(SessionKeys.LOGIN_USER);
-		LOG.info("用户: {} 退出", forms.getUsername());
+		LOG.info("用户 {} 请求退出", forms.getUsername());
 		return PageLogicPath.LOGIN.path();
 	}
 	
@@ -212,10 +212,10 @@ public class UserController {
 			repoService.createRepository(user, RepoPath.default_repo);
 			boolean isSend = sendVerifyEmail(request, user);
 			if (isSend) {
-				LOG.info("注册邮件:({})发送成功!",user.getEmail());
+				LOG.info("用户 {} 注册邮件发送成功",user.getEmail());
 				return RestPagePath.REDIRECT.concat(RestPagePath.ACTIVATE_TIP).concat("?").concat(SessionKeys.RESULT_TYPE).concat("=").concat("2");
 			} else {
-				LOG.info("注册邮件:({})发送失败!",user.getEmail());
+				LOG.info("用户 {} 注册邮件发送失败",user.getEmail());
 				model.addAttribute(SessionKeys.RESULT_ERROR,SessionResults.PROCESS_FAILURE);
 				model.addAttribute(forms);
 				return RestPagePath.REGISTER_LOC;
@@ -249,6 +249,9 @@ public class UserController {
 			@PathVariable("checkcode") String checkCode,
 			HttpServletRequest request,Model model){
 		User user=userService.getUser(Long.parseLong(id));
+		
+		LOG.info("用户 {} 请求激活帐号", user.getEmail());
+		
 		if(user.getActivated()){
 			return RestPagePath.REDIRECT.concat(RestPagePath.LOGIN);
 		}

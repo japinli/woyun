@@ -312,3 +312,20 @@ function batchPermanentDelete(_this, repoid) {
         
     });
 }
+
+/**
+ * 恢复已删除的仓库
+ * @param repoid - 通过`_this`获取
+ */
+function restoreRepository(_this) {
+    var repoid = getByKey(_this, 'repoid');
+    $.ajax({
+        url: '/wesign/repos/{0}/restore'.format(repoid),
+        type: 'PUT',
+        async: false,
+        contentType: 'application/json',
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
