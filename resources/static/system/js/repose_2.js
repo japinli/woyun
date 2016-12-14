@@ -103,7 +103,9 @@ function formatFileItemInfo(type, repoId, path, name, size, mtime) {
     html += '		</i>';
     html += '		<i title="{6}" repoid="{1}" path="{2}" name="{0}" class="icon-copy all-icon" onclick="fcopyNext(this)"></i>';
     html += '		<i title="{7}" repoid="{1}" path="{2}" name="{0}" class="icon-remove all-icon" onclick="fmoveNext(this)"></i>';
-    html += '		<i title="{8}" repoid="{1}" path="{2}" name="{0}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
+    if ('file' == type) {
+        html += '	<i title="{8}" repoid="{1}" path="{2}" name="{0}" class="icon-history all-icon" onclick="getFileHistory(this)"></i>';
+    }
     html += '	</th>';
     html += '	<th class="th-4">{9}</th>';
     html += '	<th class="th-5">{10}</th>';

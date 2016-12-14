@@ -582,3 +582,24 @@ WEB 接口说明
 	"desc": "操作成功"
 }
 ```
+
+### 还原文件到指定状态
+
+#### 请求
+
+`PUT http://woyun.cn/wesign/repos/restore/{repo-id}/{commit}?pathname=xxxxx`
+
+#### 参数
+
+- repo-id - 仓库编号
+- commit - 提交记录编号
+- pathname - 文件在仓库下的相对路径
+
+#### 响应
+
+```
+{
+	"status": 0,
+	"desc": "操作成功"
+}
+```

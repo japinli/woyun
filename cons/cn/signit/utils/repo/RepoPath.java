@@ -49,6 +49,8 @@ public class RepoPath {
 	public static final String exists_repo_msg = "资料库 \"%s\" 已存在";
 	public static final String add_file_msg = "添加 \"%s\" ";
 	public static final String del_file_msg = "删除 \"%s\" ";
+	public static final String rename_msg = "重命名 \"%s\" 为 \"%s\"";
+	public static final String restore_msg = "还原了 \"%s\" 文件";
 	
 	/**
 	 * 路径拼接

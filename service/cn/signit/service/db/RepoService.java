@@ -184,4 +184,13 @@ public interface RepoService {
 	 * @throws IOException 
 	 */
 	boolean uploadFiles(String repoName, String path, MultipartFile[] files) throws IOException;
+	
+	/**
+	 * 仓库回滚
+	 * @param repoName 仓库名
+	 * @param commit 提交记录
+	 * @return
+	 * @throws IOException 
+	 */
+	boolean rollback(String repoName, String commit) throws IOException;
 }

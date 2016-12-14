@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
@@ -245,6 +246,48 @@ public class RepoUtils {
 		}
 	}
 	
+	/**
+	 * 还原文件到指定的提交记录状态
+	 * @param user 用户邮件
+	 * @param repoid 仓库ID
+	 * @param commit 提交记录标志
+	 * @param pathname 仓库下的文件相对路径
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	public static boolean restoreFileByCommit(String user, String repoid, String commit, String pathname) throws IOException {
+		String repoName = RepoPath.contact(user, repoid);
+		return restoreFileByCommit(repoName, commit, pathname);
+	}
+	
+	/**
+	 * 还原文件到指定的提交记录状态
+	 * @param repoName 仓库名 (用户邮件/仓库ID)
+	 * @param commit 提交记录标志
+	 * @param pathname 仓库下的文件相对路径
+	 * @return true - 成功, false - 失败
+	 * @throws IOException
+	 */
+	public static boolean restoreFileByCommit(String repoName, String commit, String pathname) throws IOException {
+		Repository repository = getRepository(repoName);
+		try (Git git = new Git(repository)) {
+			try {
+				git.checkout().addPath(pathname).setStartPoint(commit).call();
+				String message = String.format(RepoPath.restore_msg, pathname);
+				gitCommit(repository, pathname, message);
+				LOG.info("提交成功: {} 仓库{}", repoName, message);
+				return true;
+			} catch (GitAPIException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 提交记录
+	 */
 	public static class CommitRecord {
 		private String message; /** 提交信息 */
 		private String user;    /** 提交者 */

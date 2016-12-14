@@ -29,6 +29,7 @@ import cn.signit.entry.RepoInfo;
 import cn.signit.service.db.RepoService;
 import cn.signit.untils.message.SessionKeys;
 import cn.signit.utils.repo.RepoPath;
+import cn.signit.utils.repo.RepoUtils;
 
 @Controller
 @SessionAttributes({ SessionKeys.LOGIN_USER })
@@ -161,6 +162,26 @@ public class RepoController {
 		RestResponse response = new RestResponse(true);
 		response.setData(categoryInfos);
 		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_REVERSION, method=RequestMethod.PUT)
+	@ResponseBody
+	public RestResponse RepoReversion(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
+			@PathVariable("repo-id") String repoId, @PathVariable("commit") String commit) {
+		String repoName = RepoPath.contact(user.getEmail(), repoId);
+		
+		RestResponse response = new RestResponse();
+		return response;
+	}
+	
+	@RequestMapping(value=UrlPath.REPO_RESTORE_FILE, method=RequestMethod.PUT)
+	@ResponseBody
+	public RestResponse restoreFileByCommit(@ModelAttribute(SessionKeys.LOGIN_USER) User user, 
+			@PathVariable("repo-id") String repoId, @PathVariable("commit") String commit, @RequestParam String pathname)
+					throws IOException {
+		LOG.info("用户 {} 请求还原 {} 仓库下的 {} 文件到 {} 状态", user.getEmail(), repoId, pathname, commit);
+		boolean flag = RepoUtils.restoreFileByCommit(user.getEmail(), repoId, commit, pathname);
+		return new RestResponse(flag);
 	}
 	
 	/*@RequestMapping(value=UrlPath.REPO_SHOW_REPO_ID_CATEGORY, method=RequestMethod.GET)

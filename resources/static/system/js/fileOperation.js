@@ -83,7 +83,7 @@ function batchDownloadFiles(_this, names) {
     var path = getPath(_this);
     var repoid = getRepoId(_this);
     var param = "path=" + path + '&name=' + names.join('&name=');
-    var url = gfALLDATA('basehref') + '/wesign/repos/' + repoid + '/file?' + param;
+    var url = gfALLDATA('baseHref') + '/wesign/repos/' + repoid + '/file?' + param;
     doDownload(url);
 }
 
@@ -91,7 +91,7 @@ function batchDownloadFiles(_this, names) {
  * 下载文件或目录
  */
 function downloadFile(_this) {
-    var names = new Array(getByKey(_this, name));
+    var names = new Array(getByKey(_this, 'name'));
     batchDownloadFiles(_this, names);
 }
 

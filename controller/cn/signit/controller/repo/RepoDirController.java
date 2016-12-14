@@ -78,7 +78,7 @@ public class RepoDirController {
 		String repoPath = RepoPath.contact(user.getEmail(), repoId);
 		String dirPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		
-		LOG.info("用户 { )请求在 {} 仓库下新建 {} 目录", user.getEmail(), repoId, dirInfo.getName());
+		LOG.info("用户 {} 请求在 {} 仓库下新建 {} 目录", user.getEmail(), repoId, dirInfo.getName());
 		
 		RestStatus status = repoService.createDirectory(repoPath, dirPath);
 		RestResponse response = new RestResponse(status);

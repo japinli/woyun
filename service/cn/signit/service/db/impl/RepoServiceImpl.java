@@ -271,7 +271,8 @@ public class RepoServiceImpl implements RepoService {
 				return RestStatus.RENAME_FAILED;
 		}
 		Repository repository = RepoUtils.getRepository(repoName);
-		return gitCommit(repository, ".", "rename") ? RestStatus.SUCCESS : RestStatus.FAILED;
+		flag = gitCommit(repository, ".", String.format(RepoPath.rename_msg, oldPath, newPath));
+		return flag ? RestStatus.SUCCESS : RestStatus.FAILED;
 	}
 	
 	public List<CommitHistory> getRepositoryHistory(String repoName) throws IOException {
@@ -297,8 +298,11 @@ public class RepoServiceImpl implements RepoService {
 			List<FileInfo> infos = new ArrayList<FileInfo>();
 			while (treeWalk.next()) {
 				String name = treeWalk.getNameString();
-				String type = treeWalk.isSubtree() ? "dir" : "file";
 				File file = new File(working, treeWalk.getPathString());
+				if (!file.exists()) {  // 文件已经被删除
+					continue;
+				}
+				String type = treeWalk.isSubtree() ? "dir" : "file";
 				long size =  FS.DETECTED.length(file);
 				long mtime = FS.DETECTED.lastModified(file);
 				String path = treeWalk.getPathString().replace(name, "");
@@ -360,13 +364,13 @@ public class RepoServiceImpl implements RepoService {
 	
 	public boolean delete(String repoName, List<DirOperation> dels) throws IOException {
 		String repoPath = RepoPath.getRepositoryPath(repoName);
-		String deleted = " ";
-		for (DirOperation dirOperation : dels) {
-			deleted += dirOperation.getPath() + ";";
-			deleteFile(repoPath, dirOperation.getPath());
-		}
 		Repository repository = getRepository(repoName);
-		return gitCommit(repository, ".", String.format(RepoPath.del_file_msg, deleted));
+		for (DirOperation dirOperation : dels) {
+			deleteFile(repoPath, dirOperation.getPath());
+			gitCommit(repository, ".", String.format(RepoPath.del_file_msg, dirOperation.getPath()));
+		}
+		
+		return true;
 	}
 	
 	public boolean uploadFiles(String repoName, String path, MultipartFile[] files) throws IOException {
@@ -381,6 +385,11 @@ public class RepoServiceImpl implements RepoService {
 		}
 		Repository repository = getRepository(repoName);
 		return gitCommit(repository, ".", String.format(RepoPath.add_file_msg, commitMessage));
+	}
+	
+	public boolean rollback(String repoName, String commit) throws IOException {
+		Repository repository = RepoUtils.getRepository(repoName);
+		return false;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////
@@ -456,7 +465,7 @@ public class RepoServiceImpl implements RepoService {
 		config.setString("user", null, "name", name);
 		config.setString("user", null, "email", email);
 		config.save();
-		LOG.info("修改仓库用户名为({})，邮件地址为({})", name, email);
+		LOG.info("仓库用户名: {}，邮件地址: {}", name, email);
 	}
 	
 	/**
@@ -521,7 +530,7 @@ public class RepoServiceImpl implements RepoService {
 			git.add().addFilepattern(filePattern).call();
 			git.commit().setMessage(message).call();
 			git.close();
-			LOG.info("提交成功: {}", message);
+			LOG.info("提交成功: {} 仓库{}", repository.getDirectory().getParentFile().getName(), message);
 			return true;
 		} catch (NoFilepatternException e) {
 			// TODO Auto-generated catch block
@@ -530,7 +539,7 @@ public class RepoServiceImpl implements RepoService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		LOG.warn("提交失败: {}", message);
+		LOG.warn("提交失败: {} 仓库{}", repository.getDirectory().getParentFile().getName(), message);
 		return false;
 	}
 	
@@ -564,7 +573,7 @@ public class RepoServiceImpl implements RepoService {
 		} else {
 			File folder = new File(dst, name);
 			if (!folder.mkdir()) {
-				LOG.warn("创建文件夹({})失败", folder.getPath());
+				LOG.warn("创建文件夹 {} 失败", folder.getPath());
 				return false;
 			}
 

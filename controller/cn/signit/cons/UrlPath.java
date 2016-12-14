@@ -149,6 +149,12 @@ public class UrlPath {
 	/** 查看历史提交文件(夹) */
 	public final static String REPO_VIEW_HISTORY = USER_ROOT + "/repos/{repo-id}/history/view";
 	
+	/** 恢复到特定版本 */
+	public final static String REPO_REVERSION = USER_ROOT + "/repos/reversion/{repo-id}/{commit}";
+	
+	/** 还原文件到指定的状态 */
+	public final static String REPO_RESTORE_FILE = USER_ROOT + "/repos/restore/{repo-id}/{commit}";
+	
 	/** 根据类别获取文件信息 */
 	public final static String REPO_SHOW_BY_CATEGORY = USER_ROOT + "/repos/{category}"; 
 	
