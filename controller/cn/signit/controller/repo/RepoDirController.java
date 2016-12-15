@@ -97,7 +97,7 @@ public class RepoDirController {
 		String oldPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getName());
 		String newPath = RepoPath.contact(dirInfo.getPath(), dirInfo.getNewName());
 		
-		LOG.info("用户 { )请求在 {} 仓库下重命名 {} 目录为 {}", user.getEmail(), repoId, oldPath, newPath);
+		LOG.info("用户 {} 请求在 {} 仓库下重命名 {} 目录为 {}", user.getEmail(), repoId, oldPath, newPath);
 		
 		RestStatus status = repoService.renameDirectory(repoName, oldPath, newPath);
 		

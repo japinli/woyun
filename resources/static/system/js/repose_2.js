@@ -226,9 +226,10 @@ function fnewNextfolder() {
  * 目录重命名弹出窗口
  */
 function fwriteNext(_this){
+    var name = getByKey(_this, 'name');
     layer.open({
 	type: 1,
-	title:'重命名文件夹',
+	title:'重命名: ' + name,
 	skin: 'layui-layer-rim', //加上边框
 	area: ['420px', '240px'], //宽高
 	content: 
@@ -236,7 +237,7 @@ function fwriteNext(_this){
 	    +'<div class="layui-form-item" style="margin-top:30px;">'
 	    +'<label class="layui-form-label">文件夹名：</label>'
 	    + '<div class="layui-input-inline">'
-	    +'<input type="text" name="name"  autocomplete="off" class="layui-input " id="id-renamefloder"/>'
+	    +'<input type="text" name="name" oldname="' + name + '" autocomplete="off" class="layui-input " id="id-renamefloder"/>'
 	    +'</div>'
 	    +'</div>'
 	    +'<div class="layui-form-item">'
@@ -255,34 +256,30 @@ function fwriteNext(_this){
 function frenameNextfolder(){
     var repoId = getGlobalRepoId();
     var path = getCurrentPath();
-    var name = $("#id-renamefloder").val();
-    var newName = pathContact(path, name);
-    // TODO: 如何获取原文件的原名称
-
-    console.log(repoId + ":" + path + ":" + name);
+    var new_name = $("#id-renamefloder").val();
+    var old_name = $("#id-renamefloder").attr("oldname");
     
     $.ajax({
 	url:'/wesign/repos/' + repoId + '/dir',
 	async:true,
 	type:'PUT',
 	contentType:'application/json',
-	data: JSON.stringify({"path": path, "name": name}),
+	data: JSON.stringify({"path": path, "name": old_name, "newName": new_name}),
 	success:function(data){
 
 	    var status = data.status;
 	    var dd = data.data;
 	    if(status == 0 && dd){
                 
-                updateDirectory(repoid, path);
+                updateDirectory(repoId, path);
 
-		layer.close({
-		    anim:6
-		});
 		layer.msg('文件夹创建成功', {
 		    icon: 1,
 		    time: 1000, //2秒关闭（如果不配置，默认是3秒）
 		    anim:1
 		});
+                layer.closeAll();
+                
 	    } else {
                 layer.msg(data.desc, {
                     icon: 2,
