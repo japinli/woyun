@@ -424,7 +424,7 @@ WEB 接口说明
 
 #### 请求
 
-`POST http://woyun.cn/wesign/repos/{repo-id}/file`
+`POST http://woyun.cn/wesign/repos/{repo-id}/file?path=pathname`
 
 **备注:**
 
@@ -433,8 +433,7 @@ WEB 接口说明
 #### 参数
 
  - repo-id - 仓库id编号
- - files - 待上传的文件
- - path - 上传路径 (仓库中的路径)
+ - path - 上传路径 (仓库下的相对路径)
  
 #### 响应
 

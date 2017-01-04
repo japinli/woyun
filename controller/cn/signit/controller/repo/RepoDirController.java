@@ -154,7 +154,7 @@ public class RepoDirController {
 	@RequestMapping(value = UrlPath.REPO_UPLOAD_FILE, method = RequestMethod.POST)
 	@ResponseBody
 	public RestResponse uploadFiles(@ModelAttribute(SessionKeys.LOGIN_USER) User user,
-			@PathVariable("repo-id") String repoId, @RequestPart(name = "file") MultipartFile[] files, String path,
+			@PathVariable("repo-id") String repoId, @RequestPart(name = "file") MultipartFile[] files, @RequestParam String path,
 			HttpServletResponse response) throws IOException {
 
 		LOG.info("用户 {} 请求上传文件到 {} 仓库的 {} 目录", user.getEmail(), repoId, path);
